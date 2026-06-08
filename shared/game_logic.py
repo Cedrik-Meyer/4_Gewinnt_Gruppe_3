@@ -110,3 +110,59 @@ def check_winner_2d_diagonals(board: np.ndarray, player_value: int) -> bool:
             return True
             
     return False
+
+def check_winner_3d_diagonals(board: np.ndarray, player_value: int) -> bool:
+    """
+    Prüft, ob der übergebene Spieler eine der 4 echten Raumdiagonalen 
+    quer durch das Zentrum des 3D-Würfels gebildet hat.
+    
+    Args:
+        board (np.ndarray): Das 3D-Spielfeld.
+        player_value (int): Der Zellwert des Spielers (z. B. 1 oder 2).
+        
+    Returns:
+        bool: True, wenn eine 3D-Raumdiagonale gefunden wurde, sonst False.
+    """
+    # Da wir wissen, dass die Kantenlänge exakt 4 ist, können wir die 4 Linien
+    # direkt mathematisch über die Indizes abgreifen. Das ist extrem schnell.
+    
+    # 1. Raumdiagonale: Von (0,0,0) nach (3,3,3)
+    if all(board[i, i, i] == player_value for i in range(4)):
+        return True
+        
+    # 2. Raumdiagonale: Von (0,0,3) nach (3,3,0)
+    if all(board[i, i, 3 - i] == player_value for i in range(4)):
+        return True
+        
+    # 3. Raumdiagonale: Von (0,3,0) nach (3,0,3)
+    if all(board[i, 3 - i, i] == player_value for i in range(4)):
+        return True
+        
+    # 4. Raumdiagonale: Von (0,3,3) nach (3,0,0)
+    if all(board[i, 3 - i, 3 - i] == player_value for i in range(4)):
+        return True
+        
+    return False
+
+
+def check_winner(board: np.ndarray, player_value: int) -> bool:
+    """
+    Die zentrale Hauptfunktion zur Gewinnerkennung.
+    Überprüft das gesamte Board auf eine gültige 4er-Reihe für den Spieler.
+    Geprüft werden: Gerade Achsen, flache 2D-Diagonalen und 3D-Raumdiagonalen.
+    
+    Args:
+        board (np.ndarray): Das 3D-Spielfeld mit Shape [4, 4, 4].
+        player_value (int): Der Zellwert des Spielers (1 oder 2).
+        
+    Returns:
+        bool: True, wenn der Spieler gewonnen hat, sonst False.
+    """
+    # Wir nutzen die Kurzschluss-Auswertung (Short-Circuit Evaluation) von Python:
+    # Wenn die geraden Achsen schon True sind, werden die rechenintensiveren 
+    # Diagonalen gar nicht erst ausgeführt. Das spart massiv CPU-Zyklen beim Training!
+    return (
+        check_winner_straight_axes(board, player_value) or
+        check_winner_2d_diagonals(board, player_value) or
+        check_winner_3d_diagonals(board, player_value)
+    )
