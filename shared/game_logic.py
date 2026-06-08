@@ -1,10 +1,11 @@
-import numpy as np
-from shared.data_structures import Move
-
 """
 Enthält die zentralen Spielregeln, die Spielfeld-Initialisierung
 und die Gewinnerkennung für den 3D Connect4 Agenten.
 """
+
+import numpy as np
+from shared.data_structures import Move
+
 
 def create_empty_board() -> np.ndarray:
     """
@@ -41,3 +42,36 @@ def apply_move(board: np.ndarray, move: Move, player_value: int) -> np.ndarray:
     
     # 3. Gebe das aktualisierte Board zurück
     return board
+
+def check_winner_straight_axes(board: np.ndarray, player_value: int) -> bool:
+    """
+    Prüft, ob der übergebene Spieler eine 4er-Reihe entlang der geraden
+    X- (Breite), Y- (Höhe) oder Z-Achsen (Tiefe) gebildet hat.
+    
+    Args:
+        board (np.ndarray): Das 3D-Spielfeld mit Shape [4, 4, 4] und Format [y][z][x].
+        player_value (int): Der Zellwert des Spielers (z. B. 1 oder 2).
+        
+    Returns:
+        bool: True, wenn eine gerade 4er-Reihe gefunden wurde, sonst False.
+    """
+    # Erzeugt eine boolesche Maske (True wo der Spieler Steine hat, sonst False)
+    player_mask = (board == player_value)
+    
+    # 1. Vertikale Gewinnerkennung (Entlang der Y-Achse / Höhe)
+    # axis=0 reduziert die Y-Dimension. Wenn in einer (z, x) Säule alle 4 Werte True sind,
+    # ergibt np.all dort True. np.any prüft, ob es überhaupt so eine Säule gibt.
+    if np.any(np.all(player_mask, axis=0)):
+        return True
+        
+    # 2. Tiefen-Gewinnerkennung (Entlang der Z-Achse / Tiefe)
+    # axis=1 reduziert die Z-Dimension. Prüft alle geraden Reihen nach hinten.
+    if np.any(np.all(player_mask, axis=1)):
+        return True
+        
+    # 3. Horizontale Gewinnerkennung (Entlang der X-Achse / Breite)
+    # axis=2 reduziert die X-Dimension. Prüft alle geraden Reihen nach rechts/links.
+    if np.any(np.all(player_mask, axis=2)):
+        return True
+        
+    return False
