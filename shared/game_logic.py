@@ -75,3 +75,38 @@ def check_winner_straight_axes(board: np.ndarray, player_value: int) -> bool:
         return True
         
     return False
+
+def check_winner_2d_diagonals(board: np.ndarray, player_value: int) -> bool:
+    """
+    Prüft, ob der übergebene Spieler eine 4er-Reihe auf einer der 2D-Diagonalen gebildet hat.
+    Das bedeutet: Eine Diagonale, die flach auf einer bestimmten XY-, YZ- oder ZX-Ebene liegt.
+    
+    Args:
+        board (np.ndarray): Das 3D-Spielfeld.
+        player_value (int): Der Zellwert des Spielers (z. B. 1 oder 2).
+        
+    Returns:
+        bool: True, wenn eine 2D-Diagonale gefunden wurde, sonst False.
+    """
+    player_mask = (board == player_value)
+    
+    # 1. XY-Ebenen prüfen (Wir schneiden den Würfel entlang der Z-Achse in 4 Scheiben)
+    for z in range(4):
+        plane = player_mask[:, z, :]  # Holt eine 4x4 Wand (Y und X)
+        if np.all(np.diagonal(plane)) or np.all(np.diagonal(np.fliplr(plane))):
+            return True
+            
+    # 2. YZ-Ebenen prüfen (Wir schneiden den Würfel entlang der X-Achse in 4 Scheiben)
+    for x in range(4):
+        plane = player_mask[:, :, x]  # Holt eine 4x4 Wand (Y und Z)
+        if np.all(np.diagonal(plane)) or np.all(np.diagonal(np.fliplr(plane))):
+            return True
+            
+    # 3. ZX-Ebenen prüfen (Wir schneiden den Würfel entlang der Y-Achse in 4 Scheiben)
+    # Das entspricht flachen Diagonalen den einzelnen "Ebenen".
+    for y in range(4):
+        plane = player_mask[y, :, :]  # Holt einen 4x4 Boden (Z und X)
+        if np.all(np.diagonal(plane)) or np.all(np.diagonal(np.fliplr(plane))):
+            return True
+            
+    return False
