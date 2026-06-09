@@ -1,3 +1,16 @@
-.env
-.idea
+# Python Cache (Ignoriert ALLES was mit pycache zu tun hat)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDEs & OS
+.idea/
+.vscode/
 .DS_Store
+
+# Environments & ML
+.env
+.venv/
+venv/
+*.pt
+*.pth
