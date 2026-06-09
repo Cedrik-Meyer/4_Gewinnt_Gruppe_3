@@ -58,3 +58,59 @@ def test_apply_move_out_of_bounds_raises_error():
     # Assert: x=4 existiert nicht (erlaubt sind nur 0, 1, 2, 3)
     with pytest.raises(ValueError, match="Ungültige Koordinaten"):
         apply_move(board, Move(x=4, z=1), player)
+
+from shared.game_logic import check_winner
+
+def test_winner_straight_vertical():
+    """Testet einen Sieg durch einen 4er-Turm (Y-Achse)."""
+    board = create_empty_board()
+    player = 1
+    
+    # 4 Steine übereinander an x=0, z=0
+    board[0][0][0] = player
+    board[1][0][0] = player
+    board[2][0][0] = player
+    board[3][0][0] = player
+    
+    assert check_winner(board, player) is True
+    # Wichtig: Der Gegner darf diesen Sieg nicht fälschlicherweise zugesprochen bekommen
+    assert check_winner(board, 2) is False
+
+def test_winner_2d_diagonal():
+    """Testet einen Sieg auf einer flachen 2D-Ebene (Treppenmuster auf dem Boden)."""
+    board = create_empty_board()
+    player = 2
+    
+    # Eine Diagonale flach auf dem Boden (y=0) von links-vorne nach rechts-hinten
+    board[0][0][0] = player
+    board[0][1][1] = player
+    board[0][2][2] = player
+    board[0][3][3] = player
+    
+    assert check_winner(board, player) is True
+
+def test_winner_3d_room_diagonal():
+    """Testet die komplexeste Siegerkennung: Eine Raumdiagonale quer durch den Würfel."""
+    board = create_empty_board()
+    player = 1
+    
+    # Von unten-vorne-links (0,0,0) nach oben-hinten-rechts (3,3,3)
+    board[0][0][0] = player
+    board[1][1][1] = player
+    board[2][2][2] = player
+    board[3][3][3] = player
+    
+    assert check_winner(board, player) is True
+
+def test_no_winner_if_interrupted():
+    """Testet, dass eine 3er-Reihe oder eine unterbrochene 4er-Reihe KEIN Sieg ist."""
+    board = create_empty_board()
+    player = 1
+    
+    # Eine Reihe auf der X-Achse (Breite), die vom Gegner unterbrochen wird
+    board[0][0][0] = player
+    board[0][0][1] = player
+    board[0][0][2] = 2       # Gegner blockiert!
+    board[0][0][3] = player
+    
+    assert check_winner(board, player) is False
