@@ -6,7 +6,7 @@ import websockets
 
 
 class AgentWebSocketClient:
-    def __init__(self, base_url: str, token: str, heartbeat_interval: float = 30.0):
+    def __init__(self, base_url: str, token: str, heartbeat_interval: float = 30.0, reconnect_delay: float = 5.0):
         self.base_url = base_url.rstrip('/')
         self.token = token
         self.ws_url = f"{self.base_url}/ws/agent?token={self.token}"
@@ -14,18 +14,20 @@ class AgentWebSocketClient:
         self.handlers = {}
         self.heartbeat_interval = heartbeat_interval
         self.heartbeat_task = None
+        self.reconnect_delay = reconnect_delay
+        self._running = False
 
     def register_handler(self, msg_type: str, handler_func):
         self.handlers[msg_type] = handler_func
 
-    async def connect(self):
-        self.websocket = await websockets.connect(self.ws_url)
-        self.start_heartbeat()
-
     async def disconnect(self):
+        self._running = False
         self.stop_heartbeat()
         if self.websocket is not None:
-            await self.websocket.close()
+            try:
+                await self.websocket.close()
+            except Exception:
+                pass
             self.websocket = None
 
     def start_heartbeat(self):
@@ -55,27 +57,47 @@ class AgentWebSocketClient:
             pass
 
     async def listen(self):
-        if self.websocket is None:
-            return
-
-        async for message in self.websocket:
+        self._running = True
+        while self._running:
             try:
-                data = json.loads(message)
-                msg_type = data.get("type")
+                self.websocket = await websockets.connect(self.ws_url)
+                self.start_heartbeat()
 
-                if msg_type in self.handlers:
-                    if asyncio.iscoroutinefunction(self.handlers[msg_type]):
-                        await self.handlers[msg_type](data)
-                    else:
-                        self.handlers[msg_type](data)
-                else:
-                    await self.handle_unregistered_message(data)
-            except json.JSONDecodeError:
+                async for message in self.websocket:
+                    try:
+                        data = json.loads(message)
+                        msg_type = data.get("type")
+
+                        if msg_type in self.handlers:
+                            if asyncio.iscoroutinefunction(self.handlers[msg_type]):
+                                await self.handlers[msg_type](data)
+                            else:
+                                self.handlers[msg_type](data)
+                        else:
+                            await self.handle_unregistered_message(data)
+                    except json.JSONDecodeError:
+                        pass
+
+            except (websockets.exceptions.ConnectionClosed, ConnectionRefusedError, OSError):
                 pass
+            finally:
+                self.stop_heartbeat()
+                if self.websocket is not None:
+                    try:
+                        await self.websocket.close()
+                    except Exception:
+                        pass
+                    self.websocket = None
+
+            if self._running:
+                await asyncio.sleep(self.reconnect_delay)
 
     async def handle_unregistered_message(self, data: dict):
         pass
 
     async def send_message(self, message: dict):
         if self.websocket is not None and self.websocket.open:
-            await self.websocket.send(json.dumps(message))
+            try:
+                await self.websocket.send(json.dumps(message))
+            except websockets.exceptions.ConnectionClosed:
+                pass
