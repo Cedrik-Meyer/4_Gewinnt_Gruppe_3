@@ -14,3 +14,6 @@ __pycache__/
 venv/
 *.pt
 *.pth
+
+# Python egg-info (Lokale Paket-Metadaten)
+*.egg-info/
