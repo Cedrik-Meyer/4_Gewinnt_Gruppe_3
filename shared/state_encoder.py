@@ -6,6 +6,7 @@ in die mathematische Tensor-Repräsentation für das Neuronale Netz (Ebene C).
 """
 
 import numpy as np
+import torch
 
 def generate_feature_channels(board: np.ndarray, player_slot: int) -> np.ndarray:
     """
@@ -36,3 +37,49 @@ def generate_feature_channels(board: np.ndarray, player_slot: int) -> np.ndarray
     # 3. Stapele die beiden 3D-Matrizen übereinander.
     # Aus zwei [4, 4, 4] Arrays wird ein [2, 4, 4, 4] Array.
     return np.stack([own_channel, opp_channel])
+
+def encode_state(board: np.ndarray, player_slot: int) -> torch.Tensor:
+    """
+    Kombiniert die Invarianz-Transformation mit der PyTorch-Konvertierung.
+    Wandelt das Numpy-Array in einen float32 PyTorch-Tensor um (Ebene C).
+    
+    Args:
+        board (np.ndarray): Das logische 3D-Spielfeld.
+        player_slot (int): Der Slot des Agenten (0 oder 1).
+        
+    Returns:
+        torch.Tensor: Ein Tensor der Shape [2, 4, 4, 4] mit dtype torch.float32.
+    """
+    # 1. Feature Channels via Numpy generieren (Logik aus B4_01)
+    channels_array = generate_feature_channels(board, player_slot)
+    
+    # 2. In PyTorch Tensor umwandeln
+    # torch.from_numpy ist extrem speichereffizient (Zero-Copy), da es den  
+    # RAM-Speicher mit Numpy teilt, anstatt das Array komplett neu zu kopieren.
+    state_tensor = torch.from_numpy(channels_array)
+    
+    return state_tensor
+
+def get_legal_mask(board: np.ndarray) -> np.ndarray:
+    """
+    Erstellt ein 1D-Array (Größe 16), das für das Maskieren der Modell-Ausgaben genutzt wird.
+    Prüft die oberste Ebene (y=3) des Boards.
+    
+    Args:
+        board (np.ndarray): Das 3D-Spielfeld mit Shape [4, 4, 4].
+        
+    Returns:
+        np.ndarray: Ein 1D float32 Array. 1.0 bedeutet "Säule frei", 0.0 bedeutet "Säule voll".
+    """
+    # 1. Wir schneiden die oberste Ebene (Dachgeschoss) ab. Shape ist jetzt [4, 4] für (z, x)
+    top_layer = board[3]
+    
+    # 2. Überall wo eine 0 steht, ist die Säule noch NICHT voll (True). 
+    # Wo ein Stein liegt, ist sie voll (False).
+    valid_positions = (top_layer == 0)
+    
+    # 3. Wir wandeln True/False in 1.0 und 0.0 um (für PyTorch Multiplikationen) 
+    # und machen das 4x4 Grid mit flatten() zu einem 1D-Array der Länge 16.
+    legal_mask = valid_positions.astype(np.float32).flatten()
+    
+    return legal_mask
