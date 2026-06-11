@@ -90,8 +90,8 @@ Trainingsverfahren, bei dem das Modell gegen sich selbst spielt, um automatisch 
 State / Game State
 Vollständiger aktueller Zustand des Spiels, inklusive Spielfeld und Information darüber, welcher Spieler am Zug ist.
 
-Tensor
-Mehrdimensionale Zahlenstruktur für Machine Learning. Das Spielfeld wird in Tensorform umgewandelt, damit es vom Modell verarbeitet werden kann.
+Tensornale Zahlenstruktur für 
+MehrdimensioMachine Learning. Das Spielfeld wird in Tensorform umgewandelt, damit es vom Modell verarbeitet werden kann.
 
 Training
 Lernprozess, bei dem das Modell anhand von Beispieldaten verbessert wird.
