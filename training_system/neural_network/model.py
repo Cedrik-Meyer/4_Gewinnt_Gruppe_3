@@ -23,36 +23,34 @@ class Connect4Model(nn.Module):
         # ---------------------------------------------------------
         # B4_05: Feature Extractor (3D-Faltungsschichten)
         # ---------------------------------------------------------
-        # Wir schicken den [2, 4, 4, 4] Input durch drei 3D-Scanner-Schichten.
-        # padding=1 sorgt dafür, dass die Kanten des 4x4x4 Würfels nicht 
-        # abgeschnitten werden und die räumliche Dimension erhalten bleibt.
         self.conv_layers = nn.Sequential(
-            # Schicht 1: Aus 2 Kanälen werden 32 Feature-Karten
             nn.Conv3d(in_channels=2, out_channels=32, kernel_size=3, padding=1),
             nn.BatchNorm3d(32),
             nn.ReLU(),
             
-            # Schicht 2: Aus 32 Karten werden 64
             nn.Conv3d(in_channels=32, out_channels=64, kernel_size=3, padding=1),
             nn.BatchNorm3d(64),
             nn.ReLU(),
             
-            # Schicht 3: Komplexe Mustererkennung auf 64 Karten
             nn.Conv3d(in_channels=64, out_channels=64, kernel_size=3, padding=1),
             nn.BatchNorm3d(64),
             nn.ReLU(),
             
-            # Flatten: Presst den 3D-Tensor für die nachfolgenden Linear-Layer flach.
-            # Shape-Rechnung: 64 Channels * 4 Höhe * 4 Tiefe * 4 Breite = 4096
             nn.Flatten()
         )
         
-        # Diese Variable speichern wir uns, damit die Output-Heads (B4_06/B4_07)
-        # exakt wissen, wie viele Neuronen bei ihnen ankommen.
-        self.flattened_size = 64 * 4 * 4 * 4
+        self.flattened_size = 64 * 4 * 4 * 4  # 4096
         
-        # Platzhalter für B4_06 und B4_07
-        self.policy_head = None
+        # ---------------------------------------------------------
+        # B4_06: Policy-Head (Wahrscheinlichkeiten der 16 Züge)
+        # ---------------------------------------------------------
+        # Ein kompakter, linearer Layer, der unsere 4096 abstrahierten Features 
+        # nimmt und daraus exakt 16 Rohwerte (Logits) für unsere 16 Züge berechnet.
+        self.policy_head = nn.Sequential(
+            nn.Linear(self.flattened_size, 16)
+        )
+        
+        # Platzhalter für B4_07
         self.value_head = None
 
     def forward(self, x: torch.Tensor):
@@ -63,11 +61,14 @@ class Connect4Model(nn.Module):
             x (torch.Tensor): Der Input-Tensor der Shape [B, 2, 4, 4, 4].
             
         Returns:
-            Ein Placeholder (Feature-Vektor) bis die Heads implementiert sind.
+            Tuple[torch.Tensor, None]: policy_logits und vorerst ein None für value.
         """
         # 1. Feature Extraktion: [B, 2, 4, 4, 4] -> [B, 4096]
         features = self.conv_layers(x)
         
-        # (Später: Die features fließen in den Policy- und Value-Head)
-        return features
+        # 2. Policy berechnen: [B, 4096] -> [B, 16]
+        policy_logits = self.policy_head(features)
+        
+        # Wir geben die Logits und vorerst None (für den Value) als Tupel zurück
+        return policy_logits, None
     
