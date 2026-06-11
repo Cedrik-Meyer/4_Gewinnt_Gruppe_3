@@ -5,21 +5,21 @@ import websockets
 from runtime_system.network.websocket_client import AgentWebSocketClient
 
 
-async def dummy_server(websocket):
-    await websocket.send(json.dumps({
+async def dummy_server(websocket): # Minimaler Server zum testen
+    await websocket.send(json.dumps({ # Request sobald Client verbunden ist
         "type": "turn.request",
         "payload": {"test": True}
     }))
 
-    async for message in websocket:
+    async for message in websocket: # Warten auf Nachricht
         data = json.loads(message)
-        if data.get("type") == "move.submit":
+        if data.get("type") == "move.submit": # Bestätigung der Nachricht
             await websocket.send(json.dumps({"type": "move.accepted"}))
             break
 
 
 @pytest.mark.asyncio
-async def test_server_communication():
+async def test_server_communication(): # Integrationstest: Prüft Connect -> Receive -> Send
     server = await websockets.serve(dummy_server, "127.0.0.1", 8765)
 
     client = AgentWebSocketClient("ws://127.0.0.1:8765", "test_token", heartbeat_interval=1.0)
