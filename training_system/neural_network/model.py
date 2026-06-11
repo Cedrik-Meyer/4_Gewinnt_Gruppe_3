@@ -44,14 +44,20 @@ class Connect4Model(nn.Module):
         # ---------------------------------------------------------
         # B4_06: Policy-Head (Wahrscheinlichkeiten der 16 Züge)
         # ---------------------------------------------------------
-        # Ein kompakter, linearer Layer, der unsere 4096 abstrahierten Features 
-        # nimmt und daraus exakt 16 Rohwerte (Logits) für unsere 16 Züge berechnet.
         self.policy_head = nn.Sequential(
             nn.Linear(self.flattened_size, 16)
         )
         
-        # Platzhalter für B4_07
-        self.value_head = None
+        # ---------------------------------------------------------
+        # B4_07: Value-Head (Stellungsbewertung)
+        # ---------------------------------------------------------
+        # Ein linearer Layer komprimiert die 4096 Features auf genau 1 Wert.
+        # Die Tanh-Aktivierungsfunktion drückt das Ergebnis zwingend in den
+        # Bereich zwischen -1.0 und +1.0.
+        self.value_head = nn.Sequential(
+            nn.Linear(self.flattened_size, 1),
+            nn.Tanh()
+        )
 
     def forward(self, x: torch.Tensor):
         """
@@ -61,14 +67,18 @@ class Connect4Model(nn.Module):
             x (torch.Tensor): Der Input-Tensor der Shape [B, 2, 4, 4, 4].
             
         Returns:
-            Tuple[torch.Tensor, None]: policy_logits und vorerst ein None für value.
+            Tuple[torch.Tensor, torch.Tensor]: 
+                - policy_logits: Rohwerte für die 16 möglichen Züge (Shape: [B, 16])
+                - value: Stellungsbewertung zwischen -1.0 und 1.0 (Shape: [B, 1])
         """
         # 1. Feature Extraktion: [B, 2, 4, 4, 4] -> [B, 4096]
         features = self.conv_layers(x)
         
-        # 2. Policy berechnen: [B, 4096] -> [B, 16]
+        # 2. Policy berechnen (Welcher Zug ist gut?): [B, 4096] -> [B, 16]
         policy_logits = self.policy_head(features)
         
-        # Wir geben die Logits und vorerst None (für den Value) als Tupel zurück
-        return policy_logits, None
+        # 3. Value berechnen (Wer gewinnt das Spiel?): [B, 4096] -> [B, 1]
+        value = self.value_head(features)
+        
+        return policy_logits, value
     
