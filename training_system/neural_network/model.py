@@ -15,20 +15,45 @@ class Connect4Model(nn.Module):
     
     Input-Shape (Ebene C):
         [Batch, Channels, Y, Z, X] -> [B, 2, 4, 4, 4]
-        - Channels: 2 (Kanal 0: Eigene Steine, Kanal 1: Gegnerische Steine)
-        - Y, Z, X: Jeweils 4 (Höhe, Tiefe, Breite des 3D-Boards)
     """
     
     def __init__(self):
-        # Der Aufruf von super() ist zwingend erforderlich, damit PyTorch 
-        # die Klasse korrekt als neuronales Netz registriert.
         super().__init__()
         
         # ---------------------------------------------------------
-        # Platzhalter: Hier kommen in B4_05 die 3D-Faltungsschichten hin.
-        # Wir wissen bereits: in_channels=2 (aufgrund unseres State-Encoders).
+        # B4_05: Feature Extractor (3D-Faltungsschichten)
         # ---------------------------------------------------------
-        pass
+        # Wir schicken den [2, 4, 4, 4] Input durch drei 3D-Scanner-Schichten.
+        # padding=1 sorgt dafür, dass die Kanten des 4x4x4 Würfels nicht 
+        # abgeschnitten werden und die räumliche Dimension erhalten bleibt.
+        self.conv_layers = nn.Sequential(
+            # Schicht 1: Aus 2 Kanälen werden 32 Feature-Karten
+            nn.Conv3d(in_channels=2, out_channels=32, kernel_size=3, padding=1),
+            nn.BatchNorm3d(32),
+            nn.ReLU(),
+            
+            # Schicht 2: Aus 32 Karten werden 64
+            nn.Conv3d(in_channels=32, out_channels=64, kernel_size=3, padding=1),
+            nn.BatchNorm3d(64),
+            nn.ReLU(),
+            
+            # Schicht 3: Komplexe Mustererkennung auf 64 Karten
+            nn.Conv3d(in_channels=64, out_channels=64, kernel_size=3, padding=1),
+            nn.BatchNorm3d(64),
+            nn.ReLU(),
+            
+            # Flatten: Presst den 3D-Tensor für die nachfolgenden Linear-Layer flach.
+            # Shape-Rechnung: 64 Channels * 4 Höhe * 4 Tiefe * 4 Breite = 4096
+            nn.Flatten()
+        )
+        
+        # Diese Variable speichern wir uns, damit die Output-Heads (B4_06/B4_07)
+        # exakt wissen, wie viele Neuronen bei ihnen ankommen.
+        self.flattened_size = 64 * 4 * 4 * 4
+        
+        # Platzhalter für B4_06 und B4_07
+        self.policy_head = None
+        self.value_head = None
 
     def forward(self, x: torch.Tensor):
         """
@@ -38,12 +63,11 @@ class Connect4Model(nn.Module):
             x (torch.Tensor): Der Input-Tensor der Shape [B, 2, 4, 4, 4].
             
         Returns:
-            Tuple[torch.Tensor, torch.Tensor]: 
-                - policy_logits: Rohwerte für die 16 möglichen Züge (Shape: [B, 16])
-                - value: Stellungsbewertung zwischen -1.0 und 1.0 (Shape: [B, 1])
+            Ein Placeholder (Feature-Vektor) bis die Heads implementiert sind.
         """
-        # ---------------------------------------------------------
-        # Platzhalter: Hier werden in B4_05 bis B4_07 die Layer aufgerufen.
-        # ---------------------------------------------------------
-        pass
+        # 1. Feature Extraktion: [B, 2, 4, 4, 4] -> [B, 4096]
+        features = self.conv_layers(x)
+        
+        # (Später: Die features fließen in den Policy- und Value-Head)
+        return features
     
