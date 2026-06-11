@@ -1,9 +1,10 @@
 import logging
+from datetime import datetime, timezone
 from typing import Optional
 
 import numpy as np
 
-from shared.data_structures import GameState
+from shared.data_structures import GameState, Move
 
 logger = logging.getLogger(__name__)
 
@@ -50,6 +51,34 @@ def parse_turn_request(message: dict) -> Optional[GameState]:
     except Exception:
         logger.exception("Unerwarteter Fehler beim Parsen der turn.request Nachricht.")
         return None
+
+
+def build_move_submit(move: Move, game_state: GameState) -> dict:
+    """
+    Baut aus einem internen Move den move.submit-Umschlag für den Server.
+
+    Der Server erwartet nur x und z im Payload. Die Höhe y wird serverseitig
+    berechnet und darf deshalb nicht mitgesendet werden.
+    """
+    x = int(move.x)
+    z = int(move.z)
+
+    if not (0 <= x < 4 and 0 <= z < 4):
+        raise ValueError(f"Ungültige Zugkoordinaten: x={x}, z={z}. Erlaubt sind Werte von 0 bis 3.")
+
+    timestamp = datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
+
+    return {
+        "version": 1,
+        "type": "move.submit",
+        "requestId": game_state.request_id,
+        "matchId": game_state.match_id,
+        "payload": {
+            "x": x,
+            "z": z,
+        },
+        "timestamp": timestamp,
+    }
 
 
 def _parse_board(raw_board) -> np.ndarray:
