@@ -15,20 +15,49 @@ class Connect4Model(nn.Module):
     
     Input-Shape (Ebene C):
         [Batch, Channels, Y, Z, X] -> [B, 2, 4, 4, 4]
-        - Channels: 2 (Kanal 0: Eigene Steine, Kanal 1: Gegnerische Steine)
-        - Y, Z, X: Jeweils 4 (Höhe, Tiefe, Breite des 3D-Boards)
     """
     
     def __init__(self):
-        # Der Aufruf von super() ist zwingend erforderlich, damit PyTorch 
-        # die Klasse korrekt als neuronales Netz registriert.
         super().__init__()
         
         # ---------------------------------------------------------
-        # Platzhalter: Hier kommen in B4_05 die 3D-Faltungsschichten hin.
-        # Wir wissen bereits: in_channels=2 (aufgrund unseres State-Encoders).
+        # B4_05: Feature Extractor (3D-Faltungsschichten)
         # ---------------------------------------------------------
-        pass
+        self.conv_layers = nn.Sequential(
+            nn.Conv3d(in_channels=2, out_channels=32, kernel_size=3, padding=1),
+            nn.BatchNorm3d(32),
+            nn.ReLU(),
+            
+            nn.Conv3d(in_channels=32, out_channels=64, kernel_size=3, padding=1),
+            nn.BatchNorm3d(64),
+            nn.ReLU(),
+            
+            nn.Conv3d(in_channels=64, out_channels=64, kernel_size=3, padding=1),
+            nn.BatchNorm3d(64),
+            nn.ReLU(),
+            
+            nn.Flatten()
+        )
+        
+        self.flattened_size = 64 * 4 * 4 * 4  # 4096
+        
+        # ---------------------------------------------------------
+        # B4_06: Policy-Head (Wahrscheinlichkeiten der 16 Züge)
+        # ---------------------------------------------------------
+        self.policy_head = nn.Sequential(
+            nn.Linear(self.flattened_size, 16)
+        )
+        
+        # ---------------------------------------------------------
+        # B4_07: Value-Head (Stellungsbewertung)
+        # ---------------------------------------------------------
+        # Ein linearer Layer komprimiert die 4096 Features auf genau 1 Wert.
+        # Die Tanh-Aktivierungsfunktion drückt das Ergebnis zwingend in den
+        # Bereich zwischen -1.0 und +1.0.
+        self.value_head = nn.Sequential(
+            nn.Linear(self.flattened_size, 1),
+            nn.Tanh()
+        )
 
     def forward(self, x: torch.Tensor):
         """
@@ -42,8 +71,14 @@ class Connect4Model(nn.Module):
                 - policy_logits: Rohwerte für die 16 möglichen Züge (Shape: [B, 16])
                 - value: Stellungsbewertung zwischen -1.0 und 1.0 (Shape: [B, 1])
         """
-        # ---------------------------------------------------------
-        # Platzhalter: Hier werden in B4_05 bis B4_07 die Layer aufgerufen.
-        # ---------------------------------------------------------
-        pass
+        # 1. Feature Extraktion: [B, 2, 4, 4, 4] -> [B, 4096]
+        features = self.conv_layers(x)
+        
+        # 2. Policy berechnen (Welcher Zug ist gut?): [B, 4096] -> [B, 16]
+        policy_logits = self.policy_head(features)
+        
+        # 3. Value berechnen (Wer gewinnt das Spiel?): [B, 4096] -> [B, 1]
+        value = self.value_head(features)
+        
+        return policy_logits, value
     
