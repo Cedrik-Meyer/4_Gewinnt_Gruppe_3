@@ -8,7 +8,8 @@ führt den Optimizer aus und passt die Gewichte des Netzwerks an.
 
 import torch
 import torch.nn as nn
-import torch.optim as optim  
+import torch.optim as optim
+import numpy as np
 from training_system.neural_network.model import Connect4Model
 
 class Connect4Trainer:
@@ -27,26 +28,15 @@ class Connect4Trainer:
         """
         self.model = model
         
-        # ---------------------------------------------------------
-        # B5_05: Definition der Loss-Funktionen
-        # ---------------------------------------------------------
         self.policy_loss_fn = nn.CrossEntropyLoss()
         self.value_loss_fn = nn.MSELoss()
         
-        # ---------------------------------------------------------
-        # B5_06: Optimizer & Scheduler
-        # ---------------------------------------------------------
-        # Der Adam-Optimizer sammelt die Fehler-Gradienten und passt die Parameter an.
-        # weight_decay (L2-Regularisierung) bestraft zu große Gewichte und verhindert Overfitting.
         self.optimizer = optim.Adam(
             self.model.parameters(), 
             lr=learning_rate, 
             weight_decay=1e-4
         )
         
-        # Der Scheduler fungiert als Feinjustierung für die Learning Rate.
-        # StepLR verkleinert die Learning Rate nach einer bestimmten Anzahl von Trainingsschritten.
-        # Hier: Nach 10.000 Trainingsschritten wird die Lernrate mit 0.9 multipliziert.
         self.scheduler = optim.lr_scheduler.StepLR(
             self.optimizer, 
             step_size=10000, 
@@ -57,18 +47,53 @@ class Connect4Trainer:
                      target_probs: torch.Tensor, target_value: torch.Tensor) -> torch.Tensor:
         """
         B5_05: Berechnet den kombinierten Gesamt-Fehler (Total Loss) aus Policy- und Value-Loss.
-        
-        Args:
-            predicted_logits (torch.Tensor): Vom Modell vorhergesagte Logits [Batch, 16].
-            predicted_value (torch.Tensor): Vom Modell vorhergesagter Zustandswert [Batch, 1].
-            target_probs (torch.Tensor): Die Ziel-Wahrscheinlichkeiten aus dem Buffer [Batch, 16].
-            target_value (torch.Tensor): Der tatsächliche Spielausgang aus dem Buffer [Batch, 1].
-            
-        Returns:
-            torch.Tensor: Der kombinierte Gesamt-Loss als differenzierbarer PyTorch-Skalar.
         """
         policy_loss = self.policy_loss_fn(predicted_logits, target_probs)
         value_loss = self.value_loss_fn(predicted_value, target_value)
         total_loss = policy_loss + value_loss
         
         return total_loss
+
+    def train_step(self, states: list, target_probs: list, target_values: list) -> float:
+        """
+        B5_07: Führt einen kompletten Trainingsschritt (Backpropagation) auf einem Batch aus.
+        
+        Args:
+            states (list): Liste von Tensors (Input-Spielfelder).
+            target_probs (list): Liste von Numpy-Arrays (Ziel-Wahrscheinlichkeiten).
+            target_values (list): Liste von Floats (Tatsächlicher Spielausgang).
+            
+        Returns:
+            float: Der berechnete numerische Fehler (Loss) für Logging-Zwecke.
+        """
+        # 1. Daten für die Grafikkarte/CPU vorbereiten (Listen -> PyTorch Batches)
+        # torch.stack baut aus einer Liste von 64 Tensors einen echten Tensor [64, 2, 4, 4, 4]
+        states_tensor = torch.stack(states)
+        
+        # Konvertierung der Wahrscheinlichkeiten [64, 16] und Werte [64, 1]
+        probs_tensor = torch.tensor(np.array(target_probs), dtype=torch.float32)
+        values_tensor = torch.tensor(target_values, dtype=torch.float32).unsqueeze(1)
+        
+        # 2. Modell in den Trainingsmodus versetzen (Aktiviert BatchNorm)
+        self.model.train()
+        
+        # 3. Alte Fehler-Notizen löschen, bevor wir neu rechnen
+        self.optimizer.zero_grad()
+        
+        # 4. FORWARD PASS: Modell trifft seine Vorhersagen für die 64 Spielfelder
+        predicted_logits, predicted_value = self.model(states_tensor)
+        
+        # 5. LOSS: Die Strafe für falsche Vorhersagen berechnen
+        loss = self.compute_loss(predicted_logits, predicted_value, probs_tensor, values_tensor)
+        
+        # 6. BACKWARD PASS: PyTorch sucht rückwärts durch das Netz, welche Schraube 
+        # wie viel Prozent Schuld am Fehler (Loss) hat.
+        loss.backward()
+        
+        # 7. OPTIMIZER STEP: Der Adam-Optimizer dreht nun genau an diesen Schrauben (Gewichten),
+        # um den Fehler für das nächste Mal zu minimieren. Ein neues Kandidaten-Modell entsteht!
+        self.optimizer.step()
+        
+        # Gib den Fehlerwert zurück, damit wir in der Konsole sehen, ob er im Laufe 
+        # der Stunden abnimmt.
+        return loss.item()
