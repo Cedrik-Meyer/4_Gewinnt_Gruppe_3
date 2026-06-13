@@ -1,8 +1,9 @@
 """
 training_system/self_play/self_play_loop.py
 
-Simuliert Spiele des Agenten gegen sich selbst (Self-Play), 
-um Trajectories (Spielverläufe) für das Training zu generieren.
+Simuliert Spiele des Agenten gegen sich selbst (Self-Play) und
+speichert die Spielverläufe (Trajectories) mit den entsprechenden
+Belohnungen (Rewards) im Replay Buffer.
 """
 
 import torch
@@ -12,6 +13,7 @@ from typing import List, Tuple, Dict, Any
 from shared.data_structures import Move
 from shared.game_logic import create_empty_board, apply_move, check_winner
 from shared.state_encoder import encode_state, get_legal_mask
+from training_system.self_play.replay_buffer import ReplayBuffer  
 
 def play_single_game(model: torch.nn.Module) -> Tuple[List[Dict[str, Any]], int]:
     """
@@ -22,7 +24,7 @@ def play_single_game(model: torch.nn.Module) -> Tuple[List[Dict[str, Any]], int]
         
     Returns:
         Tuple[List, int]: 
-            - trajectory: Eine Liste aller Züge (States und Action-Probs).
+            - trajectory: Eine Liste aller Züge (States, Action-Probs und Spieler-ID).
             - winner: Der finale Gewinner (1, 2 oder 0 für Unentschieden).
     """
     board = create_empty_board()
@@ -36,7 +38,6 @@ def play_single_game(model: torch.nn.Module) -> Tuple[List[Dict[str, Any]], int]
         legal_mask = get_legal_mask(board)
         
         # 2. Inferenz: Wir fügen eine Batch-Dimension hinzu [1, 2, 4, 4, 4]
-        # (Da wir nicht trainieren, schalten wir die Gradienten ab)
         with torch.no_grad():
             policy_logits, _ = model(state_tensor.unsqueeze(0))
             
@@ -46,16 +47,13 @@ def play_single_game(model: torch.nn.Module) -> Tuple[List[Dict[str, Any]], int]
         mask_tensor = torch.tensor(legal_mask, dtype=torch.float32)
         masked_logits = logits + (1.0 - mask_tensor) * -1e9
         
-        # 4. Softmax-Aktivierung: Logits in echte Wahrscheinlichkeiten (0.0 bis 1.0) umwandeln
+        # 4. Softmax-Aktivierung: Logits in echte Wahrscheinlichkeiten umwandeln
         action_probs = torch.softmax(masked_logits, dim=0).numpy()
         
-        # 5. EXPLORATION (Training-Spezialität): 
-        # Im Live-Spiel würden wir jetzt einfach Argmax (den besten Zug) nehmen.
-        # Im Training ziehen wir stattdessen zufällig gewichtet nach den Wahrscheinlichkeiten,
-        # damit das Modell ab und zu etwas Neues ausprobiert.
+        # 5. Exploration: Zufällig gewichtet nach den Wahrscheinlichkeiten ziehen
         action_index = np.random.choice(16, p=action_probs)
         
-        # 6. Erfahrung festhalten (Noch ohne Reward, da das Spiel nicht vorbei ist)
+        # 6. Erfahrung festhalten (inkl. Information, welcher Spieler den Zug gemacht hat)
         trajectory.append({
             "state": state_tensor,
             "action_probs": action_probs,
@@ -78,12 +76,32 @@ def play_single_game(model: torch.nn.Module) -> Tuple[List[Dict[str, Any]], int]
         current_player = 2 if current_player == 1 else 1
 
 
-def generate_self_play_data_mock(model: torch.nn.Module, num_games: int):
+def store_game_trajectory(trajectory: List[Dict[str, Any]], winner: int, replay_buffer: ReplayBuffer) -> None:
     """
-    Platzhalter für Multiprocessing. 
-    Hier werden später mehrere `play_single_game` Prozesse parallel gestartet.
+    B5_04: Nimmt den Spielverlauf (Trajectory) einer beendeten Partie, berechnet den 
+    Reward aus Sicht des jeweiligen Spielers und schiebt die Züge in den Replay Buffer.
+    
+    Args:
+        trajectory (List[Dict]): Der aufgezeichnete Spielverlauf aus play_single_game.
+        winner (int): Der Gewinner des Spiels (1, 2 oder 0 für Remis).
+        replay_buffer (ReplayBuffer): Der zentrale Ringpuffer.
     """
-    # Hinweis für später: Wenn ihr hier Multiprocessing (z.B. concurrent.futures) 
-    # einbaut, muss das Modell zwingend per torch.multiprocessing.set_start_method('spawn') 
-    # geteilt werden, da CUDA/Mac-Tensor-Speicher sonst zu Deadlocks führt.
-    pass
+    for step in trajectory:
+        state = step["state"]
+        action_probs = step["action_probs"]
+        player = step["player"]
+        
+        # Berechnung des Werts (Value/Reward) aus der Perspektive des Spielers,
+        # der in genau diesem Moment am Zug war:
+        if winner == 0:
+            # Unentschieden bedeutet für beide Seiten Frustration/Neutralität (0.0)
+            value = 0.0
+        elif player == winner:
+            # Dieser Zug wurde vom späteren Gewinner gemacht -> Genial (+1.0)
+            value = 1.0
+        else:
+            # Dieser Zug wurde vom späteren Verlierer gemacht -> Schlecht (-1.0)
+            value = -1.0
+            
+        # Die fertige Erfahrung wird in den Ringpuffer geschoben
+        replay_buffer.push(state, action_probs, value)
