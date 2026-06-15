@@ -1,12 +1,14 @@
 """
 training_system/main_train.py
 
-Das Hauptskript für den Trainingsprozess.
+Das Hauptskript fuer den Trainingsprozess.
 Orchestriert die Endlosschleife aus Self-Play, neuronalem Training und Arena-Evaluation.
-Speichert sowohl das aktuellste Modell als auch eine Historie aller bisherigen Champions.
+Unterstuetzt das automatische Fortsetzen (Resume) bestehender Trainingslaeufe.
 """
 
 import os
+import glob
+import re
 import torch
 from training_system.neural_network.model import Connect4Model
 from training_system.self_play.replay_buffer import ReplayBuffer
@@ -16,36 +18,65 @@ from training_system.eval.arena import evaluate_candidate
 
 def main_training_loop():
     """
-    B6_03 & B6_04: Die Endlosschleife für das AlphaZero-Training inkl. Checkpoints und Historie.
+    B6_03 & B6_04: Endlosschleife fuer das AlphaZero-Training mit automatischem Resume.
     """
     print("Initialisiere ML-Fabrik...")
     
-    # 1. Modelle aufsetzen
-    champion_model = Connect4Model()
-    candidate_model = Connect4Model()
-    candidate_model.load_state_dict(champion_model.state_dict())
-    
-    # 2. Infrastruktur aufsetzen
-    replay_buffer = ReplayBuffer(capacity=100000)
-    trainer = Connect4Trainer(candidate_model, learning_rate=1e-3)
-    
-    # 3. Checkpoint-Ordner sicherstellen
+    # 1. Checkpoint-Ordner und Pfade sicherstellen
     checkpoint_dir = "training_system/checkpoints"
     os.makedirs(checkpoint_dir, exist_ok=True)
     checkpoint_path = os.path.join(checkpoint_dir, "best_champion.pt")
     
-    # Hyperparameter für die Loop
-    MAX_ITERATIONS = 100       
+    # 2. Modell aufsetzen
+    champion_model = Connect4Model()
+    start_iteration = 1
+    
+    # Intelligentes Laden: Pruefen, ob bereits ein trainiertes Gehirn existiert
+    if os.path.exists(checkpoint_path):
+        # Laedt die Gewichte des letzten Champions von der Festplatte
+        champion_model.load_state_dict(torch.load(checkpoint_path, weights_only=True))
+        print(f"Bestehendes Gehirn erfolgreich geladen: {checkpoint_path}")
+        
+        # Historien-Dateien scannen, um die richtige Iterationsnummer zu ermitteln
+        history_files = glob.glob(os.path.join(checkpoint_dir, "champion_iter_*.pt"))
+        if history_files:
+            iterations = []
+            for f in history_files:
+                # Extrahiert die Nummer aus dem Dateinamen mittels Regular Expression
+                match = re.search(r"champion_iter_(\d+)\.pt", f)
+                if match:
+                    iterations.append(int(match.group(1)))
+            
+            if iterations:
+                # Wir machen genau eine Nummer nach dem bisherigen Maximum weiter
+                start_iteration = max(iterations) + 1
+                print(f"Historie gefunden. Training wird bei Iteration {start_iteration} fortgesetzt.")
+    else:
+        print("Kein bestehender Checkpoint gefunden. Starte mit neuem Basis-Gehirn bei Iteration 1.")
+        
+    # Der Kandidat startet immer als Kopie des geladenen/neuen Champions
+    candidate_model = Connect4Model()
+    candidate_model.load_state_dict(champion_model.state_dict())
+    
+    # 3. Infrastruktur aufsetzen
+    replay_buffer = ReplayBuffer(capacity=100000)
+    trainer = Connect4Trainer(candidate_model, learning_rate=1e-3)
+    
+    # Hyperparameter für diesen Lauf
+    ADDITIONAL_ITERATIONS = 20
     SELF_PLAY_GAMES = 50       
     TRAINING_BATCHES = 100     
     BATCH_SIZE = 64
     ARENA_GAMES = 40           
     
+    # Das Ende der Schleife berechnet sich dynamisch aus dem Startpunkt
+    end_iteration = start_iteration + ADDITIONAL_ITERATIONS - 1
+    
     print("Startschuss! Die Fabrik laeuft...")
     
-    for iteration in range(1, MAX_ITERATIONS + 1):
+    for iteration in range(start_iteration, end_iteration + 1):
         print(f"\n{'='*50}")
-        print(f"ITERATION {iteration} / {MAX_ITERATIONS}")
+        print(f"ITERATION {iteration} / {end_iteration}")
         print(f"{'='*50}")
         
         # ---------------------------------------------------------
@@ -90,13 +121,12 @@ def main_training_loop():
         )
         
         if is_new_champion:
-            # Kandidat wird neuer Champion
             champion_model.load_state_dict(candidate_model.state_dict())
             
-            # 1. Standard-Checkpoint fuer den Live-Betrieb aktualisieren
+            # 1. Standard-Checkpoint ueberschreiben
             torch.save(champion_model.state_dict(), checkpoint_path)
             
-            # 2. Historien-Checkpoint anlegen (z.B. champion_iter_0005.pt)
+            # 2. Historien-Checkpoint mit der korrekten fortlaufenden Nummer anlegen
             history_filename = f"champion_iter_{iteration:04d}.pt"
             history_path = os.path.join(checkpoint_dir, history_filename)
             torch.save(champion_model.state_dict(), history_path)
@@ -105,7 +135,6 @@ def main_training_loop():
             print(f"Historie gesichert als:    {history_path}")
             
         else:
-            # Kandidat wird zurueckgesetzt
             candidate_model.load_state_dict(champion_model.state_dict())
 
     print("\nTraining erfolgreich und sicher beendet!")
