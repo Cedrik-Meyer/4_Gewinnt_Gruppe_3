@@ -1,32 +1,23 @@
 """
 training_system/eval/arena.py
 
-Das Testgelände (Arena) für neu trainierte Modelle.
-Lässt das amtierende Champion-Modell gegen das neu trainierte Kandidaten-Modell antreten.
+Das Testgelaende (Arena) fuer neu trainierte Modelle.
+Laesst das amtierende Champion-Modell gegen das neu trainierte Kandidaten-Modell antreten.
 """
 
 import torch
 import numpy as np
-
 from shared.data_structures import Move
 from shared.game_logic import create_empty_board, apply_move, check_winner
 from shared.state_encoder import encode_state, get_legal_mask
 from training_system.neural_network.model import Connect4Model
 
 def evaluate_candidate(champion: Connect4Model, candidate: Connect4Model, 
-                       num_games: int = 100, win_threshold: float = 0.55) -> bool:
+                       num_games: int = 100, win_threshold: float = 0.55,
+                       verbose: bool = False) -> bool:
     """
-    B6_01 & B6_02: Lässt Champion und Kandidat N Partien gegeneinander spielen.
-    Nach der Hälfte der Partien werden die Seiten (Spieler 1 / Spieler 2) gewechselt.
-    
-    Args:
-        champion (Connect4Model): Das aktuell beste Modell.
-        candidate (Connect4Model): Das frisch trainierte Modell.
-        num_games (int): Anzahl der Testspiele (Standard: 100).
-        win_threshold (float): Die benötigte Siegrate für den Kandidaten (Standard: 55%).
-        
-    Returns:
-        bool: True, wenn der Kandidat gewonnen hat und neuer Champion wird. Sonst False.
+    Laesst Champion und Kandidat N Partien gegeneinander spielen.
+    Gibt True zurueck, wenn der Kandidat die Winrate erreicht hat.
     """
     champion.eval()
     candidate.eval()
@@ -39,8 +30,6 @@ def evaluate_candidate(champion: Connect4Model, candidate: Connect4Model,
         board = create_empty_board()
         current_player = 1
         
-        # B6_01: Seitenwechsel nach der Hälfte der Partien, 
-        # damit der Startspieler-Vorteil exakt ausgeglichen ist.
         if game_idx < (num_games // 2):
             p1_model = candidate
             p2_model = champion
@@ -96,17 +85,19 @@ def evaluate_candidate(champion: Connect4Model, candidate: Connect4Model,
             # Spieler wechseln
             current_player = 2 if current_player == 1 else 1
 
+
     # B6_02: Winrate & Update Logik
     # Wir berechnen die Winrate des Kandidaten aus ALLEN Spielen.
     win_rate = candidate_wins / num_games
     
-    print(f"--- Arena Ergebnis ---")
-    print(f"Kandidat Siege: {candidate_wins} | Champion Siege: {champion_wins} | Remis: {draws}")
-    print(f"Winrate des Kandidaten: {win_rate:.1%}")
-    
-    if win_rate >= win_threshold:
-        print("RESULTAT: Kandidat ist der neue Champion!")
-        return True
-    else:
-        print("RESULTAT: Kandidat wurde abgelehnt. Champion verteidigt Titel.")
-        return False
+    # Konsolenausgabe nur noch, wenn explizit gewuenscht
+    if verbose:
+        print(f"--- Arena Ergebnis ---")
+        print(f"Kandidat Siege: {candidate_wins} | Champion Siege: {champion_wins} | Remis: {draws}")
+        print(f"Winrate des Kandidaten: {win_rate:.1%}")
+        if win_rate >= win_threshold:
+            print("RESULTAT: Kandidat ist der neue Champion!")
+        else:
+            print("RESULTAT: Kandidat wurde abgelehnt. Champion verteidigt Titel.")
+            
+    return win_rate >= win_threshold
