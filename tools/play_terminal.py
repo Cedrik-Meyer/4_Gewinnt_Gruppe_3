@@ -1,13 +1,14 @@
 """
 tools/play_terminal.py
 
-Ein interaktives Kommandozeilen-Spiel (CLI) für Mensch vs. Mensch 
-oder Mensch vs. KI. Dient als interaktiver Integrationstest.
+Ein interaktives Kommandozeilen-Spiel (CLI) für Mensch vs. Mensch,
+Mensch vs. KI oder KI vs. KI. Dient als interaktiver Integrationstest.
 """
 
 import sys
 import os
 import glob
+import time
 import torch
 import numpy as np
 
@@ -74,9 +75,10 @@ def get_ai_move(board: np.ndarray, model: Connect4Model, current_player: int) ->
     
     return Move(x=x, z=z)
 
-def choose_model() -> Connect4Model:
+def choose_model(custom_prompt: str = "\nWelches Modell möchtest du laden? (Nummer eingeben): ") -> Connect4Model:
     """
     Durchsucht den Checkpoint-Ordner und lässt den Nutzer ein Modell auswaehlen.
+    Nimmt einen dynamischen Text entgegen, um bei KI vs. KI besser unterscheiden zu können.
     """
     checkpoint_dir = os.path.join("training_system", "checkpoints")
     if not os.path.exists(checkpoint_dir):
@@ -91,14 +93,14 @@ def choose_model() -> Connect4Model:
     # Dateien alphabetisch sortieren fuer eine saubere Anzeige
     files.sort()
     
-    print("\nVerfuegbare KI-Modelle:")
+    print("\nVerfügbare KI-Modelle:")
     for idx, filepath in enumerate(files):
         filename = os.path.basename(filepath)
         print(f"[{idx + 1}] {filename}")
         
     while True:
         try:
-            choice = int(input("\nWelches Modell möchtest du laden? (Nummer eingeben): "))
+            choice = int(input(custom_prompt))
             if 1 <= choice <= len(files):
                 selected_file = files[choice - 1]
                 break
@@ -114,22 +116,68 @@ def choose_model() -> Connect4Model:
     return model
 
 def main():
-    print("Willkommen zum Terminal-Test fuer Connect4 3D!")
+    print("Willkommen zum Terminal-Test für Connect4 3D!")
     print("[1] Mensch vs. Mensch")
     print("[2] Mensch vs. KI")
+    print("[3] KI vs. KI")
     
     while True:
-        mode = input("Wähle den Spielmodus (1 oder 2): ").strip()
-        if mode in ['1', '2']:
+        mode = input("Wähle den Spielmodus (1, 2 oder 3): ").strip()
+        if mode in ['1', '2', '3']:
             break
         print("Ungültige Eingabe.")
         
-    ai_model = None
-    if mode == '2':
-        ai_model = choose_model()
-        print("\nDu bist Spieler 1 (Rot/X). Die KI ist Spieler 2 (Blau/O).")
+    p1_is_ai = False
+    p2_is_ai = False
+    p1_model = None
+    p2_model = None
     
-    print("Geben Sie Ihre Züge im Format 'x z' ein (z. B. '1 2').")
+    if mode == '2':
+        ai_model = choose_model("\nWähle das KI-Modell (Nummer eingeben): ")
+        
+        while True:
+            first = input("\nWer soll den ersten Zug machen? [1] Mensch [2] KI: ").strip()
+            if first in ['1', '2']:
+                break
+            print("Ungültige Eingabe. Bitte 1 oder 2 wählen.")
+            
+        if first == '2':
+            p1_is_ai = True
+            p1_model = ai_model
+            print("\nDie KI ist Spieler 1 (Rot/X) und fängt an. Du bist Spieler 2 (Blau/O).")
+        else:
+            p2_is_ai = True
+            p2_model = ai_model
+            print("\nDu bist Spieler 1 (Rot/X) und fängst an. Die KI ist Spieler 2 (Blau/O).")
+            
+    elif mode == '3':
+        print("\n--- Auswahl KI A ---")
+        model_A = choose_model("\nWähle das erste KI-Modell (Nummer eingeben): ")
+        print("\n--- Auswahl KI B ---")
+        model_B = choose_model("\nWähle das zweite KI-Modell (Nummer eingeben): ")
+        
+        while True:
+            first = input("\nWelches Modell soll den ersten Zug machen? [1] KI A [2] KI B: ").strip()
+            if first in ['1', '2']:
+                break
+            print("Ungültige Eingabe. Bitte 1 oder 2 wählen.")
+            
+        p1_is_ai = True
+        p2_is_ai = True
+        if first == '2':
+            p1_model = model_B
+            p2_model = model_A
+            print("\nKI B ist Spieler 1 (Rot/X) und fängt an. KI A ist Spieler 2 (Blau/O).")
+        else:
+            p1_model = model_A
+            p2_model = model_B
+            print("\nKI A ist Spieler 1 (Rot/X) und fängt an. KI B ist Spieler 2 (Blau/O).")
+            
+    elif mode == '1':
+        print("\nMensch vs. Mensch ausgewählt. Spieler 1 (Rot/X) fängt an.")
+    
+    if mode != '3':
+        print("Geben Sie Ihre Züge im Format 'x z' ein (z. B. '1 2').")
     
     board = create_empty_board()
     current_player = 1
@@ -143,12 +191,17 @@ def main():
             
         print(f"Spieler {current_player} ist am Zug.")
         
-        # Pruefen, ob die KI am Zug ist
-        is_ai_turn = (mode == '2' and current_player == 2)
+        # Prüfen, ob der aktuelle Spieler eine KI ist
+        is_current_ai = (current_player == 1 and p1_is_ai) or (current_player == 2 and p2_is_ai)
         
-        if is_ai_turn and ai_model is not None:
+        if is_current_ai:
+            if mode == '3':
+                print("Warte 1 Sekunde für den nächsten Zug...")
+                time.sleep(1)
+                
+            active_model = p1_model if current_player == 1 else p2_model
             print("KI überlegt...")
-            move = get_ai_move(board, ai_model, current_player)
+            move = get_ai_move(board, active_model, current_player)
             print(f"KI spielt: x={move.x}, z={move.z}")
             apply_move(board, move, current_player)
         else:
@@ -177,8 +230,10 @@ def main():
         if check_winner(board, current_player):
             print_board(board)
             print("="*30)
-            if is_ai_turn:
-                print(" DIE KI HAT GEWONNEN! Skynet lästt grüßen.")
+            if mode == '3':
+                print(f" KI SPIELER {current_player} HAT GEWONNEN!")
+            elif is_current_ai:
+                print(" DIE KI HAT GEWONNEN!")
             else:
                 print(f" SPIELER {current_player} HAT GEWONNEN! Glückwunsch!")
             print("="*30)
