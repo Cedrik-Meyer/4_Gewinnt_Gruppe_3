@@ -4,6 +4,7 @@ training_system/training/trainer.py
 Verantwortlich für das Trainieren des Connect4Model.
 Berechnet die Loss-Funktionen (Fehler) für den Policy- und Value-Head,
 führt den Optimizer aus und passt die Gewichte des Netzwerks an.
+Unterstützt nun automatische Hardware-Beschleunigung (CUDA/GPU).
 """
 
 import torch
@@ -35,7 +36,6 @@ class Connect4Trainer:
         self.value_loss_fn = nn.MSELoss()
         
         # Der Adam-Optimizer sammelt die Fehler-Gradienten und passt die Parameter an.
-        # weight_decay (L2-Regularisierung) bestraft zu große Gewichte und verhindert Overfitting.
         self.optimizer = optim.Adam(
             self.model.parameters(), 
             lr=learning_rate, 
@@ -43,7 +43,6 @@ class Connect4Trainer:
         )
         
         # Der Scheduler fungiert als Feinjustierung für die Learning Rate.
-        # Er verkleinert die Lernrate nach 100.000 Trainingsschritten (Batches) um 10% (gamma=0.9).
         self.scheduler = optim.lr_scheduler.StepLR(
             self.optimizer, 
             step_size=100000, 
@@ -64,38 +63,34 @@ class Connect4Trainer:
     def train_step(self, states: list, target_probs: list, target_values: list) -> tuple:
         """
         B5_07: Führt einen kompletten Trainingsschritt (Backpropagation) auf einem Batch aus.
-        
-        Args:
-            states (list): Liste von Tensors (Input-Spielfelder).
-            target_probs (list): Liste von Numpy-Arrays (Ziel-Wahrscheinlichkeiten).
-            target_values (list): Liste von Floats (Tatsächlicher Spielausgang).
-            
-        Returns:
-            tuple: (total_loss, policy_loss, value_loss) für detailliertes CSV-Logging.
+        Wurde für CUDA-Beschleunigung optimiert.
         """
-        # 1. Daten für die Grafikkarte/CPU vorbereiten (Listen -> PyTorch Batches)
-        states_tensor = torch.stack(states)
-        probs_tensor = torch.tensor(np.array(target_probs), dtype=torch.float32)
-        values_tensor = torch.tensor(target_values, dtype=torch.float32).unsqueeze(1)
+        # Wir prüfen, wo das Modell gerade liegt (CPU oder NVIDIA GPU)
+        device = next(self.model.parameters()).device
         
-        # 2. Modell in den Trainingsmodus versetzen (Aktiviert BatchNorm)
+        # 1. Daten vorbereiten und direkt in den Speicher der Grafikkarte (VRAM) schieben
+        states_tensor = torch.stack(states).to(device)
+        probs_tensor = torch.tensor(np.array(target_probs), dtype=torch.float32).to(device)
+        values_tensor = torch.tensor(target_values, dtype=torch.float32).unsqueeze(1).to(device)
+        
+        # 2. Modell in den Trainingsmodus versetzen
         self.model.train()
         
-        # 3. Alte Fehler-Notizen löschen, bevor wir neu rechnen
+        # 3. Alte Fehler-Notizen löschen
         self.optimizer.zero_grad()
         
-        # 4. FORWARD PASS: Modell trifft seine Vorhersagen für die Spielfelder
+        # 4. FORWARD PASS: Vorhersagen treffen
         predicted_logits, predicted_value = self.model(states_tensor)
         
-        # 5. LOSS: Die Strafe für falsche Vorhersagen berechnen (getrennt für das Log)
+        # 5. LOSS: Fehler berechnen
         policy_loss = self.policy_loss_fn(predicted_logits, probs_tensor)
         value_loss = self.value_loss_fn(predicted_value, values_tensor)
         total_loss = policy_loss + value_loss
         
-        # 6. BACKWARD PASS: PyTorch sucht rückwärts durch das Netz und berechnet die Gradienten.
+        # 6. BACKWARD PASS: Gradienten berechnen
         total_loss.backward()
         
-        # 7. OPTIMIZER STEP: Gewichte anpassen und Scheduler aktualisieren.
+        # 7. OPTIMIZER STEP: Gewichte anpassen
         self.optimizer.step()
         self.scheduler.step()
         

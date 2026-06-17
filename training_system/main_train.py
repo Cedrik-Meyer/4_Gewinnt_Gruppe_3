@@ -3,8 +3,7 @@ training_system/main_train.py
 
 Das Hauptskript für den Trainingsprozess.
 Orchestriert die Endlosschleife aus Self-Play, neuronalem Training und Arena-Evaluation.
-Nutzt Multiprocessing für CPU-Auslastung, schreibt detaillierte CSV-Metriken und
-unterstützt das automatische Fortsetzen (Resume) bestehender Trainingsläufe.
+Nutzt Multiprocessing für CPU-Auslastung und CUDA für extreme GPU-Beschleunigung in Phase 2.
 """
 
 import os
@@ -25,12 +24,10 @@ def worker_self_play(state_dict, num_games):
     Diese Funktion wird auf jedem CPU-Kern separat ausgeführt.
     Jeder Kern baut ein eigenes lokales Modell auf, um Speicher-Konflikte zu vermeiden.
     """
-    # Eigenes, isoliertes Modell für diesen Kern erstellen
     local_model = Connect4Model()
     local_model.load_state_dict(state_dict)
     local_model.eval()
     
-    # Die zugewiesene Anzahl an Spielen absolvieren
     results = []
     for _ in range(num_games):
         trajectory, winner = play_single_game(local_model)
@@ -42,36 +39,39 @@ def main_training_loop():
     """
     B6_03 & B6_04: Endlosschleife für das AlphaZero-Training.
     """
-    # PyTorch Multiprocessing Start-Methode sicherstellen (verhindert Deadlocks auf MacOS/Linux)
     try:
         mp.set_start_method('spawn')
     except RuntimeError:
         pass
         
-    print("Initialisiere ML-Fabrik (Multiprocessing Edition)...")
+    print("Initialisiere ML-Fabrik (High-Performance GPU Edition)...")
     
-    # 1. Checkpoint-Ordner und Pfade sicherstellen
+    # ---------------------------------------------------------
+    # HARDWARE ERKENNUNG (NVIDIA CUDA)
+    # ---------------------------------------------------------
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    if torch.cuda.is_available():
+        print(f"[!] NVIDIA GPU ERKANNT: Nutze {torch.cuda.get_device_name(0)} für das Training!\n")
+    else:
+        print("[!] Keine NVIDIA GPU erkannt. Training läuft auf CPU.\n")
+
     checkpoint_dir = "training_system/checkpoints"
     os.makedirs(checkpoint_dir, exist_ok=True)
     checkpoint_path = os.path.join(checkpoint_dir, "best_champion.pt")
     metrics_path = os.path.join(checkpoint_dir, "training_metrics.csv")
     
-    # CSV Header anlegen, falls Datei noch nicht existiert
     if not os.path.isfile(metrics_path):
         with open(metrics_path, mode='w', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(["Iteration", "Buffer_Size", "Total_Loss", "Policy_Loss", "Value_Loss", "New_Champion"])
     
-    # 2. Modell aufsetzen
     champion_model = Connect4Model()
     start_iteration = 1
     
-    # Intelligentes Laden: Prüfen, ob bereits ein trainiertes Gehirn existiert
     if os.path.exists(checkpoint_path):
         champion_model.load_state_dict(torch.load(checkpoint_path, weights_only=True))
         print(f"Bestehendes Gehirn erfolgreich geladen: {checkpoint_path}")
         
-        # Historien-Dateien scannen, um die richtige Iterationsnummer zu ermitteln
         history_files = glob.glob(os.path.join(checkpoint_dir, "champion_iter_*.pt"))
         if history_files:
             iterations = []
@@ -79,49 +79,50 @@ def main_training_loop():
                 match = re.search(r"champion_iter_(\d+)\.pt", f)
                 if match:
                     iterations.append(int(match.group(1)))
-            
             if iterations:
-                # Wir machen genau eine Nummer nach dem bisherigen Maximum weiter
                 start_iteration = max(iterations) + 1
                 print(f"Historie gefunden. Training wird bei Iteration {start_iteration} fortgesetzt.")
     else:
         print("Kein bestehender Checkpoint gefunden. Starte mit neuem Basis-Gehirn bei Iteration 1.")
         
-    # Der Kandidat startet immer als Kopie des geladenen/neuen Champions
     candidate_model = Connect4Model()
     candidate_model.load_state_dict(champion_model.state_dict())
     
-    # 3. Infrastruktur aufsetzen
-    # Der Buffer muss riesig sein, um das "Vergessen" von alten Taktiken zu verhindern.
+    # Kapazität hochgeschraubt: Ein größerer Buffer verhindert das "Vergessen" von alten Taktiken
     replay_buffer = ReplayBuffer(capacity=500000)
     trainer = Connect4Trainer(candidate_model, learning_rate=1e-3)
     
     # =========================================================
-    # HYPERPARAMETER FÜR EINEN LEISTUNGSSTARKEN RECHNER
-    # (Diese Werte garantieren ein viel stabileres Lernen)
+    # HYPERPARAMETER FÜR RYZEN 7 7800X3D + RTX 4070 SUPER
     # =========================================================
-    ADDITIONAL_ITERATIONS = 1000
-    SELF_PLAY_GAMES = 400
-    TRAINING_BATCHES = 1000
-    BATCH_SIZE = 256
-    ARENA_GAMES = 100
+    ADDITIONAL_ITERATIONS = 2000 
+    
+    # Der Ryzen hat 16 logische Threads. Wir nutzen maximal 14, um das System reaktionsfähig zu halten.
+    cpu_cores = max(1, mp.cpu_count() - 2)
+    
+    # 50 Spiele pro Thread = 700 Spiele pro Iteration!
+    SELF_PLAY_GAMES = 50 * cpu_cores       
+    TRAINING_BATCHES = 1000     
+    
+    # Die 4070 Super verdaut Batches von 1024 problemlos. Das macht den Lernprozess extrem stabil.
+    BATCH_SIZE = 1024            
+    ARENA_GAMES = 100           
     # =========================================================
     
     end_iteration = start_iteration + ADDITIONAL_ITERATIONS - 1
-    cpu_cores = max(1, mp.cpu_count())
     
     session_start_time = time.time()
     session_champions_found = 0
     final_loss = 0.0
     
     print(f"\nStartschuss! Die Fabrik läuft für {ADDITIONAL_ITERATIONS} Iterationen...")
-    print(f"Nutze {cpu_cores} CPU-Kerne für die parallele Datengenerierung.")
+    print(f"Nutze {cpu_cores} logische CPU-Kerne für die parallele Datengenerierung.")
     print("Detaillierte Metriken werden im Hintergrund in 'training_metrics.csv' gespeichert.\n")
     
     for iteration in range(start_iteration, end_iteration + 1):
         
         # ---------------------------------------------------------
-        # PHASE 1: SELF-PLAY (Multiprocessing)
+        # PHASE 1: SELF-PLAY (Multiprocessing auf Ryzen CPU)
         # ---------------------------------------------------------
         champion_model.eval()
         champion_state = champion_model.state_dict()
@@ -146,9 +147,12 @@ def main_training_loop():
             continue
             
         # ---------------------------------------------------------
-        # PHASE 2: TRAINING (Kandidat lernt aus dem Buffer)
+        # PHASE 2: TRAINING (Auf NVIDIA RTX 4070 SUPER verlagert)
         # ---------------------------------------------------------
+        # Modell in den GPU-Speicher laden
+        candidate_model.to(device)
         candidate_model.train()
+        
         total_loss_sum, pol_loss_sum, val_loss_sum = 0.0, 0.0, 0.0
         
         for _ in range(TRAINING_BATCHES):
@@ -163,8 +167,11 @@ def main_training_loop():
         avg_val = val_loss_sum / TRAINING_BATCHES
         final_loss = avg_loss
         
+        # WICHTIG: Modell aus dem GPU-Speicher zurück in den Arbeitsspeicher holen
+        candidate_model.cpu()
+        
         # ---------------------------------------------------------
-        # PHASE 3: ARENA (Der ultimative Test)
+        # PHASE 3: ARENA (Auf Ryzen CPU)
         # ---------------------------------------------------------
         is_new_champion = evaluate_candidate(
             champion=champion_model, 

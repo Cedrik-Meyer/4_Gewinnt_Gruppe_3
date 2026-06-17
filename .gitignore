@@ -17,3 +17,5 @@ venv/
 
 # Python egg-info (Lokale Paket-Metadaten)
 *.egg-info/
+
+training_system/checkpoints/training_metrics.csv
