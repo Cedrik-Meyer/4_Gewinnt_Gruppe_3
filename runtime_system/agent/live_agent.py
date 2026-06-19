@@ -3,12 +3,15 @@ import os
 import torch
 
 from shared.data_structures import GameState, Move
+from shared.game_logic import apply_move, check_winner
 from shared.state_encoder import encode_state
 from training_system.neural_network.model import Connect4Model
 
 logger = logging.getLogger(__name__)
 
 ILLEGAL_MOVE_PENALTY = 1e9
+OWN_WIN_BONUS = 2e6
+BLOCK_WIN_BONUS = 1e6
 
 DEFAULT_CHECKPOINT_PATH = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "..",
@@ -62,10 +65,40 @@ class LiveAgent:
 
 
         masked_logits = policy_logits.clone()
-        # Clone wird erstellt um Fehler bei der Speicherverwaltung zu verhindern
+        # Clone wird erstellt, um Fehler bei der Speicherverwaltung zu verhindern
         masked_logits[illegal_positions] -= ILLEGAL_MOVE_PENALTY
 
         return masked_logits
+
+    def apply_forced_moves(self, logits: torch.Tensor, game_state: GameState) -> torch.Tensor:
+
+        own_value = game_state.player_slot + 1
+        # Index Spieler: 0,1; Index Steine: 1,2
+        # player_slot: Index des Spielers der am Zug ist (wir) + 1 = Index unserer Steine
+        opponent_value = 2 if game_state.player_slot == 0 else 1
+        # Index der Steine des Gegners
+
+        boosted_logits = logits.clone()
+
+        for z in range(4):
+            for x in range(4):
+                index = z * 4 + x
+                if game_state.legal_mask[index] == 0:
+                    continue
+                # Abbruch, wenn Spalte voll ist
+
+                own_board = game_state.board.copy()
+                apply_move(own_board, Move(x=x, z=z), own_value)
+                if check_winner(own_board, own_value):
+                    boosted_logits[index] += OWN_WIN_BONUS
+                    continue
+
+                opponent_board = game_state.board.copy()
+                apply_move(opponent_board, Move(x=x, z=z), opponent_value)
+                if check_winner(opponent_board, opponent_value):
+                    boosted_logits[index] += BLOCK_WIN_BONUS
+
+        return boosted_logits
 
     def select_action(self, masked_logits: torch.Tensor) -> Move:
 

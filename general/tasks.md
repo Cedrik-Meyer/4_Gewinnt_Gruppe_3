@@ -126,7 +126,11 @@ Dieses Dokument beschreibt alle Entwicklungsaufgaben im Detail. Es dient als Ref
     Explizit überprüfen, dass ein Gewinnzug definitiv einen höheren Wert hat.
 * **B7_04 | Action-Selection (`runtime_system/agent/live_agent.py`):**
     Wende `torch.argmax` auf die maskierten Logits an, nimm den resultierenden Index (0-15) und rechne ihn wieder in `x` und `z` zurück (Ebene E).
-* **B7_05 | App Assembly (`runtime_system/main_live.py`):**
+* **B7_05 | Zugzwang (`runtime_system/agent/live_agent.py`):**
+    Identifiziere alle kritischen Züge, bei denen unmittelbarer Zugzwang besteht (direkter eigener Gewinn im aktuellen Zug oder das zwingende Blockieren eines gegnerischen 
+    Gewinns im nächsten Zug). Addiere bei diesen Spalten einen massiv hohen Wert (z. B. +1e6) auf die entsprechenden Logits, um diese Züge für das Netzwerk unausweichlich zu machen.
+    Stelle dabei explizit sicher, dass ein eigener Gewinnzug mathematisch noch stärker belohnt wird als ein reiner Blockierzug (z. B. Gewinnzug +2e6, Blockierzug +1e6).
+* **B7_06 | App Assembly (`runtime_system/main_live.py`):**
     Schreibe den Startcode. Initialisiere den WebSocket-Client, übergib ihm Parser und Agent, und starte die asynchrone Endlosschleife, die auf Turn-Requests des Servers lauscht.
 
 ---
