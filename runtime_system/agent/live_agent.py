@@ -2,7 +2,7 @@ import logging
 import os
 import torch
 
-from shared.data_structures import GameState
+from shared.data_structures import GameState, Move
 from shared.state_encoder import encode_state
 from training_system.neural_network.model import Connect4Model
 
@@ -66,3 +66,11 @@ class LiveAgent:
         masked_logits[illegal_positions] -= ILLEGAL_MOVE_PENALTY
 
         return masked_logits
+
+    def select_action(self, masked_logits: torch.Tensor) -> Move:
+
+        best_index = int(torch.argmax(masked_logits).item())
+        z = best_index // 4 # 9 // 4 = 2
+        x = best_index % 4 # 9 // 4 = 2: Rest 1
+
+        return Move(x=x, z=z)
