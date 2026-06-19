@@ -8,6 +8,8 @@ from training_system.neural_network.model import Connect4Model
 
 logger = logging.getLogger(__name__)
 
+ILLEGAL_MOVE_PENALTY = 1e9
+
 DEFAULT_CHECKPOINT_PATH = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "..",
     "training_system", "checkpoints", "best_champion.pt",
@@ -51,3 +53,16 @@ class LiveAgent:
         return policy_logits.squeeze(0), value.squeeze(0)
         # Value: Bewertung des gesamten Bretts
         # Batch wird wieder entfernt
+
+    def mask_illegal_moves(self, policy_logits: torch.Tensor, legal_mask) -> torch.Tensor:
+
+        legal_mask_tensor = torch.as_tensor(legal_mask, dtype=torch.float32)
+        # volle Spalten werden mit 0 ausgegeben 
+        illegal_positions = (legal_mask_tensor == 0)
+
+
+        masked_logits = policy_logits.clone()
+        # Clone wird erstellt um Fehler bei der Speicherverwaltung zu verhindern
+        masked_logits[illegal_positions] -= ILLEGAL_MOVE_PENALTY
+
+        return masked_logits
