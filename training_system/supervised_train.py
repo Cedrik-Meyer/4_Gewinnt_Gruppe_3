@@ -9,6 +9,8 @@ Die Datengenerierung basiert auf dem "Master Mix"-Ansatz, einer Hierarchie aus:
 1. Regelbasierten Zuegen (Verhindern von trivialen Fehlern).
 2. Behavioral Cloning (Klonen von taktischen Engine-Zuegen).
 3. Knowledge Distillation (Erhalten der strategischen Intuition des Basis-Modells).
+
+Achtung! Die Laufzeit beträgt etwa 30 Stunden bei hoher Rechenlast! Achtung!
 """
 
 import os
@@ -149,9 +151,9 @@ def worker_play_master_mix(num_games: int, checkpoint_path: str):
                 data_type = "trap"
                 
             elif current_player == engine_player:
-                # Prioritaet 2 (Behavioral Cloning): Die Engine rechnet unter hohem Zeitdruck (30ms).
+                # Prioritaet 2 (Behavioral Cloning): Die Engine rechnet unter hohem Zeitdruck (2000ms).
                 # Dies zwingt sie zu taktischen 2-bis-3-Step Lookaheads, welche das Modell kopiert.
-                engine_move = engine.get_engine_move(board, current_player, time_limit_ms=30, num_cores=1)
+                engine_move = engine.get_engine_move(board, current_player, time_limit_ms=2000, num_cores=1)
                 action_idx = engine_move.x + (engine_move.z * 4)
                 target_probs = np.zeros(16, dtype=np.float32)
                 target_probs[action_idx] = 1.0
@@ -248,7 +250,7 @@ def main():
         model.load_state_dict(torch.load(latest_checkpoint, map_location='cpu', weights_only=True))
         
     # Trainings-Hyperparameter
-    TOTAL_GAMES = 15000
+    TOTAL_GAMES =15000
     BATCH_SIZE = 512
     EPOCHS = 4
     LEARNING_RATE = 2e-5       # Niedrige Lernrate, um Feinjustierung (Finetuning) zu gewaehrleisten
