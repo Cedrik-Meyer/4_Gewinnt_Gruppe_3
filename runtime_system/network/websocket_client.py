@@ -1,8 +1,11 @@
 import asyncio
 import json
+import logging
 import uuid
 from datetime import datetime, timezone
 import websockets
+
+logger = logging.getLogger(__name__)
 
 
 class AgentWebSocketClient:
@@ -20,6 +23,7 @@ class AgentWebSocketClient:
         self.heartbeat_task = None
         self.reconnect_delay = reconnect_delay # Wartezeit in Sekunden, bevor wir nach einem Disconnect neu verbinden
         self._running = False # Flag um die Endlosschleife abbrechen zu können
+        self._next_reconnect_delay = None # Einmalige Override-Wartezeit aus agent.goodbye.retryAfterMs
 
     def register_handler(self, msg_type: str, handler_func):
         self.handlers[msg_type] = handler_func
@@ -31,7 +35,7 @@ class AgentWebSocketClient:
             try:
                 await self.websocket.close()
             except Exception:
-                pass
+                logger.debug("Fehler beim Schließen der Verbindung in disconnect()", exc_info=True)
             self.websocket = None
 
     def start_heartbeat(self): # Startet Background-Task für Heartbeat
@@ -47,7 +51,7 @@ class AgentWebSocketClient:
         try:
             while True:
                 await asyncio.sleep(self.heartbeat_interval)
-                if self.websocket is not None and self.websocket.open:
+                if self.websocket is not None:
                     timestamp = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
                     heartbeat_msg = {
                         "version": 1,
@@ -72,6 +76,9 @@ class AgentWebSocketClient:
                         data = json.loads(message)
                         msg_type = data.get("type")
 
+                        if msg_type == "agent.goodbye": # reconnect/retryAfterMs aus dem Protokoll respektieren
+                            self._apply_goodbye(data.get("payload") or {})
+
                         if msg_type in self.handlers: # Lese Nachrichten aus offenen Socket
                             if asyncio.iscoroutinefunction(self.handlers[msg_type]):
                                 await self.handlers[msg_type](data)
@@ -80,28 +87,38 @@ class AgentWebSocketClient:
                         else:
                             await self.handle_unregistered_message(data)
                     except json.JSONDecodeError:
-                        pass
+                        logger.warning("Ungültiges JSON empfangen: %s", message)
 
-            except (websockets.exceptions.ConnectionClosed, ConnectionRefusedError, OSError): # Fehler abfangen
-                pass
+            except (websockets.exceptions.WebSocketException, OSError) as exc: # Verbindungs- und Handshake-Fehler abfangen
+                logger.warning("Verbindung verloren: %s", exc)
             finally: # Verbindung schließen
                 self.stop_heartbeat()
                 if self.websocket is not None:
                     try:
                         await self.websocket.close()
                     except Exception:
-                        pass
+                        logger.debug("Fehler beim Schließen der Verbindung", exc_info=True)
                     self.websocket = None
 
             if self._running: # Reconnect
-                await asyncio.sleep(self.reconnect_delay)
+                delay = self._next_reconnect_delay if self._next_reconnect_delay is not None else self.reconnect_delay
+                self._next_reconnect_delay = None
+                await asyncio.sleep(delay)
+
+    def _apply_goodbye(self, payload: dict):
+        """Wertet reconnect/retryAfterMs aus agent.goodbye aus (s. agent_protocol.md)."""
+        if payload.get("reconnect") is False:
+            self._running = False
+        retry_after_ms = payload.get("retryAfterMs")
+        if isinstance(retry_after_ms, (int, float)):
+            self._next_reconnect_delay = retry_after_ms / 1000
 
     async def handle_unregistered_message(self, data: dict):
         pass
 
     async def send_message(self, message: dict):
-        if self.websocket is not None and self.websocket.open:
+        if self.websocket is not None:
             try:
                 await self.websocket.send(json.dumps(message))
             except websockets.exceptions.ConnectionClosed:
-                pass
+                logger.debug("Nachricht konnte nicht gesendet werden, Verbindung bereits geschlossen.")
