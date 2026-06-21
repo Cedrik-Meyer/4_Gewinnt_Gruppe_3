@@ -13,6 +13,8 @@ __pycache__/
 .venv/
 venv/
 *.pth
+.pt
+logs/*.txt
 
 # Python egg-info (Lokale Paket-Metadaten)
 *.egg-info/
