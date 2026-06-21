@@ -1,19 +1,21 @@
 """
 tools/play_terminal.py
 
-Ein interaktives Kommandozeilen-Spiel (CLI) für Mensch vs. Mensch,
-Mensch vs. KI oder KI vs. KI. Dient als interaktiver Integrationstest.
-Der Code ist strukturell in die 4 Haupt-Spielmodi unterteilt.
+Ein interaktives Kommandozeilen-Spiel (CLI) für das finale Benchmarking
+und Testen verschiedener KI-Ansätze.
+Unterstützt Mensch, Pures Modell, Modell + MTC, Einfache Engine und Starke Engine.
+Ressourcen (CPU-Kerne und Bedenkzeit) werden global verwaltet.
 """
 
 import sys
 import os
 import glob
 import time
+import datetime
 import torch
 import numpy as np
 
-# Root-Verzeichnis zum Python-Pfad hinzufuegen
+# Root-Verzeichnis zum Python-Pfad hinzufügen
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from shared.data_structures import Move
@@ -21,363 +23,366 @@ from shared.game_logic import create_empty_board, apply_move, check_winner
 from shared.state_encoder import encode_state, get_legal_mask
 from training_system.neural_network.model import Connect4Model
 
+# Externe Agenten-Engines importieren
+from tools.weak_engine import WeakEngine
+from tools.strong_engine import StrongEngine
+from tools.mtc import MCTSEngine
+
+# Sicherstellen, dass das log-Verzeichnis existiert
+os.makedirs("logs", exist_ok=True)
+
 
 # ==============================================================================
-# 1. HILFSFUNKTIONEN (Spielfeld, Inferenz & Modell-Auswahl)
+# 1. AGENTEN WRAPPER (Einheitliche Schnittstelle)
 # ==============================================================================
+
+class Agent:
+    """Basisklasse für alle Spielertypen."""
+    def __init__(self, name: str):
+        self.name = name
+        
+    def get_move(self, board: np.ndarray, player: int) -> Move:
+        raise NotImplementedError
+
+class HumanAgent(Agent):
+    """Liest die Eingabe über das Terminal ein und zeigt die Koordinaten-Hilfe."""
+    def __init__(self):
+        super().__init__("Mensch")
+        
+    def get_move(self, board: np.ndarray, player: int) -> Move:
+        # Die optische Hilfe wird NUR gedruckt, wenn der Mensch am Zug ist!
+        print("\n   --- EINGABE-HILFE (x z) ---")
+        print("  [0 0]  [1 0]  [2 0]  [3 0]")
+        print("  [0 1]  [1 1]  [2 1]  [3 1]")
+        print("  [0 2]  [1 2]  [2 2]  [3 2]")
+        print("  [0 3]  [1 3]  [2 3]  [3 3]")
+        print("   ---------------------------\n")
+        
+        while True:
+            user_input = input("Dein Zug (x z) oder 'q' zum Beenden: ").strip().lower()
+            if user_input == 'q': 
+                sys.exit(0)
+            try:
+                parts = user_input.split()
+                if len(parts) != 2: 
+                    raise ValueError("Bitte exakt zwei Zahlen (x z) eingeben.")
+                return Move(x=int(parts[0]), z=int(parts[1]))
+            except ValueError as e:
+                print(f"[!] Ungültig: {e}")
+
+class PureNNAgent(Agent):
+    """Pures neuronales Netz (Forward-Pass ohne Baumsuche)."""
+    def __init__(self, filepath: str, filename: str):
+        super().__init__(f"Modell({filename})")
+        self.model = Connect4Model()
+        self.model.load_state_dict(torch.load(filepath, map_location='cpu', weights_only=True))
+        self.model.eval()
+        
+    def get_move(self, board: np.ndarray, player: int) -> Move:
+        legal_mask = get_legal_mask(board)
+        state_tensor = encode_state(board, player - 1)
+        with torch.no_grad():
+            logits, _ = self.model(state_tensor.unsqueeze(0))
+            
+        masked_logits = logits.squeeze(0) + (1.0 - torch.tensor(legal_mask, dtype=torch.float32)) * -1e9
+        action = torch.argmax(masked_logits).item()
+        return Move(x=int(action % 4), z=int(action // 4))
+
+class MTCAgent(Agent):
+    """Monte Carlo Tree Search kombiniert mit dem neuronalen Netz."""
+    def __init__(self, filepath: str, filename: str, time_limit: int, cores: int):
+        super().__init__(f"Modell+MTC({filename})")
+        self.engine = MCTSEngine(filepath)
+        self.time_limit = time_limit
+        self.cores = cores
+        
+    def get_move(self, board: np.ndarray, player: int) -> Move:
+        return self.engine.get_engine_move(board, player, self.time_limit, self.cores)
+
+class WeakEngineAgent(Agent):
+    """Die schwache 1-Step Heuristik-Engine."""
+    def __init__(self):
+        self.engine = WeakEngine()
+        super().__init__("Einfache Engine")
+        
+    def get_move(self, board: np.ndarray, player: int) -> Move:
+        return self.engine.get_engine_move(board, player)
+
+class StrongEngineAgent(Agent):
+    """Die hochoptimierte Minimax-Engine mit Alpha-Beta-Pruning."""
+    def __init__(self, time_limit: int, cores: int):
+        self.engine = StrongEngine()
+        super().__init__("Starke Engine")
+        self.time_limit = time_limit
+        self.cores = cores
+        
+    def get_move(self, board: np.ndarray, player: int) -> Move:
+        return self.engine.get_engine_move(board, player, self.time_limit, self.cores)
+
+
+# ==============================================================================
+# 2. HILFSFUNKTIONEN (Input, Logging, UI)
+# ==============================================================================
+
+def get_int_input(prompt: str) -> int:
+    """Sichere Funktion zum Einlesen von ganzen Zahlen."""
+    while True:
+        try:
+            return int(input(prompt).strip())
+        except ValueError:
+            print("[!] Exception: Bitte eine ganze Zahl eingeben.")
 
 def print_board(board: np.ndarray):
-    """
-    Druckt das 3D-Spielfeld menschenlesbar in das Terminal.
-    Zeigt oben eine cleane Matrix-Hilfe für die (x z) Eingabe.
-    Druckt von oben (y=3) nach unten (y=0).
-    """
-    COLORS = {
-        0: ".",                     
-        1: "\033[91mX\033[0m",      # Spieler 1 (Rot)
-        2: "\033[94mO\033[0m"       # Spieler 2 (Blau)
-    }
+    """Druckt das Spielfeld im Terminal (ohne nervige Koordinaten-Texte)."""
+    COLORS = {0: ".", 1: "\033[91mX\033[0m", 2: "\033[94mO\033[0m"}
+    print("\n" + "="*30 + "\n      4-GEWINNT 3D      \n" + "="*30)
     
-    print("\n" + "="*30)
-    print("      4-GEWINNT 3D      ")
-    print("="*30)
-    
-    # Koordinaten-Matrix (x z) ueber dem Spielfeld anzeigen
-    print("\nEingabe-Koordinaten (x z):")
-    print("0 0      1 0      2 0      3 0")
-    print("0 1      1 1      2 1      3 1")
-    print("0 2      1 2      2 2      3 2")
-    print("0 3      1 3      2 3      3 3\n")
-    
-    # Die 4 Ebenen von oben nach unten drucken
     for y in reversed(range(4)):
         print(f"Ebene y = {y}")
         for z in range(4):
-            row_str = ""
-            for x in range(4):
-                val = board[y][z][x]
-                row_str += COLORS[val] + " "
-            print(row_str.strip())
+            # Mit etwas mehr Abstand gedruckt, damit es zur Eingabe-Hilfe passt
+            print("  " + "      ".join([COLORS[board[y][z][x]] for x in range(4)]))
         print()
 
-def get_ai_move(board: np.ndarray, model: Connect4Model, current_player: int) -> Move:
-    """
-    Lässt das neuronale Netz den besten Zug berechnen (Inferenz-Pipeline).
-    """
-    player_slot = current_player - 1
-    
-    # 1. Spielfeld fuer das Netz codieren
-    state_tensor = encode_state(board, player_slot)
-    legal_mask = get_legal_mask(board)
-    
-    # 2. Forward-Pass durch das Netz
-    with torch.no_grad():
-        logits, _ = model(state_tensor.unsqueeze(0))
-    logits = logits.squeeze(0)
-    
-    # 3. Illegale Zuege extrem stark bestrafen (Logit-Maskierung)
-    mask_tensor = torch.tensor(legal_mask, dtype=torch.float32)
-    masked_logits = logits + (1.0 - mask_tensor) * -1e9
-    
-    # 4. Den Index mit dem hoechsten Wert auswaehlen (0 bis 15)
-    best_action = torch.argmax(masked_logits).item()
-    
-    # 5. Index in x- und z-Koordinaten umwandeln
-    x = int(best_action % 4)
-    z = int(best_action // 4)
-    
-    return Move(x=x, z=z)
+def get_y_drop(board: np.ndarray, x: int, z: int) -> int:
+    """Bestimmt die y-Ebene, auf der ein Stein landen wird."""
+    for y in range(4):
+        if board[y][z][x] == 0: 
+            return y
+    return -1
 
-def choose_model(custom_prompt: str = "\nWelches Modell möchtest du laden? (Nummer eingeben): "):
-    """
-    Durchsucht den Checkpoint-Ordner und lässt den Nutzer ein Modell auswaehlen.
-    Nimmt einen dynamischen Text entgegen, um bei KI vs. KI besser unterscheiden zu können.
-    Gibt das geladene Modell und den Dateinamen zurueck.
-    """
-    checkpoint_dir = os.path.join("training_system", "checkpoints")
-    if not os.path.exists(checkpoint_dir):
-        print(f"\n[!] FEHLER: Der Ordner {checkpoint_dir} existiert nicht.")
-        sys.exit(1)
+def board_to_string(board: np.ndarray) -> str:
+    """Wandelt das Spielfeld in einen String für die Log-Datei um."""
+    res = ""
+    for y in reversed(range(4)):
+        res += f"Ebene y = {y}\n"
+        for z in range(4):
+            res += " ".join(["." if board[y][z][x]==0 else "X" if board[y][z][x]==1 else "O" for x in range(4)]) + "\n"
+        res += "\n"
+    return res
+
+def save_game_log(p1_name: str, p2_name: str, history: list, winner: int, final_board: np.ndarray, log_file: str, game_idx: int = 1):
+    """Speichert ein einzelnes Spiel im übergebenen Log-Dokument."""
+    with open(log_file, "a", encoding="utf-8") as f:
+        f.write(f"\n--- SPIEL {game_idx} ---\n")
+        f.write(f"Spieler 1 (Rot/X): {p1_name}\n")
+        f.write(f"Spieler 2 (Blau/O): {p2_name}\n")
+        f.write("--------------------\n")
+        for i, (p_name, p_idx, x, z, y) in enumerate(history):
+            f.write(f"Zug {i+1:02d} | {p_name} (Sp. {p_idx}) spielt -> x={x}, z={z}, y={y}\n")
         
-    files = glob.glob(os.path.join(checkpoint_dir, "*.pt"))
+        f.write("\n>>> GEWINNER: ")
+        if winner == 1: f.write(f"{p1_name} (Spieler 1) <<<\n\n")
+        elif winner == 2: f.write(f"{p2_name} (Spieler 2) <<<\n\n")
+        else: f.write("UNENTSCHIEDEN <<<\n\n")
+        
+        f.write("Finales Spielfeld:\n")
+        f.write(board_to_string(final_board))
+        f.write("="*50 + "\n")
+
+def choose_model_path():
+    """Lässt den Nutzer ein Modell aus dem Checkpoint-Ordner wählen."""
+    chk_dir = os.path.join("training_system", "checkpoints")
+    files = sorted(glob.glob(os.path.join(chk_dir, "*.pt")))
     if not files:
-        print(f"\n[!] FEHLER: Keine Modelle (.pt Dateien) im Ordner {checkpoint_dir} gefunden.")
+        print("[!] Keine .pt Modelle gefunden im Ordner: training_system/checkpoints/")
         sys.exit(1)
-        
-    # Dateien alphabetisch sortieren fuer eine saubere Anzeige
-    files.sort()
     
-    print("\nVerfügbare KI-Modelle:")
-    for idx, filepath in enumerate(files):
-        filename = os.path.basename(filepath)
-        print(f"[{idx + 1}] {filename}")
+    print("\nVerfügbare Modelle:")
+    for idx, f in enumerate(files):
+        print(f"[{idx + 1}] {os.path.basename(f)}")
         
     while True:
-        try:
-            choice = int(input(custom_prompt))
-            if 1 <= choice <= len(files):
-                selected_file = files[choice - 1]
-                break
-            else:
-                print("Ungültige Nummer.")
-        except ValueError:
-            print("Bitte eine Zahl eingeben.")
-            
-    print(f"\nLade Modell: {os.path.basename(selected_file)} ...")
-    model = Connect4Model()
-    model.load_state_dict(torch.load(selected_file, weights_only=True))
-    model.eval()  # Wichtig: Modell in den Inferenz-Modus setzen
-    return model, os.path.basename(selected_file)
+        choice = get_int_input("Modell-Nummer: ")
+        if 1 <= choice <= len(files):
+            selected = files[choice - 1]
+            return selected, os.path.basename(selected)
+        print("[!] Ungültige Auswahl.")
 
-def get_human_move() -> Move:
-    """Holt einen gueltigen Zug vom menschlichen Spieler und validiert das Format."""
-    while True:
-        user_input = input("Dein Zug (x z) oder 'q' zum Beenden: ").strip().lower()
-        if user_input == 'q':
-            print("Spiel abgebrochen.")
-            sys.exit(0)
-            
-        try:
-            parts = user_input.split()
-            if len(parts) != 2:
-                print("\n[!] FEHLER: Bitte genau zwei Zahlen mit Leerzeichen eingeben (z. B. '0 0').")
-                continue
-            x, z = int(parts[0]), int(parts[1])
-            return Move(x=x, z=z)
-        except ValueError as e:
-            print(f"\n[!] UNGÜLTIGER ZUG: {e}")
-
-
-# ==============================================================================
-# 2. SPIELMODI LOGIK
-# ==============================================================================
-
-def play_human_vs_human():
-    """Modus 1: Zwei Menschen spielen an der Konsole gegeneinander."""
-    print("\nMensch vs. Mensch ausgewählt. Spieler 1 (Rot/X) fängt an.")
-    board = create_empty_board()
-    current_player = 1
+def setup_player(prompt_text: str, cores: int, time_limit: int) -> Agent:
+    """Menü-Führung zur Auswahl eines Agenten."""
+    print(f"\n{prompt_text}")
+    print("\t[1] Mensch")
+    print("\t[2] Modell")
+    print("\t[3] Modell + MTC")
+    print("\t[4] Einfache Engine")
+    print("\t[5] Starke Engine")
     
     while True:
-        print_board(board)
-        if not np.any(board == 0):
-            print("Das Spielfeld ist voll! Unentschieden!")
-            break
-            
-        print(f"Spieler {current_player} ist am Zug.")
-        move = get_human_move()
-        apply_move(board, move, current_player)
-            
-        # Siegerkennung
-        if check_winner(board, current_player):
-            print_board(board)
-            print("="*30)
-            print(f" SPIELER {current_player} HAT GEWONNEN! Glückwunsch!")
-            print("="*30)
-            break
-            
-        # Spieler wechseln
-        current_player = 2 if current_player == 1 else 1
-
-
-def play_human_vs_ai():
-    """Modus 2: Mensch spielt gegen ein ausgewaehltes KI-Modell."""
-    ai_model, ai_filename = choose_model("\nWähle das KI-Modell (Nummer eingeben): ")
-    
-    while True:
-        first = input("\nWer soll den ersten Zug machen? [1] Mensch [2] KI: ").strip()
-        if first in ['1', '2']:
-            break
-        print("Ungültige Eingabe. Bitte 1 oder 2 wählen.")
-        
-    p1_is_ai = (first == '2')
-    p2_is_ai = not p1_is_ai
-    
-    if p1_is_ai:
-        print(f"\nDie KI ({ai_filename}) ist Spieler 1 (Rot/X) und fängt an. Du bist Spieler 2 (Blau/O).")
-    else:
-        print(f"\nDu bist Spieler 1 (Rot/X) und fängst an. Die KI ({ai_filename}) ist Spieler 2 (Blau/O).")
-        
-    board = create_empty_board()
-    current_player = 1
-    
-    while True:
-        print_board(board)
-        if not np.any(board == 0):
-            print("Das Spielfeld ist voll! Unentschieden!")
-            break
-            
-        # Pruefen, ob die KI am Zug ist
-        is_current_ai = (current_player == 1 and p1_is_ai) or (current_player == 2 and p2_is_ai)
-        player_name = ai_filename if is_current_ai else "Mensch"
-        print(f"{player_name} ist am Zug.")
-        
-        if is_current_ai:
-            print("KI überlegt...")
-            move = get_ai_move(board, ai_model, current_player)
-            print(f"KI spielt: x={move.x}, z={move.z}")
-            apply_move(board, move, current_player)
+        choice = get_int_input("Eingabe: ")
+        if choice == 1: 
+            return HumanAgent()
+        elif choice == 2: 
+            filepath, fname = choose_model_path()
+            return PureNNAgent(filepath, fname)
+        elif choice == 3: 
+            filepath, fname = choose_model_path()
+            return MTCAgent(filepath, fname, time_limit, cores)
+        elif choice == 4: 
+            return WeakEngineAgent()
+        elif choice == 5: 
+            return StrongEngineAgent(time_limit, cores)
         else:
-            move = get_human_move()
-            apply_move(board, move, current_player)
-            
-        # Siegerkennung
-        if check_winner(board, current_player):
-            print_board(board)
-            print("="*30)
-            if is_current_ai:
-                print(f" DIE KI ({ai_filename}) HAT GEWONNEN!")
-            else:
-                print(" DU HAST GEWONNEN! Glückwunsch!")
-            print("="*30)
-            break
-            
-        # Spieler wechseln
-        current_player = 2 if current_player == 1 else 1
+            print("[!] Exception: Bitte eine Zahl von 1 bis 5 eingeben.")
 
-
-def play_ai_vs_ai_live():
-    """Modus 3: Zwei KI-Modelle spielen live mit Print-Ausgabe im Terminal gegeneinander."""
-    print("\n--- Auswahl KI A ---")
-    model_A, filename_A = choose_model("\nWähle das erste KI-Modell (Nummer eingeben): ")
-    print("\n--- Auswahl KI B ---")
-    model_B, filename_B = choose_model("\nWähle das zweite KI-Modell (Nummer eingeben): ")
-    
-    while True:
-        first = input(f"\nWer soll den ersten Zug machen? [1] {filename_A} oder [2] {filename_B}: ").strip()
-        if first in ['1', '2']:
-            break
-        print("Ungültige Eingabe. Bitte 1 oder 2 wählen.")
-        
-    if first == '1':
-        p1_model, p1_name = model_A, filename_A
-        p2_model, p2_name = model_B, filename_B
-    else:
-        p1_model, p1_name = model_B, filename_B
-        p2_model, p2_name = model_A, filename_A
-        
-    print(f"\n{p1_name} ist Spieler 1 (Rot/X) und fängt an. {p2_name} ist Spieler 2 (Blau/O).")
-    
-    board = create_empty_board()
-    current_player = 1
-    
-    while True:
-        print_board(board)
-        if not np.any(board == 0):
-            print("Das Spielfeld ist voll! Unentschieden!")
-            break
-            
-        active_model = p1_model if current_player == 1 else p2_model
-        active_name = p1_name if current_player == 1 else p2_name
-        
-        print(f"{active_name} ist am Zug. (Warte 1 Sekunde...)")
-        time.sleep(1)  # Timer, damit das Spiel fuer den Menschen mitverfolgbar bleibt
-        
-        move = get_ai_move(board, active_model, current_player)
-        print(f"KI spielt: x={move.x}, z={move.z}")
-        apply_move(board, move, current_player)
-            
-        # Siegerkennung
-        if check_winner(board, current_player):
-            print_board(board)
-            print("="*30)
-            winner_filename = p1_name if current_player == 1 else p2_name
-            loser_filename = p2_name if current_player == 1 else p1_name
-            print(f"{winner_filename}  - Gewinner")
-            print(f"{loser_filename}  - Verlierer")
-            print("="*30)
-            break
-            
-        # Spieler wechseln
-        current_player = 2 if current_player == 1 else 1
-
-
-def play_ai_vs_ai_auto():
-    """Modus 4: Zwei KIs spielen 100 Runden im Hintergrund (Benchmark)."""
-    print("\n--- Auswahl KI A ---")
-    model_A, filename_A = choose_model("\nWähle das erste KI-Modell (Nummer eingeben): ")
-    print("\n--- Auswahl KI B ---")
-    model_B, filename_B = choose_model("\nWähle das zweite KI-Modell (Nummer eingeben): ")
-    
-    print(f"\nSpiele 100 Runden automatisiert ({filename_A} vs {filename_B})...")
-    wins_A = 0
-    wins_B = 0
-    draws = 0
-    
-    for game_idx in range(100):
-        board = create_empty_board()
-        current_player = 1
-        
-        # Die ersten 50 Spiele faengt Modell A an, die naechsten 50 Spiele faengt Modell B an.
-        # Dies verhindert den First-Mover-Advantage und sorgt fuer faire Winrates.
-        if game_idx < 50:
-            p1_m, p2_m = model_A, model_B
-            p1_is_A = True
-        else:
-            p1_m, p2_m = model_B, model_A
-            p1_is_A = False
-            
-        while True:
-            active_model = p1_m if current_player == 1 else p2_m
-            move = get_ai_move(board, active_model, current_player)
-            apply_move(board, move, current_player)
-            
-            # Siegerkennung im Hintergrund
-            if check_winner(board, current_player):
-                if current_player == 1:
-                    if p1_is_A: wins_A += 1
-                    else: wins_B += 1
-                else:
-                    if p1_is_A: wins_B += 1
-                    else: wins_A += 1
-                break
-                
-            if not np.any(board == 0):
-                draws += 1
-                break
-                
-            current_player = 2 if current_player == 1 else 1
-            
-    winrate_A = (wins_A / 100) * 100
-    winrate_B = (wins_B / 100) * 100
-    
-    print("\n--- Endergebnis (100 Spiele) ---")
-    print(f"{filename_A} - Winrate = {winrate_A:.0f}%")
-    print(f"{filename_B} - Winrate = {winrate_B:.0f}%")
-    if draws > 0:
-        print(f"Remis = {draws}%")
+def clean_filename(name: str) -> str:
+    """Entfernt Leerzeichen und Pfad-Fragmente für einen sauberen Dateinamen."""
+    return name.split("(")[0].strip().replace(" ", "_").replace("/", "_").replace("+", "plus")
 
 
 # ==============================================================================
-# 3. HAUPTMENÜ
+# 3. SPIEL-STEUERUNG
+# ==============================================================================
+
+def play_game_logic(agent1: Agent, agent2: Agent, show_board: bool, log_file: str = None, game_idx: int = 1) -> int:
+    """
+    Führt ein einzelnes Spiel zwischen zwei Agenten durch.
+    Gibt die Spielernummer des Gewinners zurück (1, 2) oder 0 für Unentschieden.
+    """
+    board = create_empty_board()
+    current = 1
+    history = []
+    
+    while True:
+        if show_board: 
+            print_board(board)
+            
+        if np.sum(get_legal_mask(board)) == 0:
+            if show_board: print("Unentschieden!")
+            if log_file: save_game_log(agent1.name, agent2.name, history, 0, board, log_file, game_idx)
+            return 0
+            
+        active_agent = agent1 if current == 1 else agent2
+        
+        move = active_agent.get_move(board, current)
+        y = get_y_drop(board, move.x, move.z)
+        
+        # Validierung des Zuges
+        if y == -1 or get_legal_mask(board)[move.x + (move.z * 4)] == 0.0:
+            if show_board: print(f"[!] ILLEGALER ZUG von {active_agent.name}! Disqualifikation.")
+            winner = 2 if current == 1 else 1 
+            if log_file: save_game_log(agent1.name, agent2.name, history, winner, board, log_file, game_idx)
+            return winner
+            
+        history.append((active_agent.name, current, move.x, move.z, y))
+        apply_move(board, move, current)
+        
+        if check_winner(board, current):
+            if show_board:
+                print_board(board)
+            if log_file: save_game_log(agent1.name, agent2.name, history, current, board, log_file, game_idx)
+            return current
+            
+        current = 2 if current == 1 else 1
+
+
+# ==============================================================================
+# 4. HAUPTMENÜ
 # ==============================================================================
 
 def main():
-    print("Willkommen zum Terminal-Test für Connect4 3D!")
-    print("[1] Mensch vs. Mensch")
-    print("[2] Mensch vs. KI")
-    print("[3] KI vs. KI live")
-    print("[4] KI vs. KI automatisiert")
+    print("Willkommen zum Terminal-Test für Connect4 3D!\n")
+    
+    print("Wie viele CPU-Kerne für jeden Spieler?")
+    cores = get_int_input("Eingabe: ")
+    torch.set_num_threads(cores)
+    
+    print("\nWie viel Zeit pro Zug in ms?")
+    time_limit = get_int_input("Eingabe: ")
+    
+    print("\n[1]\tEinzelspiel (Live zuschauen)")
+    print("[2]\tAuto-Benchmark (X Spiele simulieren)")
     
     while True:
-        mode = input("\nWähle den Spielmodus (1, 2, 3 oder 4): ").strip()
-        if mode == '1':
-            play_human_vs_human()
-            break
-        elif mode == '2':
-            play_human_vs_ai()
-            break
-        elif mode == '3':
-            play_ai_vs_ai_live()
-            break
-        elif mode == '4':
-            play_ai_vs_ai_auto()
-            break
-        else:
-            print("Ungültige Eingabe.")
+        mode = get_int_input("Eingabe: ")
+        if mode in [1, 2]: break
+        print("[!] Exception: Bitte 1 oder 2 eingeben.")
+        
+    # --- MODUS 1: EINZELSPIEL ---
+    if mode == 1:
+        a1 = setup_player("Spieler 1 wählen:", cores, time_limit)
+        print(f"Gewählt wurde {a1.name}")
+        
+        a2 = setup_player("Spieler 2 wählen:", cores, time_limit)
+        print(f"Gewählt wurde {a2.name}")
+        
+        print(f"\nWer soll anfangen? [1] {a1.name} oder [2] {a2.name} ?")
+        while True:
+            starter = get_int_input("Eingabe: ")
+            if starter in [1, 2]: break
+            print("[!] Exception: Bitte 1 oder 2 eingeben.")
+            
+        # Tauschen, falls Spieler 2 anfangen soll
+        if starter == 2:
+            a1, a2 = a2, a1
+            
+        print("\nLivespiel.")
+        winner = play_game_logic(a1, a2, show_board=True, log_file=None, game_idx=1)
+        
+        if winner == 1: print(f"Gewinner! ({a1.name})")
+        elif winner == 2: print(f"Gewinner! ({a2.name})")
+        else: print("Unentschieden!")
+        
+    # --- MODUS 2: AUTO-BENCHMARK ---
+    elif mode == 2:
+        print("\nWie viele Spiele sollen simuliert werden?")
+        games = get_int_input("Eingabe: ")
+        
+        a1 = setup_player("Spieler 1 wählen:", cores, time_limit)
+        print(f"Gewählt wurde {a1.name}")
+        
+        a2 = setup_player("Spieler 2 wählen:", cores, time_limit)
+        print(f"Gewählt wurde {a2.name}")
+        
+        print("\nSimulation startet jetzt:")
+        
+        # Log-Datei vorbereiten
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        n1 = clean_filename(a1.name)
+        n2 = clean_filename(a2.name)
+        log_filename = f"logs/benchmark_{n1}_vs_{n2}_{timestamp}.txt"
+        
+        with open(log_filename, "w", encoding="utf-8") as f:
+            f.write(f"BENCHMARK START: {games} Spiele\n")
+            f.write(f"Zeitlimit: {time_limit}ms | Kerne: {cores}\n")
+            f.write(f"Agent 1: {a1.name}\nAgent 2: {a2.name}\n")
+            f.write("="*50 + "\n")
+        
+        wins1, wins2, draws = 0, 0, 0
+        
+        for i in range(games):
+            # Abwechselndes Startrecht für Balance
+            if i % 2 == 0:
+                w = play_game_logic(a1, a2, show_board=False, log_file=log_filename, game_idx=i+1)
+                if w == 1: wins1 += 1
+                elif w == 2: wins2 += 1
+                else: draws += 1
+            else:
+                w = play_game_logic(a2, a1, show_board=False, log_file=log_filename, game_idx=i+1)
+                if w == 1: wins2 += 1
+                elif w == 2: wins1 += 1
+                else: draws += 1
+                
+            sys.stdout.write(f"\rSimulation: {i+1}/{games} ")
+            sys.stdout.flush()
+            
+        winrate1 = (wins1 / games) * 100
+        winrate2 = (wins2 / games) * 100
+        
+        print("\n\nSimulation:")
+        print(f"Winrate von {a1.name}: {winrate1:.1f}%")
+        print(f"Winrate von {a2.name}: {winrate2:.1f}%")
+        print(f"Spiel wurde unter dem Namen {os.path.basename(log_filename)} in logs/ gespeichert")
+        
+        # Endergebnis ans Ende der Log-Datei schreiben
+        with open(log_filename, "a", encoding="utf-8") as f:
+            f.write("\n--- BENCHMARK ENDERGEBNIS ---\n")
+            f.write(f"Winrate von {a1.name}: {winrate1:.1f}%\n")
+            f.write(f"Winrate von {a2.name}: {winrate2:.1f}%\n")
+            f.write(f"Remis: {(draws/games)*100:.1f}%\n")
 
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\nSpiel beendet.")
+        print("\nAbbruch.")
