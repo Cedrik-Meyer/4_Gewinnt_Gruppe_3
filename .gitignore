@@ -15,6 +15,7 @@ venv/
 *.pth
 .pt
 logs/*.txt
+training_system/checkpoints/*.pt
 
 # Python egg-info (Lokale Paket-Metadaten)
 *.egg-info/
