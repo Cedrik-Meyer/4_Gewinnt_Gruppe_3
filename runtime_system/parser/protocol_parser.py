@@ -25,14 +25,18 @@ def parse_turn_request(message: dict) -> Optional[GameState]:
         state = match["state"]
 
         board = _parse_board(state["board"])
-        player_slot = int(payload["playerSlot"])
-        current_player = int(state["currentPlayer"])
 
-        if player_slot not in (0, 1):
-            raise ValueError(f"Ungültiger playerSlot: {player_slot}")
+        raw_player_slot = int(payload["playerSlot"])
+        raw_current_player = int(state["currentPlayer"])
 
-        if current_player not in (0, 1):
-            raise ValueError(f"Ungültiger currentPlayer: {current_player}")
+        if raw_player_slot not in (1, 2):
+            raise ValueError(f"Ungültiger playerSlot: {raw_player_slot}")
+
+        if raw_current_player not in (1, 2):
+            raise ValueError(f"Ungültiger currentPlayer: {raw_current_player}")
+
+        player_slot = raw_player_slot - 1
+        current_player = raw_current_player - 1
 
         return GameState(
             board=board,
