@@ -38,12 +38,16 @@ def parse_turn_request(message: dict) -> Optional[GameState]:
         player_slot = raw_player_slot - 1
         current_player = raw_current_player - 1
 
+        raw_deadline_ms = payload.get("deadlineMs")
+        deadline_ms = int(raw_deadline_ms) if raw_deadline_ms is not None else None
+
         return GameState(
             board=board,
             player_slot=player_slot,
             current_player=current_player,
             match_id=str(message["matchId"]),
             request_id=str(message["requestId"]),
+            deadline_ms=deadline_ms,
         )
 
     except KeyError as error:

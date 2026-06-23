@@ -95,6 +95,17 @@ def test_parse_turn_request_builds_expected_game_state():
     assert game_state.legal_mask.shape == (16,)
     assert game_state.legal_mask.dtype == np.float32
     assert np.all(game_state.legal_mask == 1.0)
+    assert game_state.deadline_ms == 1779883205000
+
+
+def test_parse_turn_request_allows_missing_deadline_ms():
+    message = server_turn_request_example()
+    del message["payload"]["deadlineMs"]
+
+    game_state = parse_turn_request(message)
+
+    assert game_state is not None
+    assert game_state.deadline_ms is None
 
 
 def test_parse_turn_request_ignores_unknown_extra_fields():

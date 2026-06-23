@@ -48,6 +48,7 @@ class GameState:
     match_id: str           # UUID
     request_id: str         # UUID (wichtig für die Spiegelung in der Antwort)
     legal_mask: Optional[np.ndarray] = None  # Float32 Array der Größe 16
+    deadline_ms: Optional[int] = None  # Unix-Zeit in ms, bis wann der Zug beim Server eingehen muss
 
     def __post_init__(self):
         """Wird nach der Initialisierung automatisch aufgerufen, um die Maske zu berechnen."""

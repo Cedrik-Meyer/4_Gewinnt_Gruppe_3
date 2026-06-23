@@ -2,6 +2,7 @@ import asyncio
 import logging
 import os
 import sys
+import time
 
 from dotenv import load_dotenv
 
@@ -14,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_CHECKPOINT_PATH = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..",
-    "training_system", "checkpoints", "old_best_champion.pt",
+    "training_system", "checkpoints", "best_champion.pt",
 )
 
 
@@ -46,6 +47,10 @@ def make_turn_request_handler(client: AgentWebSocketClient, agent: LiveAgent):
         game_state = parse_turn_request(data)
         if game_state is None:
             return
+
+        if game_state.deadline_ms is not None:
+            remaining_s = (game_state.deadline_ms - time.time() * 1000) / 1000
+            logger.info("Zeit für diesen Zug verbleibend: %.2fs", remaining_s)
 
         policy_logits, _value = agent.predict(game_state)
         masked_logits = agent.mask_illegal_moves(policy_logits, game_state.legal_mask)
