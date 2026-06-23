@@ -67,8 +67,8 @@ Das ist die unterste Ebene (`y = 0`), die zweite Reihe von vorne (`z = 1`) und d
 | Wert | Bedeutung              |
 | ---- | ---------------------- |
 | `0`  | Leer                   |
-| `1`  | playerSlot 0/Spieler 1 |
-| `2`  | playerSlot 1/Spieler 2 |
+| `1`  | playerSlot 1/Spieler 1 |
+| `2`  | playerSlot 2/Spieler 2 |
 
 ---
 

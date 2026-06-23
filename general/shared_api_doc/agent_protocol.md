@@ -24,13 +24,23 @@ Beispiel lokal:
 ws://localhost:3000/ws/agent?token=ag_example_token
 ```
 
-Optionaler Zielzustand: Der Server kann den Token auch über den HTTP-Header akzeptieren:
+```
+
+Beispiel im gleichen WLAN/LAN:
 
 ```txt
-Authorization: Bearer <AGENT_TOKEN>
+ws://192.168.178.42:3000/ws/agent?token=ag_example_token
+```
+
+Server:
+
+```txt
+wss://<server-domain>/ws/agent?token=<AGENT_TOKEN>
 ```
 
 Der Token gehört zu genau einem Agenten. Er wird im Server erzeugt und in der Datenbank nur gehasht gespeichert.
+
+Im MVP darf ein Agent genau eine aktive WebSocket-Verbindung haben. Wenn derselbe Agent bereits verbunden ist und eine zweite Verbindung mit einem gültigen Token öffnet, sendet der Server `agent.goodbye` mit `reason: "duplicate_connection"` und schließt die zweite Verbindung. Der bereits verbundene Agent bleibt online.
 
 ## Agent-Tokens im MVP
 
@@ -77,7 +87,7 @@ Felder:
 | `payload`   | Inhalt der Nachricht. Die Struktur hängt vom `type` ab.             |
 | `timestamp` | Zeitpunkt, zu dem die Nachricht erzeugt wurde.                      |
 
-Der Agent soll die `requestId` aus `turn.request` in seiner Antwort `move.submit` wiederverwenden.
+Der Agent muss die `requestId` aus `turn.request` in seiner Antwort `move.submit` wiederverwenden. Dadurch kann der Server verspätete, doppelte oder nicht passende Antworten eindeutig zuordnen.
 
 ## Nachrichtentypen
 
@@ -128,14 +138,17 @@ Direkt nach erfolgreicher Authentifizierung sendet der Server:
     "agent": {
       "id": "550e8400-e29b-41d4-a716-446655440001",
       "name": "Gruppe A Agent",
-      "groupId": "550e8400-e29b-41d4-a716-446655440010"
+      "groupId": "550e8400-e29b-41d4-a716-446655440010",
+      "tokenType": "test"
     }
   },
   "timestamp": "2026-05-27T12:00:00.000Z"
 }
 ```
 
-Wenn der Token ungültig ist, schließt der Server die WebSocket-Verbindung.
+`tokenType` ist `test` oder `tournament`. Für den MVP werden Gruppen-Agenten normalerweise mit `test` verbunden.
+
+Wenn der Token ungültig ist, sendet der Server eine `error`-Nachricht und schließt danach die WebSocket-Verbindung.
 
 ## agent.goodbye
 
@@ -211,6 +224,8 @@ Der Server antwortet:
 }
 ```
 
+Das Heartbeat-`payload` muss ein JSON-Objekt sein. Ein leeres Objekt reicht aus. Bei einem ungültigen Heartbeat-Payload sendet der Server `error` und kein `heartbeat.ack`.
+
 ## turn.request
 
 Wenn ein Agent am Zug ist, sendet der Server `turn.request`.
@@ -256,26 +271,26 @@ Wenn ein Agent am Zug ist, sendet der Server `turn.request`.
             [0, 0, 0, 0]
           ]
         ],
-        "currentPlayer": 0,
+        "currentPlayer": 1,
         "moves": [
-          { "playerSlot": 0, "x": 1, "y": 0, "z": 1 },
-          { "playerSlot": 1, "x": 2, "y": 0, "z": 2 }
+          { "playerSlot": 1, "x": 1, "y": 0, "z": 1 },
+          { "playerSlot": 2, "x": 2, "y": 0, "z": 2 }
         ]
       },
       "players": [
         {
-          "slot": 0,
+          "slot": 1,
           "agentId": "550e8400-e29b-41d4-a716-446655440001",
           "agentName": "Gruppe A Agent"
         },
         {
-          "slot": 1,
+          "slot": 2,
           "agentId": "550e8400-e29b-41d4-a716-446655440002",
           "agentName": "Gruppe B Agent"
         }
       ]
     },
-    "playerSlot": 0,
+    "playerSlot": 1,
     "deadlineMs": 1779883205000
   },
   "timestamp": "2026-05-27T12:00:00.000Z"
@@ -287,7 +302,7 @@ Wichtige Felder im Payload:
 | Feld         | Bedeutung                                                       |
 | ------------ | --------------------------------------------------------------- |
 | `match`      | Öffentlicher Match-Zustand inklusive Spielzustand und Spielern. |
-| `playerSlot` | Slot des Agenten in diesem Match. Erlaubt sind `0` und `1`.     |
+| `playerSlot` | Slot des Agenten in diesem Match. Erlaubt sind `1` und `2`.     |
 | `deadlineMs` | Unix-Zeit in Millisekunden, bis wann der Agent antworten muss.  |
 
 ## Board-Format für 3D 4 Gewinnt
@@ -317,8 +332,8 @@ Zellwerte:
 | Wert | Bedeutung      |
 | ---- | -------------- |
 | `0`  | leer           |
-| `1`  | `playerSlot 0` |
-| `2`  | `playerSlot 1` |
+| `1`  | `playerSlot 1` |
+| `2`  | `playerSlot 2` |
 
 Beispiel:
 
@@ -326,7 +341,7 @@ Beispiel:
 board[0][1][2] = 1
 ```
 
-Das bedeutet: Auf der untersten Ebene (`y = 0`), in Reihe `z = 1`, Spalte `x = 2`, liegt ein Stein von `playerSlot 0`.
+Das bedeutet: Auf der untersten Ebene (`y = 0`), in Reihe `z = 1`, Spalte `x = 2`, liegt ein Stein von `playerSlot 1`.
 
 ## move.submit
 
@@ -352,7 +367,8 @@ Regeln für `move.submit`:
 - `z` muss eine Zahl von `0` bis `3` sein.
 - Der Agent sendet kein `y`.
 - Der Agent darf nur antworten, wenn er eine `turn.request` erhalten hat.
-- Der Agent soll dieselbe `requestId` verwenden wie in der `turn.request`.
+- Der Agent muss dieselbe `requestId` verwenden wie in der `turn.request`.
+- Eine fehlende oder falsche `requestId` kann als Protokollfehler behandelt werden.
 
 ## move.accepted
 
@@ -414,7 +430,27 @@ Mögliche Fehlerfälle:
 - ungültiger Zug
 - Agent ist nicht am Zug
 - Match existiert nicht
-- Zeitlimit überschritten
+- Zeitlimit überschritten (`turn_timeout`)
+
+Typische `reason`-Werte:
+
+| Reason                      | Bedeutung                                                                                         |
+| --------------------------- | ------------------------------------------------------------------------------------------------- |
+| `invalid_agent_token`       | Der Token ist ungültig, widerrufen oder gehört zu einem deaktivierten Agenten.                     |
+| `rate_limit_exceeded`       | Eine Aktion wurde zu häufig versucht. Der Agent sollte langsamer erneut versuchen.                 |
+| `invalid_message_format`    | Die WebSocket-Nachricht entspricht nicht dem Envelope- oder Payload-Format.                        |
+| `invalid_message_type`      | Der Nachrichtentyp ist für den Agent-WebSocket nicht bekannt oder nicht erlaubt.                   |
+| `invalid_heartbeat_payload` | Das Heartbeat-Payload ist kein gültiges JSON-Objekt.                                               |
+| `unknown_turn_request`      | `matchId` oder `requestId` passen zu keiner aktuell offenen `turn.request`.                        |
+| `match_mismatch`            | Die `requestId` gehört zu einer anderen Match-Anfrage als die gesendete `matchId`.                 |
+| `agent_not_current_player`  | Der Agent ist aktuell nicht am Zug.                                                               |
+| `invalid_move_payload`      | `payload` enthält keine ganzzahligen Koordinaten `x` und `z` im Bereich `0` bis `3`.               |
+| `invalid_move`              | Der gesendete Zug ist nach Spielregeln ungültig.                                                  |
+| `not_your_turn`             | Der Agent ist aktuell nicht am Zug. Wird in v1 vor allem in älteren Beispielen synonym verwendet.  |
+| `turn_timeout`              | Der Agent hat nicht vor `deadlineMs` geantwortet.                                                 |
+| `request_mismatch`          | Die `requestId` passt nicht zur offenen `turn.request`. Wird in v1 als `unknown_turn_request` gemeldet. |
+| `match_not_found`           | Das referenzierte Match existiert nicht oder ist beendet.                                         |
+| `unknown_game_id`           | Für das Match ist serverseitig kein passender Game-Adapter bekannt.                               |
 
 ## Timeouts
 
@@ -423,8 +459,8 @@ Jede `turn.request` enthält `deadlineMs`.
 Für v1 gilt:
 
 - Antwortet der Agent nicht rechtzeitig, wird das Match abgebrochen.
-- Der Abbruchgrund lautet `Zeitlimit überschritten`.
-- Der Server informiert Zuschauer über `match.updated` und/oder `match.deleted`.
+- Der maschinenlesbare Abbruchgrund lautet `turn_timeout`.
+- Der Server informiert Zuschauer über `match.updated`.
 
 ## Kompatibilität
 
