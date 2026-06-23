@@ -49,26 +49,26 @@ def server_turn_request_example() -> dict:
                             [0, 0, 0, 0],
                         ],
                     ],
-                    "currentPlayer": 0,
+                    "currentPlayer": 1,
                     "moves": [
-                        {"playerSlot": 0, "x": 1, "y": 0, "z": 1},
-                        {"playerSlot": 1, "x": 2, "y": 0, "z": 2},
+                        {"playerSlot": 1, "x": 1, "y": 0, "z": 1},
+                        {"playerSlot": 2, "x": 2, "y": 0, "z": 2},
                     ],
                 },
                 "players": [
                     {
-                        "slot": 0,
+                        "slot": 1,
                         "agentId": "550e8400-e29b-41d4-a716-446655440001",
                         "agentName": "Gruppe A Agent",
                     },
                     {
-                        "slot": 1,
+                        "slot": 2,
                         "agentId": "550e8400-e29b-41d4-a716-446655440002",
                         "agentName": "Gruppe B Agent",
                     },
                 ],
             },
-            "playerSlot": 0,
+            "playerSlot": 1,
             "deadlineMs": 1779883205000,
         },
         "timestamp": "2026-05-27T12:00:00.000Z",
@@ -187,7 +187,7 @@ def test_parse_turn_request_rejects_invalid_board_values(invalid_value):
 
 
 @pytest.mark.parametrize("field", ["playerSlot", "currentPlayer"])
-@pytest.mark.parametrize("value", [-1, 2, 99, "abc", None])
+@pytest.mark.parametrize("value", [-1, 0, 3, 99, "abc", None])
 def test_parse_turn_request_rejects_invalid_player_values(field, value):
     message = server_turn_request_example()
     if field == "playerSlot":
@@ -198,7 +198,7 @@ def test_parse_turn_request_rejects_invalid_player_values(field, value):
     assert parse_turn_request(message) is None
 
 
-@pytest.mark.parametrize("value", ["0", "1"])
+@pytest.mark.parametrize("value", ["1", "2"])
 def test_parse_turn_request_accepts_numeric_player_strings(value):
     message = server_turn_request_example()
     message["payload"]["playerSlot"] = value
@@ -207,8 +207,8 @@ def test_parse_turn_request_accepts_numeric_player_strings(value):
     game_state = parse_turn_request(message)
 
     assert game_state is not None
-    assert game_state.player_slot == int(value)
-    assert game_state.current_player == int(value)
+    assert game_state.player_slot == int(value) - 1
+    assert game_state.current_player == int(value) - 1
 
 
 def test_build_move_submit_uses_server_envelope_format():
