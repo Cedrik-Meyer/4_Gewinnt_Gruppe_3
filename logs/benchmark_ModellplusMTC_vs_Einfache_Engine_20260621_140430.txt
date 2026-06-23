@@ -1,0 +1,756 @@
+BENCHMARK START: 10 Spiele
+Zeitlimit: 180ms | Kerne: 4
+Agent 1: Modell+MTC(champion_iter_2852.pt)
+Agent 2: Einfache Engine
+==================================================
+
+--- SPIEL 1 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_2852.pt)
+Spieler 2 (Blau/O): Einfache Engine
+--------------------
+Zug 01 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 02 | Einfache Engine (Sp. 2) spielt -> x=2, z=2, y=0
+Zug 03 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 04 | Einfache Engine (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 05 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=0, y=0
+Zug 06 | Einfache Engine (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 07 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=0, y=1
+Zug 08 | Einfache Engine (Sp. 2) spielt -> x=1, z=0, y=1
+Zug 09 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=0, y=2
+Zug 10 | Einfache Engine (Sp. 2) spielt -> x=2, z=0, y=3
+Zug 11 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 12 | Einfache Engine (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 13 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 14 | Einfache Engine (Sp. 2) spielt -> x=3, z=0, y=0
+Zug 15 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 16 | Einfache Engine (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 17 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 18 | Einfache Engine (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 19 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=2, y=1
+Zug 20 | Einfache Engine (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 21 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 22 | Einfache Engine (Sp. 2) spielt -> x=3, z=1, y=1
+Zug 23 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 24 | Einfache Engine (Sp. 2) spielt -> x=3, z=0, y=1
+Zug 25 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 26 | Einfache Engine (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 27 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=2, y=2
+Zug 28 | Einfache Engine (Sp. 2) spielt -> x=0, z=2, y=3
+Zug 29 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=0, y=1
+Zug 30 | Einfache Engine (Sp. 2) spielt -> x=3, z=2, y=1
+Zug 31 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=3, y=1
+Zug 32 | Einfache Engine (Sp. 2) spielt -> x=3, z=0, y=2
+Zug 33 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=0, y=3
+Zug 34 | Einfache Engine (Sp. 2) spielt -> x=3, z=3, y=2
+Zug 35 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=3, y=1
+Zug 36 | Einfache Engine (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 37 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 38 | Einfache Engine (Sp. 2) spielt -> x=2, z=2, y=1
+Zug 39 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=3, y=2
+Zug 40 | Einfache Engine (Sp. 2) spielt -> x=1, z=3, y=3
+Zug 41 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=2, y=2
+Zug 42 | Einfache Engine (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 43 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=2, y=3
+Zug 44 | Einfache Engine (Sp. 2) spielt -> x=3, z=1, y=2
+Zug 45 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 46 | Einfache Engine (Sp. 2) spielt -> x=1, z=0, y=2
+Zug 47 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=0, y=3
+
+>>> GEWINNER: Modell+MTC(champion_iter_2852.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. X O X
+. . . .
+O O X .
+. O . .
+
+Ebene y = 2
+. O X O
+. X . O
+X X O X
+. X . O
+
+Ebene y = 1
+X O X O
+O X . O
+X X O O
+X O . X
+
+Ebene y = 0
+X X X O
+X O . X
+X X O O
+O X O O
+
+==================================================
+
+--- SPIEL 2 ---
+Spieler 1 (Rot/X): Einfache Engine
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_2852.pt)
+--------------------
+Zug 01 | Einfache Engine (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 02 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 03 | Einfache Engine (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 04 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=3, y=1
+Zug 05 | Einfache Engine (Sp. 1) spielt -> x=2, z=3, y=0
+Zug 06 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=0, y=0
+Zug 07 | Einfache Engine (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 08 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 09 | Einfache Engine (Sp. 1) spielt -> x=0, z=3, y=2
+Zug 10 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 11 | Einfache Engine (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 12 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=0, y=1
+Zug 13 | Einfache Engine (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 14 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=0, y=2
+Zug 15 | Einfache Engine (Sp. 1) spielt -> x=2, z=0, y=3
+Zug 16 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 17 | Einfache Engine (Sp. 1) spielt -> x=0, z=1, y=3
+Zug 18 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 19 | Einfache Engine (Sp. 1) spielt -> x=0, z=3, y=3
+Zug 20 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=3, z=1, y=1
+Zug 21 | Einfache Engine (Sp. 1) spielt -> x=2, z=1, y=1
+Zug 22 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=1, y=2
+Zug 23 | Einfache Engine (Sp. 1) spielt -> x=0, z=0, y=1
+Zug 24 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=0, y=2
+Zug 25 | Einfache Engine (Sp. 1) spielt -> x=3, z=2, y=0
+Zug 26 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=0, y=0
+Zug 27 | Einfache Engine (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 28 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=2, y=0
+Zug 29 | Einfache Engine (Sp. 1) spielt -> x=2, z=1, y=2
+Zug 30 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 31 | Einfache Engine (Sp. 1) spielt -> x=2, z=1, y=3
+
+>>> GEWINNER: Einfache Engine (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . X .
+X . X .
+. . . .
+X . . .
+
+Ebene y = 2
+O . O .
+O O X .
+. . . .
+X . . .
+
+Ebene y = 1
+X . O .
+O O X O
+. . . .
+O . . .
+
+Ebene y = 0
+X O O .
+O X X X
+X X O X
+O . X O
+
+==================================================
+
+--- SPIEL 3 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_2852.pt)
+Spieler 2 (Blau/O): Einfache Engine
+--------------------
+Zug 01 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 02 | Einfache Engine (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 03 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=0, y=0
+Zug 04 | Einfache Engine (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 05 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=3, y=0
+Zug 06 | Einfache Engine (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 07 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 08 | Einfache Engine (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 09 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 10 | Einfache Engine (Sp. 2) spielt -> x=3, z=0, y=0
+Zug 11 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=0, y=1
+Zug 12 | Einfache Engine (Sp. 2) spielt -> x=3, z=0, y=1
+Zug 13 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=0, y=2
+Zug 14 | Einfache Engine (Sp. 2) spielt -> x=2, z=0, y=3
+Zug 15 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=2, y=1
+Zug 16 | Einfache Engine (Sp. 2) spielt -> x=3, z=1, y=0
+Zug 17 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=2, y=0
+Zug 18 | Einfache Engine (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 19 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 20 | Einfache Engine (Sp. 2) spielt -> x=1, z=0, y=3
+Zug 21 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 22 | Einfache Engine (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 23 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=3, y=1
+Zug 24 | Einfache Engine (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 25 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=0, y=2
+Zug 26 | Einfache Engine (Sp. 2) spielt -> x=3, z=0, y=3
+Zug 27 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 28 | Einfache Engine (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 29 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 30 | Einfache Engine (Sp. 2) spielt -> x=2, z=3, y=1
+Zug 31 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 32 | Einfache Engine (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 33 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 34 | Einfache Engine (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 35 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=1, y=3
+Zug 36 | Einfache Engine (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 37 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=1, y=1
+Zug 38 | Einfache Engine (Sp. 2) spielt -> x=0, z=0, y=1
+Zug 39 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=0, y=2
+
+>>> GEWINNER: Modell+MTC(champion_iter_2852.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. O O O
+X . . .
+. . . .
+. . . .
+
+Ebene y = 2
+X X X X
+O X . .
+. O . .
+. . . .
+
+Ebene y = 1
+O X X O
+O X X .
+X O . .
+. X O O
+
+Ebene y = 0
+X X X O
+O O X O
+O X X X
+X O O O
+
+==================================================
+
+--- SPIEL 4 ---
+Spieler 1 (Rot/X): Einfache Engine
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_2852.pt)
+--------------------
+Zug 01 | Einfache Engine (Sp. 1) spielt -> x=3, z=2, y=0
+Zug 02 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=2, y=0
+Zug 03 | Einfache Engine (Sp. 1) spielt -> x=3, z=0, y=0
+Zug 04 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=3, z=1, y=0
+Zug 05 | Einfache Engine (Sp. 1) spielt -> x=3, z=0, y=1
+Zug 06 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 07 | Einfache Engine (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 08 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=3, z=1, y=1
+Zug 09 | Einfache Engine (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 10 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 11 | Einfache Engine (Sp. 1) spielt -> x=2, z=0, y=0
+Zug 12 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=3, z=1, y=2
+Zug 13 | Einfache Engine (Sp. 1) spielt -> x=3, z=1, y=3
+Zug 14 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 15 | Einfache Engine (Sp. 1) spielt -> x=1, z=3, y=2
+Zug 16 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 17 | Einfache Engine (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 18 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=0, y=0
+Zug 19 | Einfache Engine (Sp. 1) spielt -> x=2, z=0, y=1
+Zug 20 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=0, y=1
+Zug 21 | Einfache Engine (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 22 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=0, y=2
+Zug 23 | Einfache Engine (Sp. 1) spielt -> x=1, z=0, y=3
+Zug 24 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=1, y=2
+Zug 25 | Einfache Engine (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 26 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=3, y=1
+Zug 27 | Einfache Engine (Sp. 1) spielt -> x=2, z=0, y=2
+Zug 28 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=0, y=3
+Zug 29 | Einfache Engine (Sp. 1) spielt -> x=1, z=3, y=3
+Zug 30 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=3, y=2
+Zug 31 | Einfache Engine (Sp. 1) spielt -> x=2, z=3, y=3
+Zug 32 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 33 | Einfache Engine (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 34 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 35 | Einfache Engine (Sp. 1) spielt -> x=1, z=2, y=3
+Zug 36 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 37 | Einfache Engine (Sp. 1) spielt -> x=0, z=3, y=0
+Zug 38 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 39 | Einfache Engine (Sp. 1) spielt -> x=3, z=3, y=1
+Zug 40 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=3, z=2, y=1
+Zug 41 | Einfache Engine (Sp. 1) spielt -> x=0, z=3, y=1
+Zug 42 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=3, y=2
+Zug 43 | Einfache Engine (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 44 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=2, y=1
+Zug 45 | Einfache Engine (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 46 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=0, y=1
+Zug 47 | Einfache Engine (Sp. 1) spielt -> x=0, z=0, y=2
+Zug 48 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=2, y=2
+Zug 49 | Einfache Engine (Sp. 1) spielt -> x=0, z=2, y=3
+Zug 50 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 51 | Einfache Engine (Sp. 1) spielt -> x=3, z=2, y=2
+Zug 52 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=3, z=2, y=3
+
+>>> GEWINNER: Modell+MTC(champion_iter_2852.pt) (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. X O .
+. O . X
+X X . O
+. X X .
+
+Ebene y = 2
+X O X .
+. O . O
+O O O X
+O X O .
+
+Ebene y = 1
+O O X X
+O X . O
+O O X O
+X O O X
+
+Ebene y = 0
+X O X X
+X O X O
+O O X X
+X X O X
+
+==================================================
+
+--- SPIEL 5 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_2852.pt)
+Spieler 2 (Blau/O): Einfache Engine
+--------------------
+Zug 01 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 02 | Einfache Engine (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 03 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=3, y=0
+Zug 04 | Einfache Engine (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 05 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=1, y=1
+Zug 06 | Einfache Engine (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 07 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=1, y=2
+Zug 08 | Einfache Engine (Sp. 2) spielt -> x=2, z=1, y=3
+Zug 09 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 10 | Einfache Engine (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 11 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 12 | Einfache Engine (Sp. 2) spielt -> x=2, z=0, y=0
+Zug 13 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=1, y=1
+Zug 14 | Einfache Engine (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 15 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=1, y=2
+Zug 16 | Einfache Engine (Sp. 2) spielt -> x=0, z=1, y=3
+Zug 17 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 18 | Einfache Engine (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 19 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 20 | Einfache Engine (Sp. 2) spielt -> x=3, z=1, y=1
+Zug 21 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=3, y=1
+Zug 22 | Einfache Engine (Sp. 2) spielt -> x=1, z=1, y=2
+Zug 23 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 24 | Einfache Engine (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 25 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=2, y=2
+Zug 26 | Einfache Engine (Sp. 2) spielt -> x=2, z=2, y=3
+Zug 27 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=0, y=1
+Zug 28 | Einfache Engine (Sp. 2) spielt -> x=0, z=2, y=1
+Zug 29 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 30 | Einfache Engine (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 31 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 32 | Einfache Engine (Sp. 2) spielt -> x=0, z=2, y=2
+Zug 33 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=2, y=3
+Zug 34 | Einfache Engine (Sp. 2) spielt -> x=3, z=0, y=0
+Zug 35 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 36 | Einfache Engine (Sp. 2) spielt -> x=3, z=0, y=1
+Zug 37 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=2, y=1
+Zug 38 | Einfache Engine (Sp. 2) spielt -> x=0, z=0, y=2
+Zug 39 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 40 | Einfache Engine (Sp. 2) spielt -> x=1, z=0, y=3
+Zug 41 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=0, y=2
+Zug 42 | Einfache Engine (Sp. 2) spielt -> x=3, z=1, y=2
+Zug 43 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=1, y=3
+
+>>> GEWINNER: Modell+MTC(champion_iter_2852.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. O . .
+O O O X
+X . O .
+. . . .
+
+Ebene y = 2
+O X . X
+X O X O
+O . X .
+. . . .
+
+Ebene y = 1
+X X . O
+X X X O
+O . X X
+X . . O
+
+Ebene y = 0
+O X O O
+X O X X
+O . X O
+O X X O
+
+==================================================
+
+--- SPIEL 6 ---
+Spieler 1 (Rot/X): Einfache Engine
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_2852.pt)
+--------------------
+Zug 01 | Einfache Engine (Sp. 1) spielt -> x=2, z=3, y=0
+Zug 02 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=2, y=0
+Zug 03 | Einfache Engine (Sp. 1) spielt -> x=3, z=0, y=0
+Zug 04 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 05 | Einfache Engine (Sp. 1) spielt -> x=2, z=3, y=1
+Zug 06 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 07 | Einfache Engine (Sp. 1) spielt -> x=1, z=2, y=3
+Zug 08 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=1, y=0
+Zug 09 | Einfache Engine (Sp. 1) spielt -> x=2, z=3, y=2
+Zug 10 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=3, y=3
+Zug 11 | Einfache Engine (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 12 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 13 | Einfache Engine (Sp. 1) spielt -> x=3, z=0, y=1
+Zug 14 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 15 | Einfache Engine (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 16 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 17 | Einfache Engine (Sp. 1) spielt -> x=2, z=0, y=0
+Zug 18 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 19 | Einfache Engine (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 20 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=2, y=0
+Zug 21 | Einfache Engine (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 22 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=3, z=2, y=0
+
+>>> GEWINNER: Modell+MTC(champion_iter_2852.pt) (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . .
+. . . .
+. X . .
+. . O .
+
+Ebene y = 2
+. . . .
+. . . .
+. O . .
+. . X .
+
+Ebene y = 1
+. . . X
+. . . .
+. O . .
+. . X .
+
+Ebene y = 0
+O X X X
+X X O .
+O O O O
+O X X O
+
+==================================================
+
+--- SPIEL 7 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_2852.pt)
+Spieler 2 (Blau/O): Einfache Engine
+--------------------
+Zug 01 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 02 | Einfache Engine (Sp. 2) spielt -> x=1, z=2, y=0
+Zug 03 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 04 | Einfache Engine (Sp. 2) spielt -> x=2, z=2, y=0
+Zug 05 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 06 | Einfache Engine (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 07 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=0, y=0
+Zug 08 | Einfache Engine (Sp. 2) spielt -> x=2, z=0, y=0
+Zug 09 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 10 | Einfache Engine (Sp. 2) spielt -> x=1, z=0, y=3
+Zug 11 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=3, y=0
+Zug 12 | Einfache Engine (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 13 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=2, y=1
+Zug 14 | Einfache Engine (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 15 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=2, y=2
+Zug 16 | Einfache Engine (Sp. 2) spielt -> x=0, z=2, y=3
+Zug 17 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 18 | Einfache Engine (Sp. 2) spielt -> x=2, z=1, y=0
+Zug 19 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=1, y=1
+Zug 20 | Einfache Engine (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 21 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=0, y=1
+Zug 22 | Einfache Engine (Sp. 2) spielt -> x=2, z=0, y=2
+Zug 23 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=0, y=1
+Zug 24 | Einfache Engine (Sp. 2) spielt -> x=3, z=0, y=1
+Zug 25 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 26 | Einfache Engine (Sp. 2) spielt -> x=2, z=1, y=2
+Zug 27 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=3, y=1
+Zug 28 | Einfache Engine (Sp. 2) spielt -> x=2, z=2, y=1
+Zug 29 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=3, y=2
+Zug 30 | Einfache Engine (Sp. 2) spielt -> x=2, z=3, y=3
+Zug 31 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 32 | Einfache Engine (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 33 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 34 | Einfache Engine (Sp. 2) spielt -> x=2, z=0, y=3
+Zug 35 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=1, y=3
+Zug 36 | Einfache Engine (Sp. 2) spielt -> x=3, z=0, y=2
+Zug 37 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=2, y=2
+Zug 38 | Einfache Engine (Sp. 2) spielt -> x=3, z=0, y=3
+Zug 39 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 40 | Einfache Engine (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 41 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 42 | Einfache Engine (Sp. 2) spielt -> x=3, z=2, y=1
+Zug 43 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=2, y=2
+
+>>> GEWINNER: Modell+MTC(champion_iter_2852.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. O O O
+. X . .
+O . . .
+. . O .
+
+Ebene y = 2
+. X O O
+. X O .
+X X X X
+. . X .
+
+Ebene y = 1
+X X X O
+. O X .
+X X O O
+. . X .
+
+Ebene y = 0
+O X O X
+O X O X
+X O O O
+O X X O
+
+==================================================
+
+--- SPIEL 8 ---
+Spieler 1 (Rot/X): Einfache Engine
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_2852.pt)
+--------------------
+Zug 01 | Einfache Engine (Sp. 1) spielt -> x=2, z=3, y=0
+Zug 02 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=2, y=0
+Zug 03 | Einfache Engine (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 04 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 05 | Einfache Engine (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 06 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 07 | Einfache Engine (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 08 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 09 | Einfache Engine (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 10 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 11 | Einfache Engine (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 12 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=1, y=0
+Zug 13 | Einfache Engine (Sp. 1) spielt -> x=3, z=0, y=0
+Zug 14 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=1, y=1
+Zug 15 | Einfache Engine (Sp. 1) spielt -> x=0, z=3, y=1
+Zug 16 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=1, y=2
+Zug 17 | Einfache Engine (Sp. 1) spielt -> x=2, z=1, y=3
+Zug 18 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=2, y=1
+Zug 19 | Einfache Engine (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 20 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=3, y=2
+Zug 21 | Einfache Engine (Sp. 1) spielt -> x=3, z=0, y=1
+Zug 22 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=3, y=1
+Zug 23 | Einfache Engine (Sp. 1) spielt -> x=3, z=3, y=1
+Zug 24 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 25 | Einfache Engine (Sp. 1) spielt -> x=3, z=0, y=2
+Zug 26 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=3, z=0, y=3
+Zug 27 | Einfache Engine (Sp. 1) spielt -> x=3, z=2, y=1
+Zug 28 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=3, z=1, y=1
+Zug 29 | Einfache Engine (Sp. 1) spielt -> x=0, z=3, y=3
+Zug 30 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=3, z=3, y=2
+Zug 31 | Einfache Engine (Sp. 1) spielt -> x=2, z=0, y=0
+Zug 32 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=2, y=2
+Zug 33 | Einfache Engine (Sp. 1) spielt -> x=0, z=2, y=3
+Zug 34 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=3, y=2
+Zug 35 | Einfache Engine (Sp. 1) spielt -> x=2, z=0, y=1
+Zug 36 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 37 | Einfache Engine (Sp. 1) spielt -> x=1, z=3, y=2
+Zug 38 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=3, z=3, y=3
+
+>>> GEWINNER: Modell+MTC(champion_iter_2852.pt) (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . O
+. . X .
+X . . .
+X . . O
+
+Ebene y = 2
+. . . X
+. . O .
+O O . .
+O X O O
+
+Ebene y = 1
+. . X X
+. . O O
+O X . X
+X O O X
+
+Ebene y = 0
+O . X X
+X . O X
+O O X O
+O X X X
+
+==================================================
+
+--- SPIEL 9 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_2852.pt)
+Spieler 2 (Blau/O): Einfache Engine
+--------------------
+Zug 01 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 02 | Einfache Engine (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 03 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=0, y=0
+Zug 04 | Einfache Engine (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 05 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=3, y=0
+Zug 06 | Einfache Engine (Sp. 2) spielt -> x=2, z=2, y=0
+Zug 07 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=0, y=1
+Zug 08 | Einfache Engine (Sp. 2) spielt -> x=1, z=2, y=0
+Zug 09 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 10 | Einfache Engine (Sp. 2) spielt -> x=2, z=0, y=2
+Zug 11 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 12 | Einfache Engine (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 13 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 14 | Einfache Engine (Sp. 2) spielt -> x=3, z=0, y=0
+Zug 15 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 16 | Einfache Engine (Sp. 2) spielt -> x=0, z=2, y=1
+Zug 17 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 18 | Einfache Engine (Sp. 2) spielt -> x=1, z=0, y=3
+Zug 19 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=1, y=1
+Zug 20 | Einfache Engine (Sp. 2) spielt -> x=0, z=0, y=1
+Zug 21 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=3, y=1
+Zug 22 | Einfache Engine (Sp. 2) spielt -> x=2, z=3, y=1
+Zug 23 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=1, y=2
+Zug 24 | Einfache Engine (Sp. 2) spielt -> x=2, z=1, y=3
+Zug 25 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 26 | Einfache Engine (Sp. 2) spielt -> x=0, z=3, y=1
+Zug 27 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=2, y=0
+Zug 28 | Einfache Engine (Sp. 2) spielt -> x=0, z=2, y=2
+Zug 29 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=0, y=1
+Zug 30 | Einfache Engine (Sp. 2) spielt -> x=3, z=0, y=2
+Zug 31 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 32 | Einfache Engine (Sp. 2) spielt -> x=2, z=0, y=3
+Zug 33 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=3, y=2
+Zug 34 | Einfache Engine (Sp. 2) spielt -> x=3, z=0, y=3
+Zug 35 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=2, z=3, y=3
+Zug 36 | Einfache Engine (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 37 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 38 | Einfache Engine (Sp. 2) spielt -> x=0, z=2, y=3
+Zug 39 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 40 | Einfache Engine (Sp. 2) spielt -> x=2, z=2, y=3
+Zug 41 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=2, y=1
+Zug 42 | Einfache Engine (Sp. 2) spielt -> x=3, z=1, y=1
+Zug 43 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=2, y=2
+Zug 44 | Einfache Engine (Sp. 2) spielt -> x=3, z=2, y=3
+Zug 45 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=2, y=3
+Zug 46 | Einfache Engine (Sp. 2) spielt -> x=3, z=3, y=2
+Zug 47 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=3, y=2
+Zug 48 | Einfache Engine (Sp. 2) spielt -> x=0, z=3, y=3
+Zug 49 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=3, z=3, y=3
+Zug 50 | Einfache Engine (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 51 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 52 | Einfache Engine (Sp. 2) spielt -> x=3, z=1, y=2
+Zug 53 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 54 | Einfache Engine (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 55 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=1, y=1
+Zug 56 | Einfache Engine (Sp. 2) spielt -> x=0, z=0, y=2
+Zug 57 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=0, z=0, y=3
+Zug 58 | Einfache Engine (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 59 | Modell+MTC(champion_iter_2852.pt) (Sp. 1) spielt -> x=1, z=3, y=2
+
+>>> GEWINNER: Modell+MTC(champion_iter_2852.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+X O O O
+. . O .
+O X O O
+O . X X
+
+Ebene y = 2
+O X O O
+. X X O
+O X O X
+X X X O
+
+Ebene y = 1
+O X X X
+X O X O
+O X X X
+O O O X
+
+Ebene y = 0
+X X X O
+O O X X
+X O O X
+O X X O
+
+==================================================
+
+--- SPIEL 10 ---
+Spieler 1 (Rot/X): Einfache Engine
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_2852.pt)
+--------------------
+Zug 01 | Einfache Engine (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=2, y=0
+Zug 03 | Einfache Engine (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 04 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 05 | Einfache Engine (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 06 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 07 | Einfache Engine (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 08 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=1, y=0
+Zug 09 | Einfache Engine (Sp. 1) spielt -> x=3, z=0, y=0
+Zug 10 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 11 | Einfache Engine (Sp. 1) spielt -> x=2, z=3, y=1
+Zug 12 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 13 | Einfache Engine (Sp. 1) spielt -> x=1, z=2, y=3
+Zug 14 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 15 | Einfache Engine (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 16 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 17 | Einfache Engine (Sp. 1) spielt -> x=3, z=3, y=1
+Zug 18 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 19 | Einfache Engine (Sp. 1) spielt -> x=1, z=3, y=1
+Zug 20 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=3, y=1
+Zug 21 | Einfache Engine (Sp. 1) spielt -> x=1, z=3, y=2
+Zug 22 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=1, z=3, y=3
+Zug 23 | Einfache Engine (Sp. 1) spielt -> x=0, z=1, y=2
+Zug 24 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=1, y=1
+Zug 25 | Einfache Engine (Sp. 1) spielt -> x=3, z=0, y=1
+Zug 26 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=2, z=1, y=2
+Zug 27 | Einfache Engine (Sp. 1) spielt -> x=2, z=1, y=3
+Zug 28 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=3, z=1, y=1
+Zug 29 | Einfache Engine (Sp. 1) spielt -> x=3, z=1, y=2
+Zug 30 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=3, y=2
+Zug 31 | Einfache Engine (Sp. 1) spielt -> x=3, z=0, y=2
+Zug 32 | Modell+MTC(champion_iter_2852.pt) (Sp. 2) spielt -> x=0, z=3, y=3
+
+>>> GEWINNER: Modell+MTC(champion_iter_2852.pt) (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . .
+. . X .
+. X . .
+O O . .
+
+Ebene y = 2
+. . . X
+X . O X
+. O O .
+O X . .
+
+Ebene y = 1
+. . . X
+O . O O
+. O X .
+O X X X
+
+Ebene y = 0
+. . . X
+X . O X
+. O X .
+O X O O
+
+==================================================
+
+--- BENCHMARK ENDERGEBNIS ---
+Winrate von Modell+MTC(champion_iter_2852.pt): 90.0%
+Winrate von Einfache Engine: 10.0%
+Remis: 0.0%

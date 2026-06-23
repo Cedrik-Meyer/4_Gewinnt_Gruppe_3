@@ -1,0 +1,1199 @@
+BENCHMARK START: 20 Spiele
+Zeitlimit: 180ms | Kerne: 4
+Agent 1: Starke Engine
+Agent 2: Modell+MTC(champion_iter_3341.pt)
+==================================================
+
+--- SPIEL 1 ---
+Spieler 1 (Rot/X): Starke Engine
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 03 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 05 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 07 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 09 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 11 | Starke Engine (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 13 | Starke Engine (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 15 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=0, y=3
+Zug 17 | Starke Engine (Sp. 1) spielt -> x=2, z=0, y=0
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 19 | Starke Engine (Sp. 1) spielt -> x=0, z=1, y=3
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=0
+Zug 21 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 23 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 25 | Starke Engine (Sp. 1) spielt -> x=1, z=3, y=2
+
+>>> GEWINNER: Starke Engine (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. O . .
+X O . .
+. . . .
+. . . .
+
+Ebene y = 2
+. X . .
+O X . .
+. X . .
+. X . .
+
+Ebene y = 1
+. X . .
+O X . .
+. X . .
+. O . O
+
+Ebene y = 0
+O X X .
+O X . .
+X O . .
+O O O X
+
+==================================================
+
+--- SPIEL 2 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Starke Engine
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Starke Engine (Sp. 2) spielt -> x=2, z=2, y=1
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 04 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=0, y=0
+Zug 06 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 08 | Starke Engine (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 10 | Starke Engine (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=0, y=0
+Zug 12 | Starke Engine (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 14 | Starke Engine (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 16 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 17 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 18 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 19 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 20 | Starke Engine (Sp. 2) spielt -> x=2, z=1, y=1
+Zug 21 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=3
+Zug 22 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=1
+Zug 23 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=1
+Zug 24 | Starke Engine (Sp. 2) spielt -> x=2, z=1, y=2
+Zug 25 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=2
+Zug 26 | Starke Engine (Sp. 2) spielt -> x=1, z=3, y=3
+Zug 27 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 28 | Starke Engine (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 29 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 30 | Starke Engine (Sp. 2) spielt -> x=2, z=1, y=3
+Zug 31 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=3
+Zug 32 | Starke Engine (Sp. 2) spielt -> x=2, z=2, y=3
+Zug 33 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=3, y=1
+Zug 34 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=3
+Zug 35 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=0, y=1
+Zug 36 | Starke Engine (Sp. 2) spielt -> x=2, z=0, y=1
+Zug 37 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=1
+Zug 38 | Starke Engine (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 39 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=0, y=1
+Zug 40 | Starke Engine (Sp. 2) spielt -> x=2, z=0, y=2
+Zug 41 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=1
+Zug 42 | Starke Engine (Sp. 2) spielt -> x=2, z=0, y=3
+
+>>> GEWINNER: Starke Engine (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. O O .
+. X O .
+. X O .
+. O . .
+
+Ebene y = 2
+. X O .
+. X O .
+. O O .
+. X . .
+
+Ebene y = 1
+X O O X
+. O O .
+. O O X
+X X X O
+
+Ebene y = 0
+O X X X
+. O X X
+X X X O
+O X O X
+
+==================================================
+
+--- SPIEL 3 ---
+Spieler 1 (Rot/X): Starke Engine
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 03 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 05 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 07 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 09 | Starke Engine (Sp. 1) spielt -> x=0, z=1, y=3
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 11 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 13 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 15 | Starke Engine (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 17 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 19 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 21 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 23 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=3
+
+>>> GEWINNER: Starke Engine (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. X . .
+X O . .
+. O . .
+. . . .
+
+Ebene y = 2
+. X . .
+O X . .
+. X . .
+. . . .
+
+Ebene y = 1
+. X . .
+O X . .
+. X . .
+. O . O
+
+Ebene y = 0
+. X . .
+O X . .
+. X . O
+O O O X
+
+==================================================
+
+--- SPIEL 4 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Starke Engine
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Starke Engine (Sp. 2) spielt -> x=2, z=2, y=1
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 04 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=0, y=0
+Zug 06 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 08 | Starke Engine (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 10 | Starke Engine (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=0, y=0
+Zug 12 | Starke Engine (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 14 | Starke Engine (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 16 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 17 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 18 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 19 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 20 | Starke Engine (Sp. 2) spielt -> x=2, z=1, y=1
+Zug 21 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=3
+Zug 22 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=1
+Zug 23 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=1
+Zug 24 | Starke Engine (Sp. 2) spielt -> x=2, z=0, y=1
+Zug 25 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=3, y=1
+Zug 26 | Starke Engine (Sp. 2) spielt -> x=0, z=0, y=1
+Zug 27 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 28 | Starke Engine (Sp. 2) spielt -> x=3, z=0, y=1
+
+>>> GEWINNER: Starke Engine (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . .
+. X . .
+. . . .
+. . . .
+
+Ebene y = 2
+. . . .
+. X . .
+. O . .
+. . . .
+
+Ebene y = 1
+O O O O
+. O O .
+. O O .
+. X X .
+
+Ebene y = 0
+O X X X
+X O X .
+X X X O
+O X O X
+
+==================================================
+
+--- SPIEL 5 ---
+Spieler 1 (Rot/X): Starke Engine
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 03 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 05 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 07 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 09 | Starke Engine (Sp. 1) spielt -> x=0, z=1, y=3
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 11 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 13 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 15 | Starke Engine (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 17 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 19 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 21 | Starke Engine (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=0
+Zug 23 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=0, y=0
+Zug 25 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=3
+
+>>> GEWINNER: Starke Engine (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. X . .
+X O . .
+. O . .
+. . . .
+
+Ebene y = 2
+. X . .
+O X . .
+. X . .
+. . . .
+
+Ebene y = 1
+. X . .
+O X . .
+. X . .
+. O . .
+
+Ebene y = 0
+X X . O
+O X . .
+O X O .
+O O O X
+
+==================================================
+
+--- SPIEL 6 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Starke Engine
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Starke Engine (Sp. 2) spielt -> x=2, z=2, y=1
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 04 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=0, y=0
+Zug 06 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 08 | Starke Engine (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 10 | Starke Engine (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=0, y=0
+Zug 12 | Starke Engine (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 14 | Starke Engine (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 16 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 17 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 18 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 19 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 20 | Starke Engine (Sp. 2) spielt -> x=2, z=1, y=1
+Zug 21 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=3
+Zug 22 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=1
+Zug 23 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=1
+Zug 24 | Starke Engine (Sp. 2) spielt -> x=2, z=0, y=1
+Zug 25 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=3, y=1
+Zug 26 | Starke Engine (Sp. 2) spielt -> x=0, z=0, y=1
+Zug 27 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 28 | Starke Engine (Sp. 2) spielt -> x=3, z=0, y=1
+
+>>> GEWINNER: Starke Engine (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . .
+. X . .
+. . . .
+. . . .
+
+Ebene y = 2
+. . . .
+. X . .
+. O . .
+. . . .
+
+Ebene y = 1
+O O O O
+. O O .
+. O O .
+. X X .
+
+Ebene y = 0
+O X X X
+X O X .
+X X X O
+O X O X
+
+==================================================
+
+--- SPIEL 7 ---
+Spieler 1 (Rot/X): Starke Engine
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 03 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 05 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 07 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 09 | Starke Engine (Sp. 1) spielt -> x=0, z=1, y=3
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 11 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 13 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 15 | Starke Engine (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 17 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 19 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 21 | Starke Engine (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=0
+Zug 23 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 25 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=3
+
+>>> GEWINNER: Starke Engine (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. X . .
+X O . .
+. O . .
+. . . .
+
+Ebene y = 2
+. X . .
+O X . .
+. X . .
+. . . .
+
+Ebene y = 1
+. X . .
+O X . .
+. X . .
+. O . O
+
+Ebene y = 0
+X X . .
+O X . .
+O X O .
+O O O X
+
+==================================================
+
+--- SPIEL 8 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Starke Engine
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Starke Engine (Sp. 2) spielt -> x=2, z=2, y=1
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 04 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 06 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 08 | Starke Engine (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 10 | Starke Engine (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=0
+Zug 12 | Starke Engine (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 14 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=0, y=0
+
+>>> GEWINNER: Modell+MTC(champion_iter_3341.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . .
+. . . .
+. . . .
+. . . .
+
+Ebene y = 2
+. . . .
+. . . .
+. O O .
+. . . .
+
+Ebene y = 1
+. . . .
+. . . .
+. O O .
+. . . .
+
+Ebene y = 0
+O . . X
+X O X X
+X X X O
+X . . .
+
+==================================================
+
+--- SPIEL 9 ---
+Spieler 1 (Rot/X): Starke Engine
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 03 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 05 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 07 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 09 | Starke Engine (Sp. 1) spielt -> x=0, z=1, y=3
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 11 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 13 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 15 | Starke Engine (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 17 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 19 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 21 | Starke Engine (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=0
+Zug 23 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 25 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=3
+
+>>> GEWINNER: Starke Engine (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. X . .
+X O . .
+. O . .
+. . . .
+
+Ebene y = 2
+. X . .
+O X . .
+. X . .
+. . . .
+
+Ebene y = 1
+. X . .
+O X . .
+. X . .
+. O . O
+
+Ebene y = 0
+X X . .
+O X . .
+O X O .
+O O O X
+
+==================================================
+
+--- SPIEL 10 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Starke Engine
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Starke Engine (Sp. 2) spielt -> x=2, z=2, y=1
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 04 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 06 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 08 | Starke Engine (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 10 | Starke Engine (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=0
+Zug 12 | Starke Engine (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 14 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=0, y=0
+
+>>> GEWINNER: Modell+MTC(champion_iter_3341.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . .
+. . . .
+. . . .
+. . . .
+
+Ebene y = 2
+. . . .
+. . . .
+. O O .
+. . . .
+
+Ebene y = 1
+. . . .
+. . . .
+. O O .
+. . . .
+
+Ebene y = 0
+O . . X
+X O X X
+X X X O
+X . . .
+
+==================================================
+
+--- SPIEL 11 ---
+Spieler 1 (Rot/X): Starke Engine
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 03 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 05 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 07 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 09 | Starke Engine (Sp. 1) spielt -> x=0, z=1, y=3
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 11 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 13 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 15 | Starke Engine (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 17 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 19 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 21 | Starke Engine (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=0
+Zug 23 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 25 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=3
+
+>>> GEWINNER: Starke Engine (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. X . .
+X O . .
+. O . .
+. . . .
+
+Ebene y = 2
+. X . .
+O X . .
+. X . .
+. . . .
+
+Ebene y = 1
+. X . .
+O X . .
+. X . .
+. O . O
+
+Ebene y = 0
+X X . .
+O X . .
+O X O .
+O O O X
+
+==================================================
+
+--- SPIEL 12 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Starke Engine
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Starke Engine (Sp. 2) spielt -> x=2, z=2, y=1
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 04 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=0, y=0
+Zug 06 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 08 | Starke Engine (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 10 | Starke Engine (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=0, y=0
+Zug 12 | Starke Engine (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 14 | Starke Engine (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 16 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 17 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 18 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 19 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 20 | Starke Engine (Sp. 2) spielt -> x=2, z=1, y=1
+Zug 21 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=3
+Zug 22 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=1
+Zug 23 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=1
+Zug 24 | Starke Engine (Sp. 2) spielt -> x=2, z=0, y=1
+Zug 25 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=3, y=1
+Zug 26 | Starke Engine (Sp. 2) spielt -> x=0, z=0, y=1
+Zug 27 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 28 | Starke Engine (Sp. 2) spielt -> x=3, z=0, y=1
+
+>>> GEWINNER: Starke Engine (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . .
+. X . .
+. . . .
+. . . .
+
+Ebene y = 2
+. . . .
+. X . .
+. O . .
+. . . .
+
+Ebene y = 1
+O O O O
+. O O .
+. O O .
+. X X .
+
+Ebene y = 0
+O X X X
+X O X .
+X X X O
+O X O X
+
+==================================================
+
+--- SPIEL 13 ---
+Spieler 1 (Rot/X): Starke Engine
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 03 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 05 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 07 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 09 | Starke Engine (Sp. 1) spielt -> x=0, z=1, y=3
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 11 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 13 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 15 | Starke Engine (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 17 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 19 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 21 | Starke Engine (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=0
+Zug 23 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=1
+Zug 25 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=3
+
+>>> GEWINNER: Starke Engine (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. X . .
+X O . .
+. O . .
+. . . .
+
+Ebene y = 2
+. X . .
+O X . .
+. X . .
+. . . .
+
+Ebene y = 1
+. X . .
+O X . .
+O X . .
+. O . .
+
+Ebene y = 0
+X X . .
+O X . .
+O X O .
+O O O X
+
+==================================================
+
+--- SPIEL 14 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Starke Engine
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Starke Engine (Sp. 2) spielt -> x=2, z=2, y=1
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 04 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 06 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 08 | Starke Engine (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 10 | Starke Engine (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=0
+Zug 12 | Starke Engine (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 14 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=0, y=0
+
+>>> GEWINNER: Modell+MTC(champion_iter_3341.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . .
+. . . .
+. . . .
+. . . .
+
+Ebene y = 2
+. . . .
+. . . .
+. O O .
+. . . .
+
+Ebene y = 1
+. . . .
+. . . .
+. O O .
+. . . .
+
+Ebene y = 0
+O . . X
+X O X X
+X X X O
+X . . .
+
+==================================================
+
+--- SPIEL 15 ---
+Spieler 1 (Rot/X): Starke Engine
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 03 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 05 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 07 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 09 | Starke Engine (Sp. 1) spielt -> x=0, z=1, y=3
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 11 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 13 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 15 | Starke Engine (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 17 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 19 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 21 | Starke Engine (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=0
+Zug 23 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=0, y=1
+Zug 25 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=3
+
+>>> GEWINNER: Starke Engine (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. X . .
+X O . .
+. O . .
+. . . .
+
+Ebene y = 2
+. X . .
+O X . .
+. X . .
+. . . .
+
+Ebene y = 1
+O X . .
+O X . .
+. X . .
+. O . .
+
+Ebene y = 0
+X X . .
+O X . .
+O X O .
+O O O X
+
+==================================================
+
+--- SPIEL 16 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Starke Engine
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Starke Engine (Sp. 2) spielt -> x=2, z=2, y=1
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 04 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 06 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 08 | Starke Engine (Sp. 2) spielt -> x=2, z=1, y=1
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 10 | Starke Engine (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 12 | Starke Engine (Sp. 2) spielt -> x=3, z=1, y=0
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 14 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=0, y=0
+Zug 16 | Starke Engine (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 17 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=3
+Zug 18 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 19 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 20 | Starke Engine (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 21 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=1
+Zug 22 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=2
+Zug 23 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=1
+Zug 24 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=1
+Zug 25 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=1
+Zug 26 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=2
+Zug 27 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=2
+Zug 28 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=3
+
+>>> GEWINNER: Starke Engine (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. O . .
+. . . .
+. X . .
+. . . .
+
+Ebene y = 2
+. O . .
+. O . .
+. O . .
+. X . .
+
+Ebene y = 1
+. O . .
+. O O X
+. O O X
+. X . .
+
+Ebene y = 0
+O O X .
+X X X O
+X X X O
+. X O X
+
+==================================================
+
+--- SPIEL 17 ---
+Spieler 1 (Rot/X): Starke Engine
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 03 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 05 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 07 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 09 | Starke Engine (Sp. 1) spielt -> x=0, z=1, y=3
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 11 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 13 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 15 | Starke Engine (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 17 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 19 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 21 | Starke Engine (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=0
+Zug 23 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=2
+Zug 25 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=3
+
+>>> GEWINNER: Starke Engine (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. X . .
+X O . .
+. O . .
+. . . .
+
+Ebene y = 2
+. X . .
+O X . .
+. X . .
+. O . .
+
+Ebene y = 1
+. X . .
+O X . .
+. X . .
+. O . .
+
+Ebene y = 0
+X X . .
+O X . .
+O X O .
+O O O X
+
+==================================================
+
+--- SPIEL 18 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Starke Engine
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Starke Engine (Sp. 2) spielt -> x=2, z=2, y=1
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 04 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 06 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 08 | Starke Engine (Sp. 2) spielt -> x=2, z=1, y=1
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 10 | Starke Engine (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 12 | Starke Engine (Sp. 2) spielt -> x=3, z=1, y=0
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 14 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=0, y=0
+Zug 16 | Starke Engine (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 17 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=3
+Zug 18 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 19 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 20 | Starke Engine (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 21 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=1
+Zug 22 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=2
+Zug 23 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=1
+Zug 24 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=1
+Zug 25 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=1
+Zug 26 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=2
+Zug 27 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=2
+Zug 28 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=3
+
+>>> GEWINNER: Starke Engine (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. O . .
+. . . .
+. X . .
+. . . .
+
+Ebene y = 2
+. O . .
+. O . .
+. O . .
+. X . .
+
+Ebene y = 1
+. O . .
+. O O X
+. O O X
+. X . .
+
+Ebene y = 0
+O O X .
+X X X O
+X X X O
+. X O X
+
+==================================================
+
+--- SPIEL 19 ---
+Spieler 1 (Rot/X): Starke Engine
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 03 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 05 | Starke Engine (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 07 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 09 | Starke Engine (Sp. 1) spielt -> x=0, z=1, y=3
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 11 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 13 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 15 | Starke Engine (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 17 | Starke Engine (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 19 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 21 | Starke Engine (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=0
+Zug 23 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=1
+Zug 25 | Starke Engine (Sp. 1) spielt -> x=1, z=0, y=3
+
+>>> GEWINNER: Starke Engine (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. X . .
+X O . .
+. O . .
+. . . .
+
+Ebene y = 2
+. X . .
+O X . .
+. X . .
+. . . .
+
+Ebene y = 1
+. X . .
+O X . .
+O X . .
+. O . .
+
+Ebene y = 0
+X X . .
+O X . .
+O X O .
+O O O X
+
+==================================================
+
+--- SPIEL 20 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Starke Engine
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Starke Engine (Sp. 2) spielt -> x=2, z=2, y=1
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 04 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 06 | Starke Engine (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 08 | Starke Engine (Sp. 2) spielt -> x=2, z=1, y=1
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 10 | Starke Engine (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 12 | Starke Engine (Sp. 2) spielt -> x=3, z=1, y=0
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 14 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=0, y=0
+Zug 16 | Starke Engine (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 17 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 18 | Starke Engine (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 19 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=1
+Zug 20 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 21 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=2
+Zug 22 | Starke Engine (Sp. 2) spielt -> x=3, z=3, y=3
+Zug 23 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=2
+Zug 24 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=2
+Zug 25 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=3, y=1
+Zug 26 | Starke Engine (Sp. 2) spielt -> x=2, z=1, y=2
+Zug 27 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=1
+Zug 28 | Starke Engine (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 29 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=1
+Zug 30 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=1
+Zug 31 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=1
+Zug 32 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=2
+Zug 33 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=2
+Zug 34 | Starke Engine (Sp. 2) spielt -> x=1, z=0, y=3
+
+>>> GEWINNER: Starke Engine (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. O . .
+. O . .
+. . . .
+. . . O
+
+Ebene y = 2
+. O . .
+. O O .
+. O X .
+. X . X
+
+Ebene y = 1
+. O . .
+. O O X
+. O O X
+. X X X
+
+Ebene y = 0
+O O X .
+X X X O
+X X X O
+. X O X
+
+==================================================
+
+--- BENCHMARK ENDERGEBNIS ---
+Winrate von Starke Engine: 85.0%
+Winrate von Modell+MTC(champion_iter_3341.pt): 15.0%
+Remis: 0.0%

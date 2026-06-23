@@ -1,0 +1,1474 @@
+BENCHMARK START: 20 Spiele
+Zeitlimit: 180ms | Kerne: 4
+Agent 1: Modell+MTC(champion_iter_3341.pt)
+Agent 2: Modell+MTC(v9_champion.pt)
+==================================================
+
+--- SPIEL 1 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Modell+MTC(v9_champion.pt)
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 04 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=0, y=0
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 06 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=0
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 08 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=0
+Zug 10 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=1, y=0
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=3, y=0
+Zug 12 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=3
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 14 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=3, y=1
+Zug 16 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 17 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 18 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 19 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 20 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 21 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 22 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=0, y=3
+Zug 23 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=3, y=2
+Zug 24 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=3, y=3
+Zug 25 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=0
+Zug 26 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=0, y=1
+Zug 27 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=0, y=2
+Zug 28 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=0, y=3
+Zug 29 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=0, y=1
+Zug 30 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=1, y=0
+Zug 31 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=1
+Zug 32 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=1, y=2
+Zug 33 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=3
+Zug 34 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 35 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=2
+Zug 36 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=3, y=3
+Zug 37 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=1
+Zug 38 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 39 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=1
+
+>>> GEWINNER: Modell+MTC(champion_iter_3341.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. O O .
+. . X .
+. O O .
+. O O .
+
+Ebene y = 2
+. X X .
+. . O .
+. X O .
+. X X .
+
+Ebene y = 1
+X X O .
+. X X .
+. O X .
+. O X X
+
+Ebene y = 0
+O X O .
+X O O O
+O O X X
+X O X X
+
+==================================================
+
+--- SPIEL 2 ---
+Spieler 1 (Rot/X): Modell+MTC(v9_champion.pt)
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 03 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=1
+Zug 05 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 07 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 09 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=0, y=0
+Zug 11 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 13 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 15 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 17 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=2
+Zug 19 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=3, y=3
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=2
+Zug 21 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=2, y=3
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 23 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 25 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 26 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 27 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=0, y=1
+Zug 28 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 29 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=1, y=3
+Zug 30 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=1, y=1
+Zug 31 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=2
+Zug 32 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 33 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=3
+Zug 34 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 35 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=3, y=0
+Zug 36 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=3, y=1
+Zug 37 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=0, y=2
+Zug 38 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=0, y=3
+Zug 39 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=3, y=1
+Zug 40 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=3, y=2
+Zug 41 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=3, y=3
+Zug 42 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=1
+Zug 43 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 44 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=0, y=1
+Zug 45 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=3, y=2
+Zug 46 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=1
+Zug 47 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=0, y=2
+
+>>> GEWINNER: Modell+MTC(v9_champion.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+O . . .
+X O . .
+X O X .
+. . X X
+
+Ebene y = 2
+X X . .
+O X X .
+O X O .
+. X O O
+
+Ebene y = 1
+X O . .
+O X O .
+O X X O
+O X O O
+
+Ebene y = 0
+X X . O
+O X X X
+O X X O
+X O O O
+
+==================================================
+
+--- SPIEL 3 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Modell+MTC(v9_champion.pt)
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 04 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=0, y=0
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 06 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=0
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 08 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=0
+Zug 10 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=3
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 12 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 14 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=1, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 16 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=1, y=1
+Zug 17 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 18 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=0, y=3
+Zug 19 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=0
+Zug 20 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 21 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=3
+Zug 22 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=1, y=2
+Zug 23 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=3
+Zug 24 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 25 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=1
+Zug 26 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=2
+Zug 27 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 28 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=1, y=1
+Zug 29 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=1
+Zug 30 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 31 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 32 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=1, y=2
+
+>>> GEWINNER: Modell+MTC(v9_champion.pt) (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. O . .
+. . X .
+. X O .
+. . . .
+
+Ebene y = 2
+. X . .
+O O O O
+. O O .
+. . . .
+
+Ebene y = 1
+. X . .
+X O O O
+. O X X
+. . . .
+
+Ebene y = 0
+O X O .
+X X O X
+X O X X
+X X . .
+
+==================================================
+
+--- SPIEL 4 ---
+Spieler 1 (Rot/X): Modell+MTC(v9_champion.pt)
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 03 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=1
+Zug 05 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 07 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 09 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=0, y=0
+Zug 11 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 13 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 15 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 17 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=2
+Zug 19 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=2, y=3
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=2
+Zug 21 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=3, y=3
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 23 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=0, y=1
+Zug 25 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 26 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 27 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=3
+Zug 28 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 29 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=2, y=1
+Zug 30 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 31 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=3, y=1
+Zug 32 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=0, y=0
+Zug 33 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 34 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=2
+Zug 35 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=2, y=3
+Zug 36 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 37 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=1, y=3
+Zug 38 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=1, y=1
+Zug 39 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 40 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=0, y=2
+Zug 41 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=0, y=3
+Zug 42 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=2
+
+>>> GEWINNER: Modell+MTC(champion_iter_3341.pt) (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. X . .
+X O . .
+X O X X
+. . . X
+
+Ebene y = 2
+O X . .
+O X . .
+O X O O
+O . . O
+
+Ebene y = 1
+O X . .
+O X O .
+O X X X
+X . . O
+
+Ebene y = 0
+X O . O
+O X X X
+O X X O
+O . . O
+
+==================================================
+
+--- SPIEL 5 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Modell+MTC(v9_champion.pt)
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=0
+Zug 04 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=0
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 06 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=1, y=0
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=1
+Zug 08 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=2
+Zug 10 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=2, y=3
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=0, y=1
+Zug 12 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=3
+Zug 14 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=1
+Zug 16 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=1, y=1
+Zug 17 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=0, y=0
+Zug 18 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 19 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 20 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=1, y=2
+Zug 21 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=3
+Zug 22 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 23 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=2
+Zug 24 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=1, y=3
+Zug 25 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 26 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 27 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=3
+Zug 28 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=2
+Zug 29 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=0, y=2
+Zug 30 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+
+>>> GEWINNER: Modell+MTC(v9_champion.pt) (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . .
+. O X O
+O X X .
+. . . .
+
+Ebene y = 2
+X . . .
+. O O X
+X O O .
+. . . .
+
+Ebene y = 1
+X . . .
+. O O X
+X O X .
+. . . .
+
+Ebene y = 0
+O . . X
+. O O X
+X O X O
+. X . .
+
+==================================================
+
+--- SPIEL 6 ---
+Spieler 1 (Rot/X): Modell+MTC(v9_champion.pt)
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 03 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=1
+Zug 05 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 07 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=1, y=0
+Zug 09 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 11 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 13 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=3, y=0
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=0, y=0
+Zug 15 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=2, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=1, y=1
+Zug 17 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=1, y=2
+Zug 19 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=1, y=3
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=2
+Zug 21 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=2, y=3
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=0, y=1
+Zug 23 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 25 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 26 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=1
+Zug 27 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=3
+
+>>> GEWINNER: Modell+MTC(v9_champion.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . .
+. X . X
+X O . .
+. . . .
+
+Ebene y = 2
+. . . .
+. X . O
+O X . .
+. . . .
+
+Ebene y = 1
+O . . .
+. X . O
+O X O .
+. . . .
+
+Ebene y = 0
+X . . O
+. X X O
+O X X X
+X O O O
+
+==================================================
+
+--- SPIEL 7 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Modell+MTC(v9_champion.pt)
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 04 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=0, y=0
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 06 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=0
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 08 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=0
+Zug 10 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=3
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=0
+Zug 12 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 14 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=1, y=1
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 16 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 17 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 18 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=0, y=3
+Zug 19 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 20 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=0, y=0
+Zug 21 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 22 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 23 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=1
+Zug 24 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 25 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=3
+Zug 26 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 27 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=2
+Zug 28 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=1, y=3
+Zug 29 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 30 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=0, y=1
+Zug 31 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=0, y=1
+Zug 32 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 33 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=1
+Zug 34 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 35 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=0, y=1
+Zug 36 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=0, y=2
+Zug 37 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=2
+Zug 38 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=3, y=2
+Zug 39 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=3
+Zug 40 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=0, y=3
+Zug 41 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=0, y=2
+Zug 42 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=3, y=2
+Zug 43 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=1
+Zug 44 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=2, y=1
+Zug 45 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=0, y=2
+Zug 46 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=0, y=3
+Zug 47 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=0, y=3
+Zug 48 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=2, y=2
+Zug 49 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=3
+Zug 50 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=2, y=2
+
+>>> GEWINNER: Modell+MTC(v9_champion.pt) (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+O O X O
+O X . .
+. X O .
+. . . X
+
+Ebene y = 2
+X X X O
+X X . X
+O O O O
+. O . O
+
+Ebene y = 1
+O X X X
+X O . O
+X O X O
+. X . O
+
+Ebene y = 0
+O X O O
+X O . X
+O O X X
+X X O X
+
+==================================================
+
+--- SPIEL 8 ---
+Spieler 1 (Rot/X): Modell+MTC(v9_champion.pt)
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 03 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=1
+Zug 05 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 07 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 09 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=0, y=0
+Zug 11 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 13 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=0, y=0
+Zug 15 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 17 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=1
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=2
+Zug 19 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=2, y=3
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=1
+Zug 21 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=2
+Zug 23 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=2, y=3
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=0, y=1
+Zug 25 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 26 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 27 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=0, y=0
+Zug 28 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 29 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 30 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=0, y=2
+Zug 31 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=0, y=3
+Zug 32 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 33 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 34 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 35 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=1, y=1
+Zug 36 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 37 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=2
+Zug 38 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=3
+Zug 39 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=1, y=2
+Zug 40 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=3
+Zug 41 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=2
+Zug 42 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=1, y=3
+Zug 43 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=1, y=2
+
+>>> GEWINNER: Modell+MTC(v9_champion.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . X
+O O O .
+X O O X
+. . . .
+
+Ebene y = 2
+. . . O
+X X X X
+O X X O
+. . . .
+
+Ebene y = 1
+. . . O
+O X X X
+O X X O
+. . . O
+
+Ebene y = 0
+X O X O
+O X X X
+O X X O
+O X O O
+
+==================================================
+
+--- SPIEL 9 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Modell+MTC(v9_champion.pt)
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 04 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=0, y=0
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 06 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=0
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 08 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=0
+Zug 10 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=3
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=0
+Zug 12 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 14 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=0, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 16 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 17 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 18 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 19 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=1
+Zug 20 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 21 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 22 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=0, y=3
+Zug 23 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=1
+Zug 24 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=0, y=1
+Zug 25 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=3
+Zug 26 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=0, y=2
+Zug 27 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=0, y=3
+Zug 28 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 29 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 30 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=1, y=1
+Zug 31 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=2
+Zug 32 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=0, y=1
+Zug 33 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=0, y=2
+Zug 34 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=3, y=1
+Zug 35 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=0, y=1
+Zug 36 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 37 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=2
+Zug 38 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=0, y=3
+Zug 39 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=3
+Zug 40 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=1, y=3
+Zug 41 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=3
+Zug 42 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=1, y=0
+Zug 43 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=1
+Zug 44 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=1, y=2
+Zug 45 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 46 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=2, y=1
+Zug 47 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=1
+Zug 48 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=3, y=2
+Zug 49 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=3, y=0
+Zug 50 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 51 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=1
+Zug 52 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=2, y=2
+Zug 53 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=3
+Zug 54 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=3, y=3
+Zug 55 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=3
+Zug 56 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=0, y=2
+Zug 57 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=0, y=3
+Zug 58 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=3, y=1
+Zug 59 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=3, y=2
+Zug 60 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=3, y=3
+Zug 61 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=2
+Zug 62 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=2, y=3
+Zug 63 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=2
+Zug 64 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=3, y=3
+
+>>> GEWINNER: Modell+MTC(v9_champion.pt) (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+X O X O
+O X X X
+O O O X
+X O O O
+
+Ebene y = 2
+O X O X
+O X O X
+X X O O
+X O X X
+
+Ebene y = 1
+X X O O
+X O X O
+X O X O
+O X O X
+
+Ebene y = 0
+O X O O
+X O O X
+O O X X
+X X X O
+
+==================================================
+
+--- SPIEL 10 ---
+Spieler 1 (Rot/X): Modell+MTC(v9_champion.pt)
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 03 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=1
+Zug 05 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 07 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 09 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 11 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 13 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 15 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=3, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=1, y=0
+Zug 17 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=0, y=0
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=0, y=0
+Zug 19 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 21 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 23 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=3
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=0, y=1
+Zug 25 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=0, y=0
+Zug 26 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=1, y=0
+Zug 27 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=1
+Zug 28 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=2
+Zug 29 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=2, y=3
+Zug 30 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 31 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=0, y=1
+Zug 32 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=1
+Zug 33 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=0, y=2
+Zug 34 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=0, y=3
+Zug 35 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=2
+Zug 36 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 37 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=3, y=2
+
+>>> GEWINNER: Modell+MTC(v9_champion.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . O
+. O . .
+X O X .
+. . . .
+
+Ebene y = 2
+. . . X
+. X X .
+O X O .
+X . . .
+
+Ebene y = 1
+O . . X
+. X X .
+O X X .
+O O . O
+
+Ebene y = 0
+X O X X
+. X O O
+O X X O
+O O X O
+
+==================================================
+
+--- SPIEL 11 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Modell+MTC(v9_champion.pt)
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 04 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=0, y=0
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 06 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=0
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 08 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=0
+Zug 10 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=3
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=0
+Zug 12 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 14 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=0, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 16 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 17 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 18 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 19 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=1
+Zug 20 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 21 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 22 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=0, y=3
+Zug 23 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=1
+Zug 24 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 25 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 26 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 27 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=3
+Zug 28 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 29 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=3, y=0
+Zug 30 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 31 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=3, y=1
+Zug 32 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=3, y=2
+Zug 33 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=3
+Zug 34 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=3, y=1
+Zug 35 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=2
+Zug 36 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=3, y=2
+Zug 37 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=2
+Zug 38 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=0, y=1
+Zug 39 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=0, y=2
+Zug 40 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=0, y=3
+Zug 41 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=0, y=1
+Zug 42 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=2, y=3
+Zug 43 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=1
+Zug 44 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=2, y=1
+Zug 45 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=2
+Zug 46 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=1, y=3
+Zug 47 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=3
+Zug 48 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=2, y=2
+Zug 49 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=3
+Zug 50 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=0, y=2
+Zug 51 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=0, y=1
+Zug 52 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=3, y=3
+Zug 53 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=3
+Zug 54 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 55 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=0, y=2
+Zug 56 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=0, y=3
+Zug 57 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=0, y=3
+Zug 58 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 59 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=2
+Zug 60 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=3, y=3
+
+>>> GEWINNER: Modell+MTC(v9_champion.pt) (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+O O O X
+X O . O
+O X O X
+X X O O
+
+Ebene y = 2
+X X O X
+O X . X
+X O O O
+X O O X
+
+Ebene y = 1
+O X X X
+X O . X
+X O X O
+O O X O
+
+Ebene y = 0
+O X O O
+X O . X
+O O X X
+X O X X
+
+==================================================
+
+--- SPIEL 12 ---
+Spieler 1 (Rot/X): Modell+MTC(v9_champion.pt)
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 03 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=1
+Zug 05 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 07 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 09 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=0, y=0
+Zug 11 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 13 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 15 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 17 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=2
+Zug 19 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=2, y=3
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=2
+Zug 21 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=3, y=3
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 23 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=0, y=1
+Zug 25 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 26 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 27 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=3
+Zug 28 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 29 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 30 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=0, y=0
+Zug 31 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 32 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 33 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 34 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=0, y=1
+Zug 35 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=0, y=3
+
+>>> GEWINNER: Modell+MTC(v9_champion.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. X . .
+. O . .
+X O X .
+. . . X
+
+Ebene y = 2
+. X . .
+. X . .
+O X O .
+. . . O
+
+Ebene y = 1
+O X . O
+. X . .
+O X X .
+. O . O
+
+Ebene y = 0
+X O . O
+O X X X
+O X X O
+O X . O
+
+==================================================
+
+--- SPIEL 13 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Modell+MTC(v9_champion.pt)
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 04 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=0, y=0
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 06 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=0
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 08 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=0
+Zug 10 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=3
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 12 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=1, y=0
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=0
+Zug 14 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=3, y=0
+Zug 16 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 17 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 18 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 19 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=3, y=1
+Zug 20 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 21 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 22 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=1, y=1
+Zug 23 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=1
+Zug 24 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=1, y=2
+Zug 25 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=0, y=1
+Zug 26 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 27 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 28 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=2
+Zug 29 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=3
+Zug 30 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=1, y=2
+Zug 31 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=1
+Zug 32 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=1, y=3
+
+>>> GEWINNER: Modell+MTC(v9_champion.pt) (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . .
+O X . .
+. . O .
+. . . .
+
+Ebene y = 2
+. . . .
+O O O .
+. O O .
+. . . .
+
+Ebene y = 1
+X X . .
+O O O X
+. X X .
+. X X .
+
+Ebene y = 0
+O X O .
+X O X O
+. O X X
+X O X X
+
+==================================================
+
+--- SPIEL 14 ---
+Spieler 1 (Rot/X): Modell+MTC(v9_champion.pt)
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 03 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=1
+Zug 05 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 07 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 09 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 11 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 13 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 15 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=3, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=1, y=0
+Zug 17 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=0, y=0
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=0, y=0
+Zug 19 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=1
+Zug 21 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 23 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=2
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=3
+Zug 25 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 26 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=0, y=0
+Zug 27 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=1
+Zug 28 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=1
+Zug 29 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=2
+Zug 30 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=1, y=3
+Zug 31 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=3, y=1
+Zug 32 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=0, y=1
+Zug 33 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=0, y=1
+
+>>> GEWINNER: Modell+MTC(v9_champion.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . .
+. O O .
+. O O .
+. . . .
+
+Ebene y = 2
+. . . .
+. X X .
+. X X .
+. . . .
+
+Ebene y = 1
+X . O .
+. X X .
+O X X O
+O . . X
+
+Ebene y = 0
+X O O X
+. X X O
+O X X O
+O O X O
+
+==================================================
+
+--- SPIEL 15 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Modell+MTC(v9_champion.pt)
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 04 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=1
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 06 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 08 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 10 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 12 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=0
+Zug 14 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=0, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=0
+
+>>> GEWINNER: Modell+MTC(champion_iter_3341.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . .
+. . . .
+. . . .
+. . . .
+
+Ebene y = 2
+. . . .
+. . . .
+. . O .
+. . . .
+
+Ebene y = 1
+. . . .
+. . . .
+. O O .
+. . . .
+
+Ebene y = 0
+O X . O
+X O . X
+X X X X
+. O . X
+
+==================================================
+
+--- SPIEL 16 ---
+Spieler 1 (Rot/X): Modell+MTC(v9_champion.pt)
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 03 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=1
+Zug 05 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 07 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 09 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=0, y=0
+Zug 11 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 13 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 15 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 17 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=2
+Zug 19 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=2, y=3
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=2
+Zug 21 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=3, y=3
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 23 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=0, y=1
+Zug 25 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 26 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 27 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=3
+Zug 28 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 29 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=2, y=1
+Zug 30 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=1
+Zug 31 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=3, y=1
+Zug 32 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=0, y=1
+Zug 33 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=1, y=2
+Zug 34 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=0, y=2
+Zug 35 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=0, y=3
+Zug 36 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 37 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=3, y=0
+Zug 38 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=0, y=0
+Zug 39 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=3, y=1
+Zug 40 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=0, y=0
+Zug 41 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=1
+Zug 42 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=3
+Zug 43 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=0, y=1
+
+>>> GEWINNER: Modell+MTC(v9_champion.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . X
+O O . .
+X O X .
+. . . X
+
+Ebene y = 2
+. . . O
+X X . .
+O X O .
+. . . O
+
+Ebene y = 1
+O . X O
+O X X .
+O X X X
+X . X O
+
+Ebene y = 0
+X O O O
+O X X X
+O X X O
+O O X O
+
+==================================================
+
+--- SPIEL 17 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Modell+MTC(v9_champion.pt)
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 04 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=0, y=0
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 06 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=0
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 08 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 10 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 12 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=1
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 14 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=1, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 16 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=0, y=3
+Zug 17 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=0
+Zug 18 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 19 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=3
+Zug 20 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 21 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=0, y=1
+Zug 22 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=2
+Zug 23 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 24 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=1, y=1
+Zug 25 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=0
+Zug 26 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=3, y=0
+Zug 27 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=1
+Zug 28 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=1, y=2
+Zug 29 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=1, y=3
+Zug 30 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 31 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=2
+Zug 32 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=1, y=3
+Zug 33 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=3, y=2
+Zug 34 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=3, y=3
+Zug 35 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=1
+Zug 36 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 37 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=1
+Zug 38 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=0, y=2
+Zug 39 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=0, y=0
+Zug 40 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 41 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=3, y=2
+Zug 42 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=3, y=3
+
+>>> GEWINNER: Modell+MTC(v9_champion.pt) (Spieler 2) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. O . .
+. O X O
+. X . .
+. O . O
+
+Ebene y = 2
+O X . .
+. O O X
+. O O .
+. X . X
+
+Ebene y = 1
+X X . .
+. O O X
+. O X X
+X O . O
+
+Ebene y = 0
+O X O X
+X X O X
+. O X O
+X X O X
+
+==================================================
+
+--- SPIEL 18 ---
+Spieler 1 (Rot/X): Modell+MTC(v9_champion.pt)
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 03 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=1
+Zug 05 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 07 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 09 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=0, y=0
+Zug 11 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 13 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 15 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=1, y=0
+Zug 17 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=2
+Zug 19 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=2, y=3
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=2
+Zug 21 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=3, y=3
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 23 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=0, y=1
+Zug 25 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 26 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 27 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=3
+Zug 28 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 29 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=3, y=0
+Zug 30 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=0, y=0
+Zug 31 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 32 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=1
+Zug 33 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=0, y=2
+Zug 34 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=0, y=1
+Zug 35 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=0, y=3
+
+>>> GEWINNER: Modell+MTC(v9_champion.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. X . .
+. O . .
+X O X .
+. . . X
+
+Ebene y = 2
+. X . .
+. X . .
+O X O .
+. . . O
+
+Ebene y = 1
+O X . O
+. X . .
+O X X .
+. O . O
+
+Ebene y = 0
+X O . O
+O X X X
+O X X O
+O X . O
+
+==================================================
+
+--- SPIEL 19 ---
+Spieler 1 (Rot/X): Modell+MTC(champion_iter_3341.pt)
+Spieler 2 (Blau/O): Modell+MTC(v9_champion.pt)
+--------------------
+Zug 01 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=0, y=0
+Zug 03 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 04 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=0, y=0
+Zug 05 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=0
+Zug 06 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=0
+Zug 07 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+Zug 08 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=2
+Zug 09 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=3, y=0
+Zug 10 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=2, z=2, y=3
+Zug 11 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 12 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 13 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=1, y=0
+Zug 14 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=0
+Zug 15 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=1, z=0, y=1
+Zug 16 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=1, y=1
+Zug 17 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=0, y=0
+Zug 18 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=1, y=1
+Zug 19 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=0, z=2, y=1
+Zug 20 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=1, z=2, y=2
+Zug 21 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=0
+Zug 22 | Modell+MTC(v9_champion.pt) (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 23 | Modell+MTC(champion_iter_3341.pt) (Sp. 1) spielt -> x=3, z=2, y=1
+
+>>> GEWINNER: Modell+MTC(champion_iter_3341.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. . . .
+. . . .
+. . O .
+. . . .
+
+Ebene y = 2
+. . . .
+. . . .
+. O O .
+. . . .
+
+Ebene y = 1
+. X . .
+. O . O
+X X X X
+. . . .
+
+Ebene y = 0
+O X O X
+X O . X
+O O X X
+X . . O
+
+==================================================
+
+--- SPIEL 20 ---
+Spieler 1 (Rot/X): Modell+MTC(v9_champion.pt)
+Spieler 2 (Blau/O): Modell+MTC(champion_iter_3341.pt)
+--------------------
+Zug 01 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=0
+Zug 02 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=0
+Zug 03 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=0, y=0
+Zug 04 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=1
+Zug 05 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=0
+Zug 06 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=0
+Zug 07 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=1
+Zug 08 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=0
+Zug 09 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=0
+Zug 10 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=0
+Zug 11 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=2, y=2
+Zug 12 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=2, y=3
+Zug 13 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=1
+Zug 14 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=3, y=0
+Zug 15 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=3, y=0
+Zug 16 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=1, y=0
+Zug 17 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=0, y=0
+Zug 18 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=0, y=0
+Zug 19 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=1
+Zug 20 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=1
+Zug 21 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=1, y=2
+Zug 22 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=1, y=3
+Zug 23 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=2, y=2
+Zug 24 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=2, y=3
+Zug 25 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=0
+Zug 26 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=0, y=0
+Zug 27 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=1
+Zug 28 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=1
+Zug 29 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=1, y=2
+Zug 30 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=1, y=3
+Zug 31 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=3, y=1
+Zug 32 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=0, y=1
+Zug 33 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=1, y=1
+Zug 34 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=2, y=2
+Zug 35 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=2, y=3
+Zug 36 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=0, y=1
+Zug 37 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=3, y=2
+Zug 38 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=3, y=3
+Zug 39 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=3, y=1
+Zug 40 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=0, z=0, y=1
+Zug 41 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=0, y=1
+Zug 42 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=0, y=2
+Zug 43 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=0, y=3
+Zug 44 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=2, y=2
+Zug 45 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=2, y=3
+Zug 46 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=1, z=0, y=2
+Zug 47 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=1, z=0, y=3
+Zug 48 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=3, y=2
+Zug 49 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=0, y=2
+Zug 50 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=2, z=0, y=3
+Zug 51 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=2, z=3, y=3
+Zug 52 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=1, y=2
+Zug 53 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=3, z=1, y=3
+Zug 54 | Modell+MTC(champion_iter_3341.pt) (Sp. 2) spielt -> x=3, z=3, y=1
+Zug 55 | Modell+MTC(v9_champion.pt) (Sp. 1) spielt -> x=0, z=1, y=0
+
+>>> GEWINNER: Modell+MTC(v9_champion.pt) (Spieler 1) <<<
+
+Finales Spielfeld:
+Ebene y = 3
+. X O X
+. O O X
+X O O X
+O . X .
+
+Ebene y = 2
+. O X O
+. X X O
+O X X O
+X . O .
+
+Ebene y = 1
+O O O X
+. X X X
+O X X O
+O X X O
+
+Ebene y = 0
+X O O X
+X X X O
+O X X O
+O O X O
+
+==================================================
+
+--- BENCHMARK ENDERGEBNIS ---
+Winrate von Modell+MTC(champion_iter_3341.pt): 20.0%
+Winrate von Modell+MTC(v9_champion.pt): 80.0%
+Remis: 0.0%
