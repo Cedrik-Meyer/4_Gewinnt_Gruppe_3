@@ -224,6 +224,11 @@ src/connect4/
 ```
 
 ---
+# Dokumentation
+
+Die **[Dokumentation](/docs/documentation/docu.md)** zum Projekt, der Architektur und der Implementierung
+
+---
 
 # Entwicklerhinweis
 

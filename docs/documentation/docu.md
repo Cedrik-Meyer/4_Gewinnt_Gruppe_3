@@ -15,9 +15,9 @@ Die Kernarchitektur des Agenten ist in drei aufeinander aufbauende Detailstufen 
 * **[Level 3: Tiefe Implementierungsdetails](level3.md)**
   Der Deep-Dive für Entwickler. Enthält genaue Erklärungen zu den mathematischen Tensor-Transformationen, den Multiprocessing-Optimierungen in den MCTS/Alpha-Beta-Suchbäumen und dem chronologischen Inferenz-Datenfluss im Live-Betrieb.
 
-## 2. Daten & Schnittstellen
+## 2. Daten & interne Schnittstellen
 
-* **[Datenformate & Schnittstellen](data.md)**
+* **[Datenformate & interne Schnittstellen](data.md)**
   Definiert die sechs Datenebenen (A bis F) des Systems. Beschreibt den genauen Weg eines Spielfelds vom rohen Server-JSON (`turn.request`), über die interne Python-Repräsentation, hinein in den float32-Tensor für das neuronale Netz und zurück in den JSON-Umschlag (`move.submit`).
 
 ## 3. Maschinelles Lernen & Training
