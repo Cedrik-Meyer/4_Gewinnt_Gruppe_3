@@ -30,7 +30,10 @@ cuda = [
     "torch>=2.0.0"
 ]
 
+[tool.setuptools]
+package-dir = { "" = "src/connect4" }
+
 [tool.setuptools.packages.find]
 # Automatische Erkennung der Code-Ordner
-where = ["."]
+where = ["src/connect4"]
 include = ["shared*", "runtime_system*", "training_system*", "tools*"]
