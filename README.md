@@ -99,7 +99,7 @@ Das Modell lernt aus diesen Entdeckungen und verbessert sein strategisches Verst
 ### Start des Self-Play-Trainings
 
 ```bash
-python src/connect4/main_train.py
+python src/connect4/training_system/training/main_train.py
 ```
 
 ---
@@ -121,7 +121,7 @@ Dieses Verfahren eignet sich besonders für gezieltes "Bugfixing" am Modell.
 ### Start des Supervised Trainings
 
 ```bash
-python src/connect4/supervised_train.py
+python src/connect4/training_system/training/supervised_train.py
 ```
 
 ---
@@ -147,7 +147,7 @@ Der Standard-Checkpoint-Pfad ist als `DEFAULT_CHECKPOINT_PATH` in `runtime_syste
 ## Verbinden
 
 ```bash
-python -m connect4.runtime_system.main_live
+python -m runtime_system.main_live
 ```
 
 Das Skript:
@@ -178,7 +178,7 @@ Zum Testen mehrerer Modelle auf dem Server kann ein zweiter Agent mit eigenem To
 Tragen Sie dazu `AGENT_TOKEN_2` in die `.env` ein und starten Sie den Agenten mit:
 
 ```bash
-python -m connect4.runtime_system.main_live <TOKEN_ENV_VAR> <CHECKPOINT_PATH>
+python -m runtime_system.main_live <TOKEN_ENV_VAR> <CHECKPOINT_PATH>
 ```
 
 ## Parameter
@@ -204,7 +204,7 @@ Pfad zur gewünschten Checkpoint-Datei.
 Zweiter Agent mit eigenem Modell:
 
 ```bash
-python -m connect4.runtime_system.main_live AGENT_TOKEN_2 src/connect4/training_system/checkpoints/v9_champion.pt
+python -m runtime_system.main_live AGENT_TOKEN_2 src/connect4/training_system/checkpoints/v9_champion.pt
 ```
 
 Beide Prozesse können parallel in separaten Terminals gestartet und unabhängig voneinander mit `Strg + C` beendet werden.
@@ -215,12 +215,15 @@ Beide Prozesse können parallel in separaten Terminals gestartet und unabhängig
 
 ```text
 src/connect4/
-├── runtime_system/        # Live-Agent und Serveranbindung
-├── training_system/       # Self-Play, Supervised Learning und Checkpoints
-├── tools/                 # Benchmarking und lokale Testwerkzeuge
-├── logs/                  # Benchmark- und Analyse-Logs
-├── main_train.py          # Reinforcement Learning / Self-Play
-└── supervised_train.py    # Supervised Learning Pipeline
+├── runtime_system/                 # Live-Agent und Serveranbindung
+├── shared/                         # Gemeinsame Datenstrukturen und Spiellogik
+├── training_system/
+│   ├── training/
+│   │   ├── main_train.py           # Reinforcement Learning / Self-Play
+│   │   └── supervised_train.py     # Supervised Learning Pipeline
+│   └── checkpoints/                # Trainierte Modelle (*.pt)
+└── tools/                          # Benchmarking und lokale Testwerkzeuge
+logs/                                # Benchmark- und Analyse-Logs (Projekt-Root)
 ```
 
 ---
