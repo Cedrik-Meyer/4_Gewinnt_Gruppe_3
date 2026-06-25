@@ -21,3 +21,6 @@ training_system/checkpoints/*.pt
 *.egg-info/
 
 training_system/checkpoints/training_metrics.csv
+
+#Lokales Hilfsprogramm
+logs/visuals.py

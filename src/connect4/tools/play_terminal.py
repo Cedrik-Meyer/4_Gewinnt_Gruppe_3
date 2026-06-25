@@ -15,8 +15,13 @@ import datetime
 import torch
 import numpy as np
 
+# Dynamische Pfad-Auflösung (robust gegen unterschiedliche Ausführungsverzeichnisse)
+CURRENT_FILE = os.path.abspath(__file__)
+SRC_CONNECT4_DIR = os.path.dirname(os.path.dirname(CURRENT_FILE))
+REPO_ROOT = os.path.dirname(os.path.dirname(SRC_CONNECT4_DIR))
+
 # Root-Verzeichnis zum Python-Pfad hinzufügen
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(SRC_CONNECT4_DIR)
 
 from shared.data_structures import Move
 from shared.game_logic import create_empty_board, apply_move, check_winner
@@ -28,8 +33,9 @@ from tools.weak_engine import WeakEngine
 from tools.strong_engine import StrongEngine
 from tools.mtc import MCTSEngine
 
-# Sicherstellen, dass das log-Verzeichnis existiert
-os.makedirs("logs", exist_ok=True)
+# Sicherstellen, dass das log-Verzeichnis im Projekt-Root existiert
+LOGS_DIR = os.path.join(REPO_ROOT, "logs")
+os.makedirs(LOGS_DIR, exist_ok=True)
 
 
 # ==============================================================================
@@ -182,10 +188,12 @@ def save_game_log(p1_name: str, p2_name: str, history: list, winner: int, final_
 
 def choose_model_path():
     """Lässt den Nutzer ein Modell aus dem Checkpoint-Ordner wählen."""
-    chk_dir = os.path.join("training_system", "checkpoints")
+    # Nutzt den dynamisch aufgelösten Pfad, um unabhängig vom Aufrufort zu sein
+    chk_dir = os.path.join(SRC_CONNECT4_DIR, "training_system", "checkpoints")
     files = sorted(glob.glob(os.path.join(chk_dir, "*.pt")))
+    
     if not files:
-        print("[!] Keine .pt Modelle gefunden im Ordner: training_system/checkpoints/")
+        print(f"[!] Keine .pt Modelle gefunden im Ordner: {chk_dir}")
         sys.exit(1)
     
     print("\nVerfügbare Modelle:")
@@ -336,11 +344,11 @@ def main():
         
         print("\nSimulation startet jetzt:")
         
-        # Log-Datei vorbereiten
+        # Log-Datei vorbereiten (Nutzt das Root-Log-Verzeichnis)
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         n1 = clean_filename(a1.name)
         n2 = clean_filename(a2.name)
-        log_filename = f"logs/benchmark_{n1}_vs_{n2}_{timestamp}.txt"
+        log_filename = os.path.join(LOGS_DIR, f"benchmark_{n1}_vs_{n2}_{timestamp}.txt")
         
         with open(log_filename, "w", encoding="utf-8") as f:
             f.write(f"BENCHMARK START: {games} Spiele\n")
