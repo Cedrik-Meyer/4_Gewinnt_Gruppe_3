@@ -11,6 +11,37 @@ Der Connect4 3D Agent ist ein modulares Softwaresystem, das entwickelt wurde, um
 
 Um die Komplexität zu beherrschen und Fehler zu minimieren, wurde das System in getrennte Komponenten unterteilt, die alle auf einem gemeinsamen Kern aufbauen.
 
+```mermaid
+graph TD
+    subgraph "Connect4 3D Agent"
+        TS[Training System]
+        TE[Tools & Evaluierung]
+        RS[Runtime System]
+        SC{Shared Core}
+        MODELS[(Modell Checkpoints)]
+    end
+
+    SERVER((Turnier-Server)) <-->|JSON / WebSocket| RS
+
+    TS -->|Trainiert & Speichert| MODELS
+    RS -.->|Lädt Read-Only| MODELS
+    TE -.->|Lädt & Testet| MODELS
+
+    TS -->|Importiert Logik| SC
+    TE -->|Importiert Logik| SC
+    RS -->|Importiert Logik| SC
+
+    classDef shared fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
+    classDef component fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
+    classDef storage fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+    classDef external fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
+    
+    class SC shared;
+    class TS,TE,RS component;
+    class MODELS storage;
+    class SERVER external;
+```
+
 ## 2. Die vier zentralen Komponenten
 
 Die Ordnerstruktur des Repositories spiegelt die logische Architektur direkt wider. Jede Komponente hat eine klar abgegrenzte Verantwortlichkeit.

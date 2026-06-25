@@ -2,6 +2,73 @@
 
 Dieses Dokument bietet einen detaillierten technischen Einblick (Deep Dive) in die Quellcode-Ebene des Connect4 3D Agenten. Es erklärt die mathematischen Transformationen, algorithmischen Optimierungen und den exakten, ebenenbasierten Datenfluss (A-F).
 
+```mermaid
+flowchart TB
+    %% Styling Definitionen
+    classDef json fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
+    classDef logic fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
+    classDef tensor fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
+    classDef model fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+    classDef search fill:#fce4ec,stroke:#c2185b,stroke-width:2px;
+    classDef train fill:#eceff1,stroke:#607d8b,stroke-width:2px;
+
+    %% 1. Inferenz-Datenfluss (A-F)
+    subgraph Live_Pipeline ["Runtime System: Chronologischer Datenfluss (A-F)"]
+        direction TB
+        A["Ebene A: JSON<br/>(turn.request)"]:::json
+        B["Ebene B: GameState<br/>(board, legal_mask)"]:::logic
+        C["Ebene C: Input Tensor<br/>(Shape: [B, 2, 4, 4, 4])"]:::tensor
+        D["Ebene D: Output Tensor<br/>(policy_logits, value)"]:::tensor
+        E["Ebene E: Move<br/>(x, z)"]:::logic
+        F["Ebene F: JSON<br/>(move.submit)"]:::json
+
+        A -->|"protocol_parser.py<br/>(Validierung & Shift)"| B
+        B -->|"state_encoder.py<br/>(Invarianz & Zero-Copy)"| C
+        D -->|"live_agent.py<br/>(Masking & Forced Moves)"| E
+        E -->|"protocol_parser.py<br/>(Envelope Build)"| F
+    end
+
+    %% 2. Neuronales Netzwerk Architektur
+    subgraph NN_Arch ["Connect4Model: Actor-Critic Architektur"]
+        direction TB
+        Input["Input: [B, 2, 4, 4, 4]"]:::model
+        Conv["3x Conv3D + BatchNorm3d + ReLU"]:::model
+        Flatten["Flatten<br/>(4096 Features)"]:::model
+        PolHead["Policy-Head<br/>(nn.Linear -> 16 Logits)"]:::model
+        ValHead["Value-Head<br/>(nn.Linear -> Tanh [-1, 1])"]:::model
+
+        Input -->|"Feature Extraction"| Conv --> Flatten
+        Flatten --> PolHead
+        Flatten --> ValHead
+    end
+
+    %% 3. Suchbäume & Tools
+    subgraph Search_Engines ["Suchbäume & Evaluierung"]
+        direction TB
+        MCTS["mtc.py (MCTS)<br/>- Root Parallelization<br/>- Transposition Table<br/>- Dirichlet Noise"]:::search
+        AlphaBeta["strong_engine.py (Alpha-Beta)<br/>- Iterative Deepening<br/>- Center-First Ordering"]:::search
+    end
+
+    %% 4. Trainings-Pipeline (Master Mix)
+    subgraph Training_Pipeline ["Supervised Pipeline (Master Mix)"]
+        direction TB
+        Trap["1. Trap<br/>(Hard Rules: Sieg/Block)"]:::train
+        Clone["2. Clone<br/>(Behavioral Cloning)"]:::train
+        Distill["3. Distill<br/>(Knowledge Distillation)"]:::train
+        Loader["DataLoader<br/>(Strukturierte Tensor-Batches)"]:::train
+
+        Trap & Clone & Distill --> Loader
+    end
+
+    %% Verbindungen zwischen den Subgraphen
+    C -. "Speist Tensor ein" .-> Input
+    PolHead & ValHead -. "Gibt Rohwerte zurück" .-> D
+    
+    AlphaBeta -. "Generiert Ziel-Labels für" .-> Clone
+    MCTS -. "Befragt NN-Cache / Model" .-> Input
+    Loader -. "Optimiert (Backpropagation)" .-> Conv
+```
+
 ## 1. Shared Core: Spiellogik & Tensor-Transformation
 
 Da diese Funktionen beim Training millionenfach aufgerufen werden, ist dieser Bereich extrem auf Performance getrimmt.
