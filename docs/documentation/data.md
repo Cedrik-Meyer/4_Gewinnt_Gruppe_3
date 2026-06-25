@@ -55,7 +55,7 @@ class Move:
 
 Das Netzwerk verarbeitet die Daten invariant, d. h. **immer aus Sicht des aktuellen Spielers**.
 
-$$\text{state\_tensor} \in \mathbb{R}^{2 \times 4 \times 4 \times 4}$$
+$$\mathrm{state\_tensor} \in \mathbb{R}^{2 \times 4 \times 4 \times 4}$$
 
 * **Kanal 0 (Own Stones):** Alle Steine, deren Zellwert im Board exakt dem eigenen `player_slot` entspricht.
 * **Kanal 1 (Opponent Stones):** Alle Steine des Gegners.
@@ -75,7 +75,7 @@ $$\text{state\_tensor} \in \mathbb{R}^{2 \times 4 \times 4 \times 4}$$
 Das Netzwerk liefert zwei Köpfe (Actor-Critic-Struktur für MCTS/RL):
 
 ### 1. Policy Head (`policy_logits`)
-$$\text{policy\_logits} \in \mathbb{R}^{16}$$
+$$\mathrm{policy\_logits} \in \mathbb{R}^{16}$$
 
 * **Action Mapping:** Eindimensionaler Index [0..15]
     $$\text{index} = z \times 4 + x$$
@@ -96,7 +96,15 @@ Der Prozess der Entscheidungsfindung im Agenten *(Implementiert in `runtime_syst
 1. **Inferenz:** `state_tensor` in das Modell (ONNX/PyTorch) speisen $\rightarrow$ `policy_logits[16]` erhalten.
 2. **Validierungs-Maske:** Berechnung der `legal_mask[16]` auf Basis von Ebene B. Wenn für eine Kombination $(x,z)$ die Höhe $y=3$ besetzt ist, ist der `legal_mask`-Eintrag für `index = z * 4 + x` gleich `0`, sonst `1`.
 3. **Maskierung:** Ungültige Züge in den `policy_logits` eliminieren:
-    $$\text{logits}_{\text{masked}} = \text{logits} + (1.0 - \text{legal\_mask}) \times (-10^9)$$
+
+$$
+\mathrm{logits}_{\mathrm{masked}}
+=
+\mathrm{logits}
++
+(1.0 - \mathrm{legal\_mask}) \cdot (-10^9)
+$$
+
 4. **Auswahl:** Anwendung von `argmax` (Inferenz) oder probabilistischem Sampling (Training).
 5. **Decodierung:** Gewählten `index` in $(x, z)$ umrechnen.
 
@@ -176,7 +184,16 @@ Der Ablauf beschreibt die Transformation der Datenebenen während eines aktiven 
    > **Achtung:** Ebene D enthält noch keine Informationen über Spielregeln oder volle Säulen. Das Modell gibt rein probabilistische Präferenzen aus.
 
 ### Phase 4: Die kluge Entscheidung ($D \rightarrow E$)
-8. **Die Maskierung:** Der Agent maskiert die `policy_logits` (Ebene D) mit der `legal_mask` (aus Ebene B). Die Werte illegaler Züge werden mathematisch auf $-\infty$ ($1.0 - \text{legal\_mask} \times -10^9$) gesetzt.
+8. **Die Maskierung:** Der Agent maskiert die `policy_logits` (Ebene D) mit der `legal_mask` (aus Ebene B). Die Werte illegaler Züge werden mathematisch auf $-\infty$ gesetzt:
+
+$$
+\mathrm{logits}_{\mathrm{masked}}
+=
+\mathrm{logits}
++
+(1.0 - \mathrm{legal\_mask}) \cdot (-10^9)
+$$
+
 9. **Ebene E (Agent Decision):** Mittels `argmax` wird der Index mit dem höchsten verbleibenden Wert ausgewählt und in die Koordinaten `x` und `z` konvertiert. Das Ergebnis ist das logische Zug-Objekt (**Ebene E**).
 
 ### Phase 5: Die Abreise ($E \rightarrow F$)

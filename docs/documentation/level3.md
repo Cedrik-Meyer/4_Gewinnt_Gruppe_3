@@ -82,8 +82,8 @@ Der folgende Ablauf beschreibt die strikte Transformation der Datenebenen (defin
 5. **Ebene D (Modell-Output):** Das Modell liefert **Ebene D** zurück: `policy_logits` $\in \mathbb{R}^{16}$ und den `value` $\in \mathbb{R}^{1}$. *(Hinweis: Diese Werte enthalten noch keine Kollisionslogik).*
 
 ### Phase 4: Die kluge Entscheidung ($D \rightarrow E$)
-6. **Die Maskierung:** Der `live_agent.py` maskiert die `policy_logits` (Ebene D) mit der `legal_mask` (Ebene B). Illegale Züge werden mathematisch auf $-\infty$ gesetzt: 
-   $\text{logits}_{\text{masked}} = \text{logits} + (1.0 - \text{legal\_mask}) \times (-10^9)$.
+6. **Die Maskierung:** Der `live_agent.py` maskiert die `policy_logits` (Ebene D) mit der `legal_mask` (Ebene B). Illegale Züge werden mathematisch auf den negativst möglichen Wert gesetzt:
+   `logits_masked = logits + (1.0 - legal_mask) * (-1e9)`
 7. **Ebene E (Agent Decision):** Nach der Anwendung der Heuristiken (Forced Moves) wird mittels `argmax` der beste Index [0..15] gewählt und in logische $(x, z)$-Koordinaten konvertiert (**Ebene E**).
 
 ### Phase 5: Die Abreise ($E \rightarrow F$)
