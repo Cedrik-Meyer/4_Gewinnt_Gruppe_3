@@ -14,7 +14,7 @@ import numpy as np
 import multiprocessing as mp
 
 from shared.data_structures import Move
-from shared.game_logic import apply_move, check_winner
+from shared.game_logic import apply_move, check_winner, create_empty_board
 from shared.state_encoder import encode_state, get_legal_mask
 from training_system.neural_network.model import Connect4Model
 
@@ -180,7 +180,7 @@ def mcts_worker_task(args):
 # ==============================================================================
 
 class MCTSEngine:
-    def __init__(self, model_path: str):
+    def __init__(self, model_path: str, num_cores: int = None):
         self.model_path = model_path
         self.model = Connect4Model()
         try:
@@ -191,24 +191,42 @@ class MCTSEngine:
             print(f"[!] FEHLER beim Laden des Modells: {e}")
             raise e
 
-    def get_engine_move(self, board: np.ndarray, player: int, time_limit_ms: int, num_cores: int) -> Move:
+        if num_cores is None:
+            num_cores = mp.cpu_count()
+        self.num_cores = max(1, min(num_cores, mp.cpu_count()))
+        self.pool = mp.Pool(processes=self.num_cores)
+        self._warmup()
+
+    def _warmup(self):
+        empty_board = create_empty_board()
+        warmup_tasks = [
+            (empty_board, 1, self.model_state_dict, 0.05, 1.5, False)
+            for _ in range(self.num_cores)
+        ]
+        self.pool.map(mcts_worker_task, warmup_tasks)
+
+    def close(self):
+        if self.pool is not None:
+            self.pool.close()
+            self.pool.join()
+            self.pool = None
+
+    def get_engine_move(self, board: np.ndarray, player: int, time_limit_ms: int) -> Move:
         legal_mask = get_legal_mask(board)
         legal_indices = [i for i in range(16) if legal_mask[i] == 1.0]
         if len(legal_indices) == 1:
             return Move(x=legal_indices[0] % 4, z=legal_indices[0] // 4)
-            
-        active_cores = min(num_cores, mp.cpu_count())
-        active_cores = max(1, active_cores)
+
         time_limit_sec = time_limit_ms / 1000.0
-        
+
         tasks = []
-        for _ in range(active_cores):
+        for _ in range(self.num_cores):
             # c_puct = 1.5 ist der Standard. add_noise=True erzwingt Varianz in den Kernen
             tasks.append((board, player, self.model_state_dict, time_limit_sec, 1.5, True))
-            
-        with mp.Pool(processes=active_cores) as pool:
-            results = pool.map(mcts_worker_task, tasks)
-            
+
+        # Den persistenten Pool wiederverwenden -- nur die Suche läuft jetzt unter Deadline.
+        results = self.pool.map(mcts_worker_task, tasks)
+
         combined_visit_counts = {action: 0 for action in legal_indices}
         total_simulations = 0
         

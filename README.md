@@ -178,7 +178,7 @@ Zum Testen mehrerer Modelle auf dem Server kann ein zweiter Agent mit eigenem To
 Tragen Sie dazu `AGENT_TOKEN_2` in die `.env` ein und starten Sie den Agenten mit:
 
 ```bash
-python -m runtime_system.main_live <TOKEN_ENV_VAR> <CHECKPOINT_PATH>
+python -m runtime_system.main_live <TOKEN_ENV_VAR> <CHECKPOINT_PATH> <KERNE>
 ```
 
 ## Parameter
@@ -197,14 +197,24 @@ AGENT_TOKEN_2
 
 Pfad zur gewünschten Checkpoint-Datei.
 
+### 3. Argument (optional)
+
+Anzahl der CPU-Kerne für die MCTS-Suche. Ohne Angabe nutzt der Agent **alle** Kerne der Maschine (`os.cpu_count()`).
+
+> **Wichtig beim Betrieb von zwei Agenten auf derselben Maschine:** Lässt man das Kern-Argument weg, beansprucht *jeder* der beiden Agenten alle Kerne. Beide Prozesse überbuchen dann die CPU, rechnen pro Zug weniger Simulationen (= schwächeres Spiel) und verbrauchen doppelt so viel RAM. Gebe deshalb jedem Agenten explizit rund die **Hälfte** der verfügbaren Kerne (z. B. je `3` auf einer 6-Kern-VM, je `8` auf einer 16-Kern-Maschine).
+
 ---
 
 ## Beispiel
 
-Zweiter Agent mit eigenem Modell:
+Zwei Agenten parallel, Kerne hälftig aufgeteilt (Beispiel für eine 6-Kern-VM):
 
 ```bash
-python -m runtime_system.main_live AGENT_TOKEN_2 src/connect4/training_system/checkpoints/v9_champion.pt
+# Terminal 1
+python -m runtime_system.main_live AGENT_TOKEN   src/connect4/training_system/checkpoints/best_champion.pt 3
+
+# Terminal 2
+python -m runtime_system.main_live AGENT_TOKEN_2 src/connect4/training_system/checkpoints/v9_champion.pt 3
 ```
 
 Beide Prozesse können parallel in separaten Terminals gestartet und unabhängig voneinander mit `Strg + C` beendet werden.
