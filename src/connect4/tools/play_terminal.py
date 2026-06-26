@@ -98,12 +98,16 @@ class MTCAgent(Agent):
     """Monte Carlo Tree Search kombiniert mit dem neuronalen Netz."""
     def __init__(self, filepath: str, filename: str, time_limit: int, cores: int):
         super().__init__(f"Modell+MTC({filename})")
-        self.engine = MCTSEngine(filepath)
+        # Worker-Pools (MTC-Agenten) wird erzeugt
+        self.engine = MCTSEngine(filepath, cores)
         self.time_limit = time_limit
         self.cores = cores
-        
+
     def get_move(self, board: np.ndarray, player: int) -> Move:
-        return self.engine.get_engine_move(board, player, self.time_limit, self.cores)
+        return self.engine.get_engine_move(board, player, self.time_limit)
+
+    def close(self):
+        self.engine.close()
 
 class WeakEngineAgent(Agent):
     """Die schwache 1-Step Heuristik-Engine."""
@@ -388,6 +392,11 @@ def main():
             f.write(f"Winrate von {a1.name}: {winrate1:.1f}%\n")
             f.write(f"Winrate von {a2.name}: {winrate2:.1f}%\n")
             f.write(f"Remis: {(draws/games)*100:.1f}%\n")
+
+    # Worker-Pools (MTC-Agenten) herunterfahren
+    for agent in (a1, a2):
+        if hasattr(agent, "close"):
+            agent.close()
 
 if __name__ == "__main__":
     try:
