@@ -22,5 +22,6 @@ training_system/checkpoints/*.pt
 
 training_system/checkpoints/training_metrics.csv
 
-#Lokales Hilfsprogramm
+#Lokale Hilfsprogramme
 logs/visuals.py
+src/connect4/tools/wss_ping.py
