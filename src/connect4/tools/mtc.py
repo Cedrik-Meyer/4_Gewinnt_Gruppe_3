@@ -72,23 +72,37 @@ class MCTSNode:
 _WORKER = {}
 
 
-def _init_worker(state_dict):
-    """Initialisiert einen Worker-Prozess: Modell laden, für Inferenz optimieren, Cache anlegen."""
+def _init_worker(state_dict, jit_path=None):
+    """
+    Initialisiert einen Worker-Prozess: Modell laden, für Inferenz optimieren, Cache anlegen.
+
+    Zwei Modellquellen werden unterstützt:
+      * jit_path != None: Ein vorkompiliertes TorchScript-Modell (.jit) wird direkt
+        geladen. Solche Modelle sind in der Regel schon optimiert (C++-Backend) und
+        liefern maximale Inferenz-Geschwindigkeit, ohne dass jeder Worker erst tracen muss.
+      * sonst: Das state_dict wird in ein Connect4Model geladen und per torch.jit zur
+        Laufzeit für Batch-1-Inferenz optimiert.
+    """
     torch.set_grad_enabled(False)
     torch.set_num_threads(1)
 
-    model = Connect4Model()
-    model.load_state_dict(state_dict)
-    model.eval()
+    if jit_path is not None:
+        # Vorkompilierte, pfeilschnelle TorchScript-Version laden.
+        model = torch.jit.load(jit_path, map_location='cpu')
+        model.eval()
+    else:
+        model = Connect4Model()
+        model.load_state_dict(state_dict)
+        model.eval()
 
-    # Für Batch-1-CPU-Inferenz optimieren: optimize_for_inference faltet BatchNorm
-    # in die Conv-Layer und friert eval-Konstanten ein. Bei Fehlern: ungescriptetes
-    # Modell als sicherer Fallback.
-    try:
-        example = torch.zeros(1, 2, 4, 4, 4)
-        model = torch.jit.optimize_for_inference(torch.jit.trace(model, example))
-    except Exception:
-        pass
+        # Für Batch-1-CPU-Inferenz optimieren: optimize_for_inference faltet BatchNorm
+        # in die Conv-Layer und friert eval-Konstanten ein. Bei Fehlern: ungescriptetes
+        # Modell als sicherer Fallback.
+        try:
+            example = torch.zeros(1, 2, 4, 4, 4)
+            model = torch.jit.optimize_for_inference(torch.jit.trace(model, example))
+        except Exception:
+            pass
 
     _WORKER["model"] = model
     _WORKER["nn_cache"] = {}
@@ -236,15 +250,30 @@ def mcts_worker_task(args):
 class MCTSEngine:
     def __init__(self, model_path: str, num_cores: int = None):
         self.model_path = model_path
-        try:
-            state_dict = torch.load(self.model_path, map_location='cpu', weights_only=True)
-            # Sicherstellen, dass das Modell ladbar ist, bevor die Worker starten.
-            probe = Connect4Model()
-            probe.load_state_dict(state_dict)
-            self.model_state_dict = {k: v.cpu() for k, v in state_dict.items()}
-        except Exception as e:
-            print(f"[!] FEHLER beim Laden des Modells: {e}")
-            raise e
+        self.model_state_dict = None
+        self.jit_path = None
+
+        if model_path.endswith(".jit"):
+            # Vorkompiliertes TorchScript-Modell: Pfad an die Worker durchreichen, die
+            # es per torch.jit.load einlesen. Kein state_dict-Pickling nötig.
+            try:
+                # Vorab im Hauptprozess testweise laden, damit Fehler nicht erst still
+                # in den Workern auftauchen.
+                torch.jit.load(model_path, map_location='cpu')
+            except Exception as e:
+                print(f"[!] FEHLER beim Laden des TorchScript-Modells: {e}")
+                raise e
+            self.jit_path = model_path
+        else:
+            try:
+                state_dict = torch.load(self.model_path, map_location='cpu', weights_only=True)
+                # Sicherstellen, dass das Modell ladbar ist, bevor die Worker starten.
+                probe = Connect4Model()
+                probe.load_state_dict(state_dict)
+                self.model_state_dict = {k: v.cpu() for k, v in state_dict.items()}
+            except Exception as e:
+                print(f"[!] FEHLER beim Laden des Modells: {e}")
+                raise e
 
         if num_cores is None:
             num_cores = mp.cpu_count()
@@ -254,7 +283,7 @@ class MCTSEngine:
         self.pool = mp.Pool(
             processes=self.num_cores,
             initializer=_init_worker,
-            initargs=(self.model_state_dict,),
+            initargs=(self.model_state_dict, self.jit_path),
         )
         self._warmup()
 
