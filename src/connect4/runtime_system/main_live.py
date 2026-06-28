@@ -22,7 +22,7 @@ DEFAULT_CHECKPOINT_PATH = os.path.join(
 # Puffer für Netzwerklaufzeit
 DEADLINE_SAFETY_MARGIN_MS = 100
 # Untergrenze
-MIN_TIME_LIMIT_MS = 100
+MIN_TIME_LIMIT_MS = 5
 # Fallback bei keiner Deadline
 FALLBACK_TIME_LIMIT_MS = 2000
 
