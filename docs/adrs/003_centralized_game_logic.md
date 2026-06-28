@@ -6,14 +6,14 @@ Akzeptiert
 
 ## Kontext
 
-Sowohl das Laufzeitsystem als auch das Trainingssystem benötigen ein identisches und exaktes Verständnis der 3D-Vier-Gewinnt-Regeln. Die Runtime braucht diese Logik zur Validierung der Server-Zustände, während das Trainingssystem sie zur Simulation der Millionen Self-Play-Partien benötigt. Würden wir die Spielregeln in beiden Systemen separat implementieren, bestünde die große Gefahr eines logischen Auseinanderdriftens. Wenn das ML-Modell Regeln lernt, die sich minimal von den offiziellen Server-Regeln unterscheiden, führt dies unweigerlich zu illegalen Zügen und Disqualifikationen im offiziellen Turnierbetrieb.
+Laufzeitsystem und Trainingssystem benötigen dieselben 3D-Vier-Gewinnt-Regeln. Die Runtime nutzt diese Logik zur Validierung der Server-Zustände, das Trainingssystem zur Simulation von Self-Play-Partien. Separate Implementierungen könnten zu abweichendem Verhalten führen. Wenn das Modell Regeln lernt, die sich von den Server-Regeln unterscheiden, können illegale Züge entstehen.
 
 ## Entscheidung
 
-Wir haben uns dafür entschieden, alle zentralen Datenstrukturen (`Move`, `GameState`), den State-Encoder sowie das komplette Regelwerk (`game_logic.py`) in einem einzigen, gemeinsamen Verzeichnis (`shared/`) zu bündeln. Um die typischen Python-Importfehler (`ModuleNotFoundError`) beim Zugriff aus den parallel liegenden Laufzeit- und Trainingsordnern zu verhindern, nutzen wir eine `pyproject.toml`-Datei im Root-Verzeichnis. Über diese Datei installieren wir das gesamte Projekt lokal als editierbares Paket mittels des Befehls `pip install -e .`.
+Die Datenstrukturen (`Move`, `GameState`), der State-Encoder und das Regelwerk (`game_logic.py`) werden in `src/connect4/shared/` gebündelt. Um Python-Importfehler (`ModuleNotFoundError`) beim Zugriff aus Laufzeit- und Trainingsordnern zu verhindern, wird eine `pyproject.toml`-Datei im Root-Verzeichnis genutzt. Über diese Datei wird das Projekt lokal als editierbares Paket mittels `pip install -e .` installiert.
 
 ## Konsequenzen
 
-Durch die Zentralisierung müssen Regeländerungen oder Fehlerkorrekturen an der 3D-Gewinnerkennung nur noch an einer einzigen Stelle im Code vorgenommen werden. Dies garantiert, dass das KI-Modell auf Basis exakt derselben Regeln trainiert wird, die der Live-Agent später zur Laufzeit verwendet. Als einzige technische Hürde müssen alle Entwickler des Teams zu Projektbeginn einmalig die lokale Installation über das Terminal ausführen, um eine konsistente Entwicklungsumgebung sicherzustellen.
+Durch die Zentralisierung werden Regeländerungen oder Fehlerkorrekturen an der 3D-Gewinnerkennung an einer Stelle vorgenommen. Das Modell wird damit auf Basis derselben Regeln trainiert, die der Live-Agent zur Laufzeit verwendet. Voraussetzung ist die lokale Installation über `pip install -e .`.
 
 ---

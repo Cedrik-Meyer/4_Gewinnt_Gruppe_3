@@ -4,7 +4,7 @@ Gemeinsame Dokumentation für die Agenten-Gruppen.
 
 ## Empfohlene Lesereihenfolge
 
-1. [Agent-Protokoll](agent-protocol.md)
+1. [Agent-Protokoll](agent_protocol.md)
 
    Vollständige Spezifikation für externe Agenten:
 
@@ -19,7 +19,7 @@ Gemeinsame Dokumentation für die Agenten-Gruppen.
    - `agent.goodbye`
    - Timeouts
 
-2. [Board-Format](board-format.md)
+2. [Board-Format](board_format.md)
 
    Kurzreferenz zum 3D-Spielbrett:
 

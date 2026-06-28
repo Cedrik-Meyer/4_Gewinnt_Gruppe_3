@@ -1,13 +1,13 @@
 Task-ID	Task-Name (Allex Titel)	Rolle / Buchung	Aufwand (Effort)	Abhängigkeit (Predecessor)
-B1_01	shared/data_structures.py: Move definieren	Developer	0.5 h	Keine
-B1_02	shared/data_structures.py: GameState definieren	Developer	0.5 h	B1_01
-B1_03	shared/game_logic.py: 3D-Board & Drop-Mechanik	Developer	1.0 h	B1_02
-B1_04	shared/game_logic.py: Gewinn 4er-Reihe (H/V)	Developer	1.0 h	B1_03
-B1_05	shared/game_logic.py: Gewinn 2D-Diagonalen	Developer	1.0 h	B1_04
-B1_06	shared/game_logic.py: Gewinn 3D-Raumdiagonalen	Developer	1.0 h	B1_05
+B1_01	src/connect4/shared/data_structures.py: Move definieren	Developer	0.5 h	Keine
+B1_02	src/connect4/shared/data_structures.py: GameState definieren	Developer	0.5 h	B1_01
+B1_03	src/connect4/shared/game_logic.py: 3D-Board & Drop-Mechanik	Developer	1.0 h	B1_02
+B1_04	src/connect4/shared/game_logic.py: Gewinn 4er-Reihe (H/V)	Developer	1.0 h	B1_03
+B1_05	src/connect4/shared/game_logic.py: Gewinn 2D-Diagonalen	Developer	1.0 h	B1_04
+B1_06	src/connect4/shared/game_logic.py: Gewinn 3D-Raumdiagonalen	Developer	1.0 h	B1_05
 B1_07	tests/unit/shared/test_game_logic.py: Züge testen	Tester	1.0 h	B1_03
 B1_08	tests/unit/shared/test_game_logic.py: Sieg testen	Tester	1.0 h	B1_06, B1_07
-B1_09	tools/play_terminal.py: CLI Mensch vs Mensch	Developer	1.0 h	B1_06
+B1_09	src/connect4/tools/play_terminal.py: CLI Mensch vs Mensch	Developer	1.0 h	B1_06
 B2_01	runtime/parser: turn.request extrahieren	Developer	0.5 h	B1_02
 B2_02	runtime/parser: JSON validieren & Fehler	Developer	0.5 h	B2_01
 B2_03	runtime/parser: move.submit Envelope bauen	Developer	1.0 h	B2_02
@@ -17,13 +17,13 @@ B3_02	runtime/network: WS Event-Handler aufsetzen	Developer	1.0 h	B3_01, B2_01
 B3_03	runtime/network: Heartbeat Ping/Pong	Developer	0.5 h	B3_02
 B3_04	runtime/network: Auto-Reconnect Logik	Developer	1.0 h	B3_02
 B3_05	tests/use_cases: Integration WS-Mock-Server	Tester	1.0 h	B3_04, B2_04
-B4_01	shared/state_encoder.py: Invarianz-Spiegelung	Developer	1.0 h	B1_02
-B4_02	shared/state_encoder.py: Board zu float32-Tensor	Developer	0.5 h	B4_01
-B4_03	shared/state_encoder.py: legal_mask generieren	Developer	0.5 h	B4_02
-B4_04	training_system/neural_network: Modellklasse	Developer	0.5 h	B4_02
-B4_05	training_system/neural_network: 3D-Conv-Layers	Developer	1.0 h	B4_04
-B4_06	training_system/neural_network: Policy-Head	Developer	0.5 h	B4_05
-B4_07	training_system/neural_network: Value-Head	Developer	0.5 h	B4_05
+B4_01	src/connect4/shared/state_encoder.py: Invarianz-Spiegelung	Developer	1.0 h	B1_02
+B4_02	src/connect4/shared/state_encoder.py: Board zu float32-Tensor	Developer	0.5 h	B4_01
+B4_03	src/connect4/shared/state_encoder.py: legal_mask generieren	Developer	0.5 h	B4_02
+B4_04	src/connect4/training_system/neural_network: Modellklasse	Developer	0.5 h	B4_02
+B4_05	src/connect4/training_system/neural_network: 3D-Conv-Layers	Developer	1.0 h	B4_04
+B4_06	src/connect4/training_system/neural_network: Policy-Head	Developer	0.5 h	B4_05
+B4_07	src/connect4/training_system/neural_network: Value-Head	Developer	0.5 h	B4_05
 B4_08	tests/unit/training: Tensor-Formate testen	Tester	1.0 h	B4_06, B4_07
 B5_01	training/self_play: Replay-Buffer erstellen	Developer	1.0 h	B1_01
 B5_02	training/self_play: Mini-Batch Sampling	Developer	0.5 h	B5_01
@@ -40,8 +40,8 @@ B7_01	runtime/agent: PyTorch-Modell-Lader	Developer	0.5 h	B6_04
 B7_02	runtime/agent: Inferenz-Pipeline (Predict)	Developer	1.0 h	B7_01, B4_02
 B7_03	runtime/agent: Logit-Maskierung (legal_mask)	Developer	0.5 h	B7_02, B4_03
 B7_04	runtime/agent: Action-Selection & Index-Decode	Developer	0.5 h	B7_03
-B7_05	runtime/main_live.py: App-Zusammenführung	Developer	1.0 h	B7_04, B3_04
-B8_01	tools/play_terminal.py: Mensch vs KI Upgrade	Developer	1.0 h	B1_09, B7_01
+B7_05	src/connect4/runtime_system/main_live.py: App-Zusammenführung	Developer	1.0 h	B7_04, B3_04
+B8_01	src/connect4/tools/play_terminal.py: Mensch vs Modell Upgrade	Developer	1.0 h	B1_09, B7_01
 B8_02	tests/use_cases: 1 Trainings-Iteration Test	Tester	1.0 h	B6_04
 MS_01	MEILENSTEIN: 200h Autonomes Self-Play Training	Alle (Zuweisung)	200.0 h	B6_04, B8_02
-B8_04	runtime/main_live.py: Test auf Live-Server	Tester / Alle	1.0 h	MS_01, B7_05
+B8_04	src/connect4/runtime_system/main_live.py: Test auf Live-Server	Tester / Alle	1.0 h	MS_01, B7_05

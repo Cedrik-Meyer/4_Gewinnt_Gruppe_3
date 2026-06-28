@@ -24,8 +24,6 @@ Beispiel lokal:
 ws://localhost:3000/ws/agent?token=ag_example_token
 ```
 
-```
-
 Beispiel im gleichen WLAN/LAN:
 
 ```txt

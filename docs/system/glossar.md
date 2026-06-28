@@ -1,21 +1,21 @@
-# Glossar – Maschinelles Lernen & Connect4 3D
+# Glossar, Maschinelles Lernen & Connect4 3D
 
-Dieses Glossar definiert die zentralen Fachbegriffe der künstlichen Intelligenz und erklärt sie im spezifischen Kontext unseres PyTorch-basierten Connect4 3D Agenten (AlphaZero-Architektur).
+Dieses Glossar definiert Fachbegriffe der künstlichen Intelligenz im Kontext des PyTorch-basierten Connect4 3D Agenten (AlphaZero-Architektur).
 
 **A**
 * **Action / Aktion:** Ein möglicher Spielzug. Im 3D-Vier-Gewinnt entspricht eine Aktion einer der 16 Säulen (x, z-Koordinaten) auf dem 4x4-Raster.
 * **Actor-Critic:** Eine duale Netzwerkarchitektur. Das `Connect4Model` fungiert gleichzeitig als "Akteur" (Policy: Welcher Zug ist gut?) und "Kritiker" (Value: Wer gewinnt das Spiel?).
-* **AlphaZero:** Das zugrundeliegende Reinforcement-Learning-Paradigma des Projekts, bei dem der Agent ausschließlich durch das Spielen gegen sich selbst (Self-Play) kombiniert mit MCTS lernt.
-* **Arena / Evaluation:** Das Vergleichssystem (`eval/arena.py`), in dem ein neues Kandidatenmodell gegen den aktuellen Champion spielt. Züge werden hier strikt nach Vorhersage-Maximum (Exploitation) gewählt, um die reine Spielstärke zu messen.
+* **AlphaZero:** Das Reinforcement-Learning-Paradigma des Projekts, bei dem der Agent durch Self-Play kombiniert mit MCTS lernt.
+* **Arena / Evaluation:** Das Vergleichssystem (`eval/arena.py`), in dem ein Kandidatenmodell gegen den Champion spielt. Züge werden nach Vorhersage-Maximum (Exploitation) gewählt, um die Spielstärke zu messen.
 
 **B**
-* **Backpropagation:** Das Lernverfahren neuronaler Netzwerke in PyTorch. Nach der Loss-Berechnung wird der Fehler rückwärts durch das Netz propagiert, um die Gewichte mittels eines Optimizers (z.B. Adam) anzupassen.
+* **Backpropagation:** Das Lernverfahren neuronaler Netzwerke in PyTorch. Nach der Loss-Berechnung wird der Fehler rückwärts durch das Netz propagiert, um die Gewichte mittels eines Optimizers (z. B. Adam) anzupassen.
 * **Batch Size:** Die Anzahl der Trainingsbeispiele, die auf einmal parallel verarbeitet werden (z. B. ein Batch von 1024 Tensor-Boards, um moderne NVIDIA-GPUs optimal auszulasten).
-* **Behavioral Cloning:** Eine Technik in der Supervised-Learning-Pipeline (`supervised_train.py`). Das neuronale Netz lernt, indem es taktische Züge der extrem starken Minimax-Engine imitiert (Klonen von Verhalten).
+* **Behavioral Cloning:** Eine Technik in der Supervised-Learning-Pipeline (`supervised_train.py`). Das neuronale Netz lernt, indem es taktische Züge der Minimax-Engine imitiert.
 
 **C**
 * **Candidate:** Ein neu trainiertes Modell (z. B. in `main_train.py`), das sich in der Arena beweisen muss, bevor es zum neuen Champion werden kann.
-* **Champion:** Das aktuell stärkste und freigegebene Modell (`best_champion.pt`), das vom Runtime-System für Live-Turnierspiele verwendet wird.
+* **Champion:** Das freigegebene Modell (`best_champion.pt`), das vom Runtime-System für Live-Turnierspiele verwendet wird.
 * **Checkpoint (.pt):** Eine Speicherdatei, die den Trainingszustand (die Gewichte/Weights) eines PyTorch-Modells enthält.
 * **CNN (Convolutional Neural Network):** Ein Faltungsnetzwerk. In unserem Agenten als 3D-CNN (`nn.Conv3d`) implementiert, um dreidimensionale, räumliche Muster (wie Blockaden oder 4er-Reihen) im Spielfeld zu erkennen.
 
@@ -36,7 +36,7 @@ Dieses Glossar definiert die zentralen Fachbegriffe der künstlichen Intelligenz
 
 **I**
 * **Input / Eingabe:** Die Daten, die in das Modell fließen. Im Projekt ist dies der vorverarbeitete Tensor der Form `[Batch, 2, 4, 4, 4]`.
-* **Invarianz-Transformation:** Ein Konzept im Encoder. Das Spielfeld wird immer aus der relativen "Ich"-Perspektive des aktuell ziehenden Spielers codiert, um dem Netz die Unterscheidung zwischen absoluten Spieler-IDs abzunehmen.
+* **Invarianz-Transformation:** Ein Konzept im Encoder. Das Spielfeld wird immer aus der relativen Perspektive des aktuell ziehenden Spielers codiert, um dem Netz die Unterscheidung zwischen absoluten Spieler-IDs abzunehmen.
 
 **K**
 * **Knowledge Distillation:** Eine ML-Technik im Supervised Learning. Bei simplen Zügen sagt das alte Basis-Modell eine Wahrscheinlichkeitsverteilung voraus, die das neue Modell lernen soll. Dies schützt das Modell davor, sein generelles Positionsverständnis zu vergessen (Catastrophic Forgetting).
@@ -49,13 +49,13 @@ Dieses Glossar definiert die zentralen Fachbegriffe der künstlichen Intelligenz
 **M**
 * **Maschinelles Lernen (ML):** Bereich der Informatik, bei dem der Agent aus Trajektorien (gespielten Partien) Muster ableitet, statt alle taktischen Spielregeln manuell per if/else programmiert zu bekommen.
 * **MCTS (Monte Carlo Tree Search):** Ein asymmetrischer Suchalgorithmus (`mtc.py`), der das Netz durch Vorwärtssimulationen im Suchbaum unterstützt. Verbessert die Qualität der Trainingsdaten maßgeblich.
-* **Modell (`Connect4Model`):** Die eigentliche KI-Komponente des Systems. Sie verarbeitet den 3D-Tensor und berechnet daraus Entscheidungen oder Bewertungen.
+* **Modell (`Connect4Model`):** Die zentrale Modellkomponente des Systems. Sie verarbeitet den 3D-Tensor und berechnet daraus Entscheidungen oder Bewertungen.
 
 **N**
 * **Neuronales Netzwerk:** Siehe Modell / CNN. Ein Konstrukt aus verbundenen Faltungs- und linearen Schichten.
 
 **O**
-* **Output / Ausgabe:** Das Ergebnis des neuronalen Netzes. Im Projekt sind das exakt zwei Tensoren: Policy (Zugwahrscheinlichkeiten) und Value (Siegchance).
+* **Output / Ausgabe:** Das Ergebnis des neuronalen Netzes. Im Projekt sind das zwei Tensoren: Policy (Zugwahrscheinlichkeiten) und Value (Siegchance).
 
 **P**
 * **Policy (Akteur):** Der Ausgabekopf (Policy-Head) des Modells, der bewertet, welche der 16 Säulen die beste Handlungsoption ist.
@@ -77,11 +77,11 @@ Dieses Glossar definiert die zentralen Fachbegriffe der künstlichen Intelligenz
 * **Transposition Table:** Ein Hash-Speicher (`nn_cache`), in dem MCTS und Alpha-Beta-Suchbäume sich bereits berechnete Brettzustände merken, um wiederholte Neural-Net-Inferenzen zu vermeiden.
 
 **V**
-* **Value (Kritiker):** Der Ausgabekopf (Value-Head) des Modells. Eine Tanh-Aktivierungsfunktion presst die Bewertung der Spielsituation strikt in einen Bereich zwischen `-1.0` (Sichere Niederlage) und `+1.0` (Sicherer Sieg).
+* **Value (Kritiker):** Der Ausgabekopf (Value-Head) des Modells. Eine Tanh-Aktivierungsfunktion begrenzt die Bewertung der Spielsituation auf den Bereich zwischen `-1.0` (Sichere Niederlage) und `+1.0` (Sicherer Sieg).
 
 **W**
 * **WebSocket:** Die asynchrone, dauerhafte Netzwerkverbindung zwischen dem Live-Agenten und dem Turnier-Server (`websocket_client.py`).
-* **Winrate:** Der prozentuale Anteil der gewonnenen Spiele in der Arena. Oft an einen Threshold gekoppelt (z.B. > 55%), um zu entscheiden, ob ein Modell gut genug für das Runtime-System ist.
+* **Winrate:** Der prozentuale Anteil der gewonnenen Spiele in der Arena. Oft an einen Threshold gekoppelt (z. B. > 55%), um zu entscheiden, ob ein Modell gut genug für das Runtime-System ist.
 
 **Z**
-* **Zero-Copy:** Ein speichereffizienter Vorgang. Bei `torch.from_numpy()` wird das Numpy-Spielfeld in einen PyTorch-Tensor übersetzt, ohne den RAM durch eine neue Kopie der Daten doppelt zu belasten.
+* **Zero-Copy:** Ein speichereffizienter Vorgang. Bei `torch.from_numpy()` wird das NumPy-Spielfeld in einen PyTorch-Tensor übersetzt, ohne den RAM durch eine neue Kopie der Daten doppelt zu belasten.

@@ -14,4 +14,4 @@ Wir verwerfen Multiprocessing für die `StrongEngine` und beschränken sie hart 
 
 ## Konsequenzen
 
-Die Implementierung bleibt deutlich simpler. Durch das Center-First Move Ordering und eine geteilte Hash-Tabelle im RAM eines einzelnen Kerns erreicht die Engine extrem schnell hohe Suchtiefen. Der Nachteil ist offensichtlich: Wir können die rohe Rechenkraft von modernen Multi-Core-CPUs für diese spezifische Komponente nicht ausnutzen. Die Engine bleibt an die Single-Core-Taktfrequenz der CPU gebunden.
+Die Implementierung bleibt einfacher. Durch Center-First Move Ordering und eine Hash-Tabelle im RAM eines Kerns erreicht die Engine hohe Suchtiefen. Der Nachteil ist, dass diese Komponente Multi-Core-CPUs nicht ausnutzt. Die Engine bleibt an die Single-Core-Taktfrequenz der CPU gebunden.

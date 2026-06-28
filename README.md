@@ -6,13 +6,13 @@ Ein autonomer, auf Machine Learning basierender Agent für **4-Gewinnt 3D (4x4x4
 
 # Übersicht
 
-Dieses Projekt beinhaltet die vollständige Entwicklungsumgebung für einen 3D-Connect4-Agenten. Die Architektur nutzt maschinelles Lernen, um ein tiefes neuronales Modell zu trainieren. Dieses Modell bildet zusammen mit einer Monte Carlo Tree Search (MCTS) und dem übergeordneten Runtime-System den eigentlichen Spiele-Agenten. Zusätzlich steht eine klassische, iterative Alpha-Beta-Suche (Minimax) als Benchmark-Gegner zur Verfügung.
+Dieses Projekt beinhaltet die Entwicklungsumgebung für einen 3D-Connect4-Agenten. Die Architektur nutzt maschinelles Lernen, um ein neuronales Modell zu trainieren. Dieses Modell bildet zusammen mit einer Monte Carlo Tree Search (MCTS) und dem Runtime-System den Spiele-Agenten. Zusätzlich steht eine iterative Alpha-Beta-Suche (Minimax) als Benchmark-Gegner zur Verfügung.
 
 Das System ist in drei logische Hauptkomponenten unterteilt:
 
 - **Training System**: Generierung von Datensätzen und Training des neuronalen Netzes (Supervised Learning & Self-Play)
-- **Tools & Evaluierung**: Lokale CLI-Werkzeuge zum interaktiven Testen und für hochperformante Benchmarks (z.B. Modell + MCTS vs. Minimax)
-- **Runtime System**: Ein WebSocket-Client, der das fertige Modell mit dem Live-Turnierserver verbindet
+- **Tools & Evaluierung**: CLI-Werkzeuge zum Testen und für Benchmarks (z. B. Modell + MCTS vs. Minimax)
+- **Runtime System**: Ein WebSocket-Client, der das Modell mit dem Live-Turnierserver verbindet
 
 ---
 
@@ -22,9 +22,9 @@ Das Projekt erfordert:
 
 - Python >= 3.10
 
-Der verwendete Tech-Stack basiert zentral auf Python und nutzt Pytorch für Deep Learning, Numpy für schnelle mathematische Matrix-Operationen sowie asynchrone Netzwerkkommunikation für die Live-Spiele.
+Der Tech-Stack basiert auf Python und nutzt PyTorch für Deep Learning, NumPy für Matrix-Operationen sowie asynchrone Netzwerkkommunikation für die Live-Spiele.
 
-Die Abhängigkeiten des Projekts werden vollständig und automatisiert über die `pyproject.toml` verwaltet.
+Die Abhängigkeiten werden über die `pyproject.toml` verwaltet.
 
 ---
 
@@ -50,7 +50,7 @@ source .venv/bin/activate
 
 ## Abhängigkeiten installieren
 
-Durch den folgenden Befehl wird das Projekt als lokales Paket installiert. Dadurch werden alle internen Import-Pfade korrekt aufgelöst.
+Der folgende Befehl installiert das Projekt als lokales Paket und löst die Import-Pfade auf.
 
 ```bash
 pip install -e .
@@ -60,7 +60,7 @@ pip install -e .
 
 # Lokales Testen und Benchmarking
 
-Für die Evaluierung der Modelle und Engines steht ein interaktives Terminal-Werkzeug zur Verfügung. Es erlaubt Einzelspiele (Mensch gegen KI) sowie vollautomatisierte Turniere (Benchmarking) über hunderte Runden zur statistischen Auswertung.
+Für die Evaluierung der Modelle und Engines steht ein interaktives Terminal-Werkzeug zur Verfügung. Es erlaubt Einzelspiele (Mensch gegen Modell) sowie vollautomatisierte Turniere (Benchmarking) über hunderte Runden zur statistischen Auswertung.
 
 ## Starten des Terminals
 
@@ -71,7 +71,7 @@ python src/connect4/tools/play_terminal.py
 Anschließend werden Sie interaktiv nach folgenden Parametern gefragt:
 
 - Anzahl der zu verwendenden CPU-Kerne
-- Zeitlimit pro Zug in Millisekunden (z.B. 180 ms)
+- Zeitlimit pro Zug in Millisekunden (z. B. 180 ms)
 
 Danach können die Agenten ausgewählt werden:
 
@@ -90,9 +90,9 @@ Das Training des neuronalen Netzes kann über zwei verschiedene Ansätze erfolge
 
 ## 1. Normales Training (Self-Play / Reinforcement Learning)
 
-Dies ist der primäre Weg, um dem Agenten komplexe Strategien beizubringen.
+Dies ist der primäre Trainingsweg.
 
-Beim Self-Play spielt das Modell kontinuierlich unzählige Partien gegen sich selbst. Das MCTS dient dabei als Lehrer, der in jeder Stellung tiefere Suchbäume aufbaut und bessere Züge findet, als das Modell initial vorschlägt.
+Beim Self-Play spielt das Modell Partien gegen sich selbst. MCTS bewertet dabei Stellungen über Suchbäume und erzeugt stärkere Zugziele als die initialen Modellvorhersagen.
 
 Das Modell lernt aus diesen Entdeckungen und verbessert sein strategisches Verständnis von Iteration zu Iteration.
 
@@ -108,15 +108,15 @@ python src/connect4/training_system/training/main_train.py
 
 Im Gegensatz zum eigenständigen Explorieren im Self-Play lernt das Modell hier zielgerichtet anhand generierter Muster-Daten ("Behavioral Cloning" und Heuristiken).
 
-Dieses Skript sucht automatisch nach der aktuellsten Modellversion, generiert einen neuen Datensatz und trainiert die nächste Modell-Iteration.
+Dieses Skript sucht die neueste Modellversion, generiert einen Datensatz und trainiert die nächste Modell-Iteration.
 
 Beispiele:
 
-- Klonen extrem schneller taktischer Züge einer Minimax-Engine
+- Klonen taktischer Züge einer Minimax-Engine
 - Blockieren offensichtlicher 1-Step-Verluste
 - Gezieltes Beseitigen taktischer Schwächen
 
-Dieses Verfahren eignet sich besonders für gezieltes "Bugfixing" am Modell.
+Dieses Verfahren eignet sich für gezieltes "Bugfixing" am Modell.
 
 ### Start des Supervised Trainings
 
@@ -140,7 +140,7 @@ AGENT_TOKEN=ag_...
 AGENT_TOKEN_2=ag_...
 ```
 
-Der Standard-Checkpoint-Pfad ist als `DEFAULT_CHECKPOINT_PATH` in `runtime_system/main_live.py` hinterlegt und kann beim Start überschrieben werden.
+Der Standard-Checkpoint-Pfad ist als `DEFAULT_CHECKPOINT_PATH` in `src/connect4/runtime_system/main_live.py` hinterlegt und kann beim Start überschrieben werden.
 
 ---
 
@@ -153,7 +153,7 @@ python -m runtime_system.main_live
 Das Skript:
 
 1. liest `AGENT_SERVER_URL` und `AGENT_TOKEN` aus `.env`
-2. lädt das Modell aus dem konfigurierten Checkpoint
+2. lädt das Modell aus dem Checkpoint
 3. verbindet sich per WebSocket
 4. läuft in einer Endlosschleife bis zur Beendigung
 
@@ -167,11 +167,11 @@ Zum Beenden genügt:
 Strg + C
 ```
 
-Der Server erkennt die Trennung automatisch über die geschlossene WebSocket-Verbindung.
+Der Server erkennt die Trennung über die geschlossene WebSocket-Verbindung.
 
 ---
 
-# Zweiten eigenen Agenten gleichzeitig starten
+# Zweiten Agenten starten
 
 Zum Testen mehrerer Modelle auf dem Server kann ein zweiter Agent mit eigenem Token und optional anderem Modell gestartet werden.
 
@@ -195,19 +195,19 @@ AGENT_TOKEN_2
 
 ### 2. Argument
 
-Pfad zur gewünschten Checkpoint-Datei.
+Pfad zur Checkpoint-Datei.
 
 ### 3. Argument (optional)
 
 Anzahl der CPU-Kerne für die MCTS-Suche. Ohne Angabe nutzt der Agent **alle** Kerne der Maschine (`os.cpu_count()`).
 
-> **Wichtig beim Betrieb von zwei Agenten auf derselben Maschine:** Lässt man das Kern-Argument weg, beansprucht *jeder* der beiden Agenten alle Kerne. Beide Prozesse überbuchen dann die CPU, rechnen pro Zug weniger Simulationen (= schwächeres Spiel) und verbrauchen doppelt so viel RAM. Gebe deshalb jedem Agenten explizit rund die **Hälfte** der verfügbaren Kerne (z. B. je `3` auf einer 6-Kern-VM, je `8` auf einer 16-Kern-Maschine).
+> **Wichtig beim Betrieb von zwei Agenten auf derselben Maschine:** Lässt man das Kern-Argument weg, beansprucht *jeder* der beiden Agenten alle Kerne. Beide Prozesse überbuchen dann die CPU, rechnen pro Zug weniger Simulationen (= schwächeres Spiel) und verbrauchen doppelt so viel RAM. Gib deshalb jedem Agenten explizit rund die **Hälfte** der verfügbaren Kerne (z. B. je `3` auf einer 6-Kern-VM, je `8` auf einer 16-Kern-Maschine).
 
 ---
 
 ## Beispiel
 
-Zwei Agenten parallel, Kerne hälftig aufgeteilt (Beispiel für eine 6-Kern-VM):
+Zwei Agenten mit hälftig aufgeteilten Kernen (Beispiel für eine 6-Kern-VM):
 
 ```bash
 # Terminal 1
@@ -217,7 +217,7 @@ python -m runtime_system.main_live AGENT_TOKEN   src/connect4/training_system/ch
 python -m runtime_system.main_live AGENT_TOKEN_2 src/connect4/training_system/checkpoints/v9_champion.pt 3
 ```
 
-Beide Prozesse können parallel in separaten Terminals gestartet und unabhängig voneinander mit `Strg + C` beendet werden.
+Beide Prozesse können in separaten Terminals gestartet und mit `Strg + C` beendet werden.
 
 ---
 
@@ -239,7 +239,7 @@ logs/                                # Benchmark- und Analyse-Logs (Projekt-Root
 ---
 # Dokumentation
 
-Die **[Dokumentation](/docs/documentation/docu.md)** zum Projekt, der Architektur und der Implementierung
+Die **[Dokumentationsübersicht](docs/README.md)** bündelt Architektur, API-Spezifikationen, ADRs und Projektaufgaben.
 
 ---
 
@@ -247,7 +247,7 @@ Die **[Dokumentation](/docs/documentation/docu.md)** zum Projekt, der Architektu
 
 Für reproduzierbare Ergebnisse wird empfohlen:
 
-- ausschließlich innerhalb einer virtuellen Umgebung zu arbeiten
+- innerhalb einer virtuellen Umgebung zu arbeiten
 - Checkpoint-Dateien (`*.pt`) nicht in Git zu versionieren
 - Benchmark-Ergebnisse und Log-Dateien lokal zu halten
 - neue Modelle vor dem Live-Einsatz zunächst gegen die Benchmark-Engines zu testen

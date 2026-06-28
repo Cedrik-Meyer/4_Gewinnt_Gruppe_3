@@ -1,21 +1,21 @@
 # Trainings-Historie & Timeline (Connect4 3D Agent)
 
-Dieses Dokument protokolliert den chronologischen Ablauf des Modell-Trainings. Da das Training für 4-Gewinnt im 3D-Raum (4x4x4) enorm rechenintensiv ist, wurde der Prozess in drei große Phasen unterteilt: Initiale Self-Play-Datengenerierung, gezieltes Supervised Finetuning (um Stagnation zu überwinden) und abschließendes Self-Play für den Feinschliff.
+Dieses Dokument protokolliert den Ablauf des Modell-Trainings. Da das Training für 4-Gewinnt im 3D-Raum (4x4x4) rechenintensiv ist, wurde der Prozess in drei Phasen unterteilt: initiale Self-Play-Datengenerierung, Supervised Finetuning gegen Stagnation und abschließendes Self-Play.
 
 ---
 
 ## Hardware-Setup
 
-Alle maßgeblichen Trainingsläufe wurden auf folgendem dedizierten System durchgeführt:
+Die Trainingsläufe wurden auf folgendem System durchgeführt:
 * **CPU:** AMD Ryzen 7 7800X3D (Nutzung von 14 logischen Kernen für MCTS & Datengenerierung)
-* **GPU:** NVIDIA RTX 4070 Super (Nutzung für hochparallele Tensor-Kalkulationen / Backpropagation)
+* **GPU:** NVIDIA RTX 4070 Super (Tensor-Kalkulationen / Backpropagation)
 * **VRAM:** 12 GB 
 * **RAM:** 32 GB
 
 
 ---
 
-## Phase 1: Initiales AlphaZero Self-Play (Iterationen 1 – 2000)
+## Phase 1: Initiales AlphaZero Self-Play (Iterationen 1, 2000)
 
 Das Training begann von Grund auf neu (Zufallsgewichte) mit der klassischen Reinforcement-Learning-Schleife (`main_train.py`). Das Modell spielte ununterbrochen gegen sich selbst, sammelte Trajektorien im `ReplayBuffer` und trainierte mittels Kreuzentropie (Policy) und MSE (Value).
 
@@ -30,7 +30,7 @@ Das Training begann von Grund auf neu (Zufallsgewichte) mit der klassischen Rein
 | **Learning Rate** | `1e-3` | Mit StepLR-Scheduler (Gamma 0.9 alle 100.000 Steps). |
 
 **Erkenntnisse der Phase 1:** 
-Zwischen Iteration 1 und 500 gab es ein starkes initiales Wachstum. Ab Iteration 500 bis ca. 1500 fiel jedoch auf, dass der **Policy Loss** auf einem Niveau von ca. `2.69 - 2.71` stagnierte. Das Netzwerk ordnete allen 16 Säulen sehr ähnliche Wahrscheinlichkeiten zu und übersah teilweise simple 1-Step-Bedrohungen. Zwar wurden durch einen stark verbesserten Value-Head weiterhin neue Champions gekürt, die reine Zug-Intuition stagnierte jedoch.
+Zwischen Iteration 1 und 500 gab es initiales Wachstum. Ab Iteration 500 bis ca. 1500 stagnierte der **Policy Loss** auf einem Niveau von ca. `2.69 - 2.71`. Das Netzwerk ordnete allen 16 Säulen ähnliche Wahrscheinlichkeiten zu und übersah teilweise 1-Step-Bedrohungen. Zwar wurden durch einen verbesserten Value-Head weiterhin neue Champions gekürt, die Policy stagnierte jedoch.
 
 ---
 
@@ -38,7 +38,7 @@ Zwischen Iteration 1 und 500 gab es ein starkes initiales Wachstum. Ab Iteration
 
 Um die Policy-Stagnation aufzubrechen und fundamentale Flüchtigkeitsfehler abzutrainieren, wurde das Training pausiert. Das Modell aus Phase 1 wurde in eine überwachte Trainingspipeline (`supervised_train.py`) übergeben. 
 
-Dabei wurde eine dedizierte "Master Mix"-Hierarchie genutzt, um dem Netz taktisches Wissen von außen "einzutrichtern":
+Dabei wurde eine "Master Mix"-Hierarchie genutzt, um taktische Zielverteilungen zu erzeugen:
 1. **Trap:** Hardcoded One-Hot-Vektor bei direkten 1-Step-Siegen/Blocks.
 2. **Clone:** Klonen von Zügen der Alpha-Beta `StrongEngine` (2000ms Bedenkzeit).
 3. **Distill:** Boltzmann-Exploration des Basismodells (Knowledge Distillation) bei ruhigen Stellungen, um das bisherige RL-Wissen nicht zu vergessen.
@@ -46,7 +46,7 @@ Dabei wurde eine dedizierte "Master Mix"-Hierarchie genutzt, um dem Netz taktisc
 ### Hyperparameter (Supervised Phase)
 | Parameter | Wert | Beschreibung |
 | :--- | :--- | :--- |
-| **Trainings-Zyklen** | 9 | Es wurden 9 vollständige Durchläufe generiert (v1 bis v9). |
+| **Trainings-Zyklen** | 9 | Es wurden 9 Durchläufe generiert (v1 bis v9). |
 | **Total Games** | 15.000 | Anzahl der simulierten Partien pro Zyklus. |
 | **Batch Size** | 512 | Tensor-Stapelgröße für die GPU. |
 | **Epochs** | 4 | Trainingsdurchläufe über den gesamten Datensatz pro Zyklus. |
@@ -57,14 +57,14 @@ Dabei wurde eine dedizierte "Master Mix"-Hierarchie genutzt, um dem Netz taktisc
 
 ---
 
-## Phase 3: Zweite Self-Play RL-Phase (Iterationen 2001 – 4000)
+## Phase 3: Zweite Self-Play RL-Phase (Iterationen 2001, 4000)
 
-Mit dem extrem starken `v9_champion.pt` als neuer Baseline kehrte das System in den AlphaZero-Modus (`main_train.py`) zurück. Ziel war es nun, die geklonten Heuristiken der Engine durch tiefes, eigenes RL-Wissen (Beyond Human/Engine Level) zu übertreffen.
+Mit `v9_champion.pt` als Baseline kehrte das System in den AlphaZero-Modus (`main_train.py`) zurück. Ziel war es, die geklonten Engine-Heuristiken durch Self-Play weiter zu verbessern.
 
 Die Hyperparameter blieben identisch zur Phase 1.
 
 **Erkenntnisse der Phase 3 (Deep Finetuning):**
-In dieser fortgeschrittenen RL-Phase lief das Training extrem stabil weiter. Da das Ausgangsniveau von `v9` bereits sehr hoch war, wurden neue Champions erwartungsgemäß seltener (z.B. bei Iterationen 2852, 3130, 3341, etc.). Das Modell lernte in dieser Phase vor allem "Micro-Optimizations" (kleinste Positionsvorteile) und glich verbleibende Schwächen aus, die die klassische Alpha-Beta-Engine in Phase 2 nicht abdecken konnte.
+In dieser RL-Phase lief das Training stabil weiter. Da das Ausgangsniveau von `v9` hoch war, wurden neue Champions seltener (z. B. bei Iterationen 2852, 3130, 3341, usw.). Das Modell lernte vor allem "Micro-Optimizations" (kleine Positionsvorteile) und glich Schwächen aus, die die Alpha-Beta-Engine in Phase 2 nicht abdecken konnte.
 
 ---
 
