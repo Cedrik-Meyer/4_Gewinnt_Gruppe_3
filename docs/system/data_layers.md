@@ -97,13 +97,7 @@ Der Prozess der Entscheidungsfindung im Agenten *(Implementiert in `src/connect4
 2. **Validierungs-Maske:** Berechnung der `legal_mask[16]` auf Basis von Ebene B. Wenn für eine Kombination $(x,z)$ die Höhe $y=3$ besetzt ist, ist der `legal_mask`-Eintrag für `index = z * 4 + x` gleich `0`, sonst `1`.
 3. **Maskierung:** Ungültige Züge in den `policy_logits` eliminieren:
 
-$$
-\mathrm{logits}_{\mathrm{masked}}
-=
-\mathrm{logits}
-+
-(1.0 - \mathrm{legal\_mask}) \cdot (-10^9)
-$$
+$$\mathrm{logits}_{\mathrm{masked}} = \mathrm{logits} + (1.0 - \mathrm{legal\_mask}) \cdot (-10^9)$$
 
 4. **Auswahl:** Anwendung von `argmax` (Inferenz) oder probabilistischem Sampling (Training).
 5. **Decodierung:** Gewählten `index` in $(x, z)$ umrechnen.
@@ -182,13 +176,7 @@ Der Ablauf beschreibt die Transformation der Datenebenen während eines aktiven 
 ### Phase 4: Maskierung und Zugauswahl ($D \rightarrow E$)
 8. **Maskierung:** Der Agent maskiert die `policy_logits` (Ebene D) mit der `legal_mask` (aus Ebene B). Die Werte illegaler Züge werden rechnerisch auf einen sehr kleinen Wert gesetzt:
 
-$$
-\mathrm{logits}_{\mathrm{masked}}
-=
-\mathrm{logits}
-+
-(1.0 - \mathrm{legal\_mask}) \cdot (-10^9)
-$$
+$$\mathrm{logits}_{\mathrm{masked}} = \mathrm{logits} + (1.0 - \mathrm{legal\_mask}) \cdot (-10^9)$$
 
 9. **Ebene E (Internes Zugformat):** Mittels `argmax` wird der Index mit dem höchsten verbleibenden Wert ausgewählt und in die Koordinaten `x` und `z` konvertiert. Das Ergebnis ist das logische Zug-Objekt (**Ebene E**).
 
