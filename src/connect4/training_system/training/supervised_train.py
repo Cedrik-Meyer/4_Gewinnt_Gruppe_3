@@ -1,16 +1,18 @@
 """
 training_system/supervised_train.py
 
-Automatisierte Supervised-Learning-Pipeline fuer das 3D-Connect4-Modell.
-Dieses Skript sucht eigenstaendig nach der aktuellsten Modellversion im 
-Checkpoint-Ordner und trainiert iterativ die naechste Version (v+1).
+Automatisierte Supervised-Learning-Pipeline für das 3D-Connect4-Modell.
+Dieses Skript sucht eigenständig nach der aktuellsten Modellversion im 
+Checkpoint-Ordner und trainiert iterativ die nächste Version (v+1).
 
 Die Datengenerierung basiert auf dem "Master Mix"-Ansatz, einer Hierarchie aus:
-1. Regelbasierten Zuegen (Verhindern von trivialen Fehlern).
-2. Behavioral Cloning (Klonen von taktischen Engine-Zuegen).
+1. Regelbasierten Zügen (Verhindern von trivialen Fehlern / 1-Turn-Loss).
+2. Behavioral Cloning (Klonen von taktischen Engine-Zügen).
 3. Knowledge Distillation (Erhalten der strategischen Intuition des Basis-Modells).
 
-Achtung! Die Laufzeit beträgt etwa 30 Stunden bei hoher Rechenlast! Achtung!
+Hinweis zur Projekt-Timeline: 
+Dieses Skript wurde in den Trainingsphasen 2 (v1-v9) und 4 (v10-v12) eingesetzt.
+Die Laufzeit beträgt bei 15.000 generierten Spielen mehrere Stunden pro Iteration.
 """
 
 import os
@@ -23,7 +25,7 @@ import multiprocessing as mp
 import sys
 from torch.utils.data import Dataset, DataLoader
 
-# Root-Verzeichnis zum Python-Pfad hinzufuegen, um absolute Importe zu ermoeglichen
+# Root-Verzeichnis zum Python-Pfad hinzufügen, um absolute Importe zu ermöglichen
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from shared.data_structures import Move
@@ -41,8 +43,8 @@ def get_latest_model_info():
     """
     Durchsucht den definierten Checkpoint-Ordner nach existierenden Modellen
     im Format 'vX_champion.pt'. 
-    Gibt den Dateipfad des aktuellsten Modells und den Integer-Wert fuer 
-    die darauffolgende Version zurueck.
+    Gibt den Dateipfad des aktuellsten Modells und den Integer-Wert für 
+    die darauffolgende Version zurück.
     """
     checkpoint_dir = "training_system/checkpoints"
     os.makedirs(checkpoint_dir, exist_ok=True)
@@ -55,7 +57,7 @@ def get_latest_model_info():
     max_version = 0
     latest_file = ""
     
-    # Extraktion der hoechsten Versionsnummer via Regular Expressions
+    # Extraktion der höchsten Versionsnummer via Regular Expressions
     for f in files:
         match = re.search(r'v(\d+)_champion\.pt', os.path.basename(f))
         if match:
@@ -69,8 +71,8 @@ def get_latest_model_info():
 
 def load_sim_model(checkpoint_path: str):
     """
-    Laedt die Gewichte (Weights) eines existierenden PyTorch-Modells.
-    Wird auf die CPU gemappt, da die Worker-Prozesse unabhaengige Kopien benoetigen.
+    Lädt die Gewichte (Weights) eines existierenden PyTorch-Modells.
+    Wird auf die CPU gemappt, da die Worker-Prozesse unabhängige Kopien benötigen.
     """
     model = Connect4Model()
     if checkpoint_path and os.path.exists(checkpoint_path):
@@ -85,39 +87,42 @@ def load_sim_model(checkpoint_path: str):
 
 def get_critical_move(board: np.ndarray, player: int):
     """
-    Prueft das Spielfeld auf unmittelbare (1-Step) Bedrohungen oder Siegchancen.
+    Prüft das Spielfeld auf unmittelbare (1-Step) Bedrohungen oder Siegchancen.
     Dient als harter Filter, damit das neuronale Netz lernt, einfache 
-    Fluechtigkeitsfehler zu vermeiden.
+    Flüchtigkeitsfehler unter allen Umständen zu vermeiden.
     """
     opponent = 2 if player == 1 else 1
     legal_mask = get_legal_mask(board)
     
-    # Pruefung 1: Gibt es einen legalen Zug, der das Spiel sofort gewinnt?
+    # Prüfung 1: Gibt es einen legalen Zug, der das Spiel sofort gewinnt?
     for i in range(16):
         if legal_mask[i] == 1.0:
             test_board = np.copy(board)
             apply_move(test_board, Move(x=i % 4, z=i // 4), player)
-            if check_winner(test_board, player): return i
+            if check_winner(test_board, player): 
+                return i
             
-    # Pruefung 2: Wuerde der Gegner im naechsten Zug gewinnen? (Zwingender Block)
+    # Prüfung 2: Würde der Gegner im nächsten Zug gewinnen? (Zwingender Block)
     for i in range(16):
         if legal_mask[i] == 1.0:
             test_board = np.copy(board)
             apply_move(test_board, Move(x=i % 4, z=i // 4), opponent)
-            if check_winner(test_board, opponent): return i
+            if check_winner(test_board, opponent): 
+                return i
             
     return None
 
+
 def worker_play_master_mix(num_games: int, checkpoint_path: str):
     """
-    Ausfuehrungslogik fuer einen einzelnen CPU-Kern im Multiprocessing-Pool.
-    Generiert selbststaendig Spiele und zeichnet die Zuege gemaess der Hierarchie auf.
+    Ausführungslogik für einen einzelnen CPU-Kern im Multiprocessing-Pool.
+    Generiert selbstständig Spiele und zeichnet die Züge gemäß der Hierarchie auf.
     """
     model = load_sim_model(checkpoint_path)
     engine = StrongEngine()
     data = []
     
-    # PyTorch nutzt standardmaessig Multi-Threading. Um Konflikte mit dem
+    # PyTorch nutzt standardmäßig Multi-Threading. Um Konflikte mit dem
     # Multiprocessing-Pool zu vermeiden, wird die Thread-Anzahl hier isoliert.
     torch.set_num_threads(1)
     
@@ -144,14 +149,14 @@ def worker_play_master_mix(num_games: int, checkpoint_path: str):
             # ---------------------------------------------------------
             
             if critical_idx is not None:
-                # Prioritaet 1 (Hard Rules): Erzwingt einen 1-Hot-Vektor auf den Sieges-/Blockzug.
+                # Priorität 1 (Hard Rules): Erzwingt einen 1-Hot-Vektor auf den Sieges-/Blockzug.
                 target_probs = np.zeros(16, dtype=np.float32)
                 target_probs[critical_idx] = 1.0
                 action_idx = critical_idx
                 data_type = "trap"
                 
             elif current_player == engine_player:
-                # Prioritaet 2 (Behavioral Cloning): Die Engine rechnet unter hohem Zeitdruck (2000ms).
+                # Priorität 2 (Behavioral Cloning): Die Engine rechnet unter hohem Zeitdruck (2000ms).
                 # Dies zwingt sie zu taktischen 2-bis-3-Step Lookaheads, welche das Modell kopiert.
                 engine_move = engine.get_engine_move(board, current_player, time_limit_ms=2000, num_cores=1)
                 action_idx = engine_move.x + (engine_move.z * 4)
@@ -160,22 +165,22 @@ def worker_play_master_mix(num_games: int, checkpoint_path: str):
                 data_type = "clone"
                 
             else:
-                # Prioritaet 3 (Knowledge Distillation): Wenn keine Gefahr besteht und die Engine
+                # Priorität 3 (Knowledge Distillation): Wenn keine Gefahr besteht und die Engine
                 # nicht am Zug ist, wird die weiche Wahrscheinlichkeitsverteilung des alten Netzes genutzt.
-                # Dies schuetzt vor dem Ueberschreiben des grundlegenden Spielverstaendnisses (Catastrophic Forgetting).
+                # Dies schützt vor dem Überschreiben des grundlegenden Spielverständnisses (Catastrophic Forgetting).
                 with torch.no_grad():
                     logits, _ = model(state_tensor.unsqueeze(0))
                     policy = logits.squeeze(0).numpy()
                     policy[legal_mask == 0.0] = -1e9
                     target_probs = torch.softmax(torch.tensor(policy), dim=0).numpy()
                     
-                    # Boltzmann Exploration fuer Varianz in den Trainingsdaten
+                    # Boltzmann Exploration für Varianz in den Trainingsdaten
                     exp_preds = np.exp(policy / 1.0)
                     action_probs = exp_preds / np.sum(exp_preds)
                     action_idx = np.random.choice(16, p=action_probs)
                 data_type = "distill"
             
-            # Speichern des Status fuer die spaetere Zuweisung des finalen Spielausgangs (Value)
+            # Speichern des Status für die spätere Zuweisung des finalen Spielausgangs (Value)
             game_memory.append((state_tensor, target_probs, current_player, data_type))
             
             # Zug auf das reale Spielfeld anwenden
@@ -192,12 +197,15 @@ def worker_play_master_mix(num_games: int, checkpoint_path: str):
         # VALUE ZUWEISUNG (Post-Game Processing)
         # ---------------------------------------------------------
         for state, probs, p, d_type in game_memory:
-            # Bewertung aus Perspektive des Spielers, der diesen Zug getaetigt hat
-            if winner == p: val = 1.0
-            elif winner == 0: val = 0.0
-            else: val = -1.0
+            # Bewertung aus Perspektive des Spielers, der diesen Zug getätigt hat
+            if winner == p: 
+                val = 1.0
+            elif winner == 0: 
+                val = 0.0
+            else: 
+                val = -1.0
                 
-            # Filterung: Wenn ein von der Engine geklonter Zug zu einer Niederlage gefuehrt hat,
+            # Filterung: Wenn ein von der Engine geklonter Zug zu einer Niederlage geführt hat,
             # wird dieser Datenpunkt verworfen, um fehlerhafte Taktiken nicht zu erlernen.
             if d_type == "clone" and val < 0:
                 continue
@@ -205,6 +213,7 @@ def worker_play_master_mix(num_games: int, checkpoint_path: str):
             data.append((state, probs, val))
             
     return data
+
 
 class MasterMixDataset(Dataset):
     """Wickelt die generierten Spieldaten in ein PyTorch-kompatibles Dataset-Format."""
@@ -237,31 +246,36 @@ def main():
         print("Basis-Modell   : [Keines gefunden] Initialisiere mit Random Weights.")
     print("==================================================\n")
     
-    # Hardware-Erkennung (Apple Silicon, Nvidia CUDA, oder CPU Fallback)
-    if torch.backends.mps.is_available():
-        device = torch.device("mps")
-    elif torch.cuda.is_available():
+    # ---------------------------------------------------------
+    # HARDWARE ERKENNUNG (NVIDIA CUDA / CPU)
+    # ---------------------------------------------------------
+    if torch.cuda.is_available():
         device = torch.device("cuda")
+        print(f"Nutze NVIDIA GPU: {torch.cuda.get_device_name(0)}")
     else:
         device = torch.device("cpu")
+        print("Keine NVIDIA GPU gefunden. Nutze CPU (Erheblich langsamer!).")
         
     model = Connect4Model()
     if latest_checkpoint:
         model.load_state_dict(torch.load(latest_checkpoint, map_location='cpu', weights_only=True))
         
-    # Trainings-Hyperparameter
-    TOTAL_GAMES =15000
+    # ---------------------------------------------------------
+    # TRAININGS-HYPERPARAMETER
+    # ---------------------------------------------------------
+    TOTAL_GAMES = 15000
     BATCH_SIZE = 512
     EPOCHS = 4
-    LEARNING_RATE = 2e-5       # Niedrige Lernrate, um Feinjustierung (Finetuning) zu gewaehrleisten
+    LEARNING_RATE = 2e-5       # Niedrige Lernrate, um Feinjustierung (Finetuning) zu gewährleisten
     EARLY_STOP_LOSS = 0.35     # Schwellenwert zur Vermeidung von Overfitting
     
+    # Reserviert einen Thread für das System, nutzt den Rest für Daten-Generierung
     cpu_cores = max(1, mp.cpu_count() - 1)
     
-    print(f"Simuliere {TOTAL_GAMES} Trainings-Spiele auf {cpu_cores} Kernen...")
+    print(f"\nSimuliere {TOTAL_GAMES} Trainings-Spiele auf {cpu_cores} logischen Kernen...")
     start_time = time.time()
     
-    # Aufteilung der zu spielenden Partien auf die verfuegbaren CPU-Kerne
+    # Aufteilung der zu spielenden Partien auf die verfügbaren CPU-Kerne
     games_per_worker = TOTAL_GAMES // cpu_cores
     args = [(games_per_worker, latest_checkpoint) for _ in range(cpu_cores)]
     all_data = []
@@ -272,9 +286,9 @@ def main():
         for res in results:
             all_data.extend(res)
             
-    print(f"Datensatz-Generierung abgeschlossen in {time.time() - start_time:.1f}s. (Zuege im RAM: {len(all_data)})\n")
+    print(f"Datensatz-Generierung abgeschlossen in {time.time() - start_time:.1f}s. (Züge im RAM: {len(all_data)})\n")
     
-    print(f"Starte Training fuer v{next_version}_champion.pt...")
+    print(f"Starte Training für v{next_version}_champion.pt...")
     dataset = MasterMixDataset(all_data)
     dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, drop_last=True)
     
@@ -295,13 +309,13 @@ def main():
             
             optimizer.zero_grad()
             
-            # Forward Pass: Das Modell berechnet Zuege und Gewinnwahrscheinlichkeiten
+            # Forward Pass: Das Modell berechnet Züge und Gewinnwahrscheinlichkeiten
             predicted_logits, predicted_values = model(batch_states)
             
             p_loss = policy_loss_fn(predicted_logits, batch_probs)
             v_loss = value_loss_fn(predicted_values, batch_values)
             
-            # Kombination beider Verluste fuer die Backpropagation
+            # Kombination beider Verluste für die Backpropagation
             loss = p_loss + v_loss
             loss.backward()
             optimizer.step()
@@ -310,20 +324,20 @@ def main():
         avg_loss = epoch_loss / len(dataloader)
         print(f"Epoche {epoch:02d}/{EPOCHS} | Total Loss: {avg_loss:.4f}")
         
-        # Fruehzeitiger Abbruch, wenn das Modell konvergiert ist
+        # Frühzeitiger Abbruch, wenn das Modell konvergiert ist
         if avg_loss < EARLY_STOP_LOSS:
-            print("\n[!] EARLY STOPPING ausgeloest (Ziel-Loss erreicht).")
+            print("\n[!] EARLY STOPPING ausgelöst (Ziel-Loss erreicht).")
             break
             
-    # Rueckfuehrung auf die CPU und Speicherung der Gewichte
+    # Rückführung auf die CPU und Speicherung der Gewichte
     model.cpu()
     save_path = f"training_system/checkpoints/v{next_version}_champion.pt"
     torch.save(model.state_dict(), save_path)
     print(f"\nTraining erfolgreich abgeschlossen! Modell gespeichert als: '{save_path}'")
+
 
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
         print("\nAbbruch durch Benutzer.")
-    
