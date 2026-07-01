@@ -1,72 +1,87 @@
 """
 training_system/self_play/replay_buffer.py
 
-Speichert die simulierten Spiele (Erfahrungen) des Agenten.
-Dient als kontinuierlicher Datensatz für das Training des neuronalen Netzes.
+Das Experience Replay Memory für den Connect4-Agenten.
+Speichert gespielte Züge, Netzwerk-Präferenzen und den finalen Spielausgang.
+Dient als hochperformanter, kontinuierlich rotierender Datensatz (Ringpuffer)
+für die GPU-Trainingsphase.
 """
 
 import random
 from collections import deque
-from typing import Any, Tuple, List
+from typing import Tuple, List, Union
+
+import torch
+import numpy as np
+
 
 class ReplayBuffer:
     """
-    Ein Ringpuffer (First-In-First-Out) mit fester Maximalkapazität für ML-Training.
-    Wenn der Puffer voll ist, werden die ältesten Erinnerungen automatisch überschrieben.
+    Ein rotierender Ringpuffer (First-In-First-Out) mit einer harten Obergrenze.
+    Das Limit garantiert, dass das Netz während des RL-Trainings stets von 
+    seinen qualitativ besten (neuesten) Spielen lernt und veraltetes Anfängerwissen 
+    automatisch aussortiert wird.
     """
     
     def __init__(self, capacity: int = 100000):
         """
-        Initialisiert den Buffer.
+        Initialisiert den Replay Buffer.
         
         Args:
-            capacity (int): Die maximale Anzahl an Zügen, die im RAM gehalten werden.
-                            Standard: 100.000 Züge.
+            capacity (int): Maximale Anzahl an Zügen (Erfahrungen), die im RAM 
+                            gehalten werden sollen.
         """
+        # deque(maxlen=...) schiebt das älteste Element automatisch aus dem Puffer,
+        # sobald die Maximalkapazität erreicht ist.
         self.buffer = deque(maxlen=capacity)
 
-    def push(self, state: Any, action_probs: Any, value: float):
+    def push(self, state: Union[torch.Tensor, np.ndarray], action_probs: np.ndarray, value: float):
         """
-        Speichert einen einzelnen Spielzug (eine Erfahrung) im Puffer.
+        Speichert einen einzelnen Datenpunkt (Transition) im Puffer.
         
         Args:
-            state: Das codierte Board (Tensor oder Numpy-Array aus Ebene C).
-            action_probs: Die Ziel-Wahrscheinlichkeiten für die 16 Züge (vom MCTS berechnet).
-            value: Der finale Ausgang des Spiels aus Sicht des Spielers (+1.0, 0.0, -1.0).
+            state: Die 3D-Board-Repräsentation (Ebene C).
+            action_probs: Die maskierte und vom MCTS/Self-Play korrigierte Zielverteilung 
+                          für die 16 möglichen Spalten.
+            value: Die Bewertung des Zugs (+1.0 Sieg, 0.0 Draw, -1.0 Niederlage).
         """
         self.buffer.append((state, action_probs, value))
 
-    def sample_batch(self, batch_size: int = 64) -> Tuple[List[Any], List[Any], List[float]]:
+    def sample_batch(self, batch_size: int = 64) -> Tuple[List[torch.Tensor], List[np.ndarray], List[float]]:
         """
-        Zieht eine zufällige Stichprobe (Mini-Batch) von alten Zügen aus dem Puffer.
+        Zieht einen zufälligen Mini-Batch aus dem Puffer für die GPU-Backpropagation.
+        Das stochastische Ziehen aus dem gesamten Puffer (Decorrelation) bricht die chronologische
+        Abhängigkeit der aufeinanderfolgenden Züge einer Partie auf, was extremes 
+        Overfitting verhindert und das Lernen verallgemeinert.
         
         Args:
-            batch_size (int): Die Anzahl der Züge, die für einen Trainingsschritt 
-                              benötigt werden (Standard: 64).
+            batch_size (int): Die Anzahl der benötigten Datenpunkte für den Forward/Backward Pass.
                               
         Returns:
-            Tuple[List, List, List]: Drei separate Listen für States, Action-Probs und Values.
+            Tuple[List, List, List]: 
+                Drei aufgespaltene Listen (States, Action_Probs, Values), fertig 
+                zur Weiterverarbeitung als PyTorch Tensoren.
             
         Raises:
-            ValueError: Wenn der Puffer weniger Elemente enthält als die angeforderte batch_size.
+            ValueError: Wenn der Puffer noch nicht genügend Daten für einen vollständigen Batch enthält.
         """
         if len(self.buffer) < batch_size:
             raise ValueError(
-                f"Nicht genug Daten im Buffer. Erwartet: {batch_size}, Aktuell: {len(self.buffer)}"
+                f"Batch-Ziehung fehlgeschlagen. Der Puffer benötigt mindestens {batch_size} "
+                f"Elemente, enthält aber aktuell nur {len(self.buffer)}."
             )
             
-        # random.sample zieht eine Stichprobe OHNE Zurücklegen (kein Element wird doppelt gezogen)
+        # Ziehung OHNE Zurücklegen, um Duplikate innerhalb desselben Batches zu vermeiden.
         batch = random.sample(self.buffer, batch_size)
         
-        # Entpackt die Liste von Tupeln: [(s1, a1, v1), (s2, a2, v2), ...]
-        # in drei separate Listen: [s1, s2, ...], [a1, a2, ...], [v1, v2, ...]
+        # Entpackt die Liste von Tripeln: [(s1, a1, v1), (s2, a2, v2), ...]
+        # in drei getrennte Tuple: (s1, s2, ...), (a1, a2, ...), (v1, v2, ...)
         states, action_probs, values = zip(*batch)
         
         return list(states), list(action_probs), list(values)
 
     def __len__(self) -> int:
         """
-        Gibt die aktuelle Anzahl der gespeicherten Züge zurück.
+        Gibt die aktuelle Füllmenge des Puffers zurück.
         """
         return len(self.buffer)
-    
