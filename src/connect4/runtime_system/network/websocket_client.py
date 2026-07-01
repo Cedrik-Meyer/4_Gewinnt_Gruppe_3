@@ -25,13 +25,13 @@ class AgentWebSocketClient:
         self._running = False # Flag um die Endlosschleife abbrechen zu können
         self._next_reconnect_delay = None # Einmalige Override-Wartezeit aus agent.goodbye.retryAfterMs
 
-    def register_handler(self, msg_type: str, handler_func):
+    def register_handler(self, msg_type: str, handler_func): #Funktion je Nachrichtentyp
         self.handlers[msg_type] = handler_func
 
     async def disconnect(self): # Fährt den Client runter und beendet die Auto-Reconnect-Schleife
         self._running = False
         self.stop_heartbeat()
-        if self.websocket is not None:
+        if self.websocket is not None: # Falls Verbindung zum Websocket offen ist, wird sie geschlossen
             try:
                 await self.websocket.close()
             except Exception:
@@ -61,26 +61,26 @@ class AgentWebSocketClient:
                         "timestamp": timestamp
                     }
                     await self.send_message(heartbeat_msg)
-        except asyncio.CancelledError:
+        except asyncio.CancelledError:  # Wenn stop_heartbeat ausgeführt wird
             pass
 
     async def listen(self): # Baut Verbindung auf, wartet auf Nachrichten und versucht bei Fehlern einen Reconnect.
         self._running = True
         while self._running:
-            try:
+            try: # Verbindung wird aufgebaut und Heartbeat gestartet
                 self.websocket = await websockets.connect(self.ws_url)
                 self.start_heartbeat()
 
-                async for message in self.websocket:
-                    try: # Versucht Verbindung aufzubauen
+                async for message in self.websocket: # Empfängt Nachrichten
+                    try: # Nachrichtentyp wird ausgewertet
                         data = json.loads(message)
                         msg_type = data.get("type")
 
-                        if msg_type == "agent.goodbye": # reconnect/retryAfterMs aus dem Protokoll respektieren
+                        if msg_type == "agent.goodbye": # Sonderregel, wenn Server reconnect untersagt
                             self._apply_goodbye(data.get("payload") or {})
 
-                        if msg_type in self.handlers: # Lese Nachrichten aus offenen Socket
-                            if asyncio.iscoroutinefunction(self.handlers[msg_type]):
+                        if msg_type in self.handlers: # Wenn Nachrichtentyp hinterlegt ist, wird die entsprechende Funktion ausgeführt
+                            if asyncio.iscoroutinefunction(self.handlers[msg_type]): # Prüft ob Funktion asynchron ist
                                 await self.handlers[msg_type](data)
                             else:
                                 self.handlers[msg_type](data)
@@ -105,8 +105,7 @@ class AgentWebSocketClient:
                 self._next_reconnect_delay = None
                 await asyncio.sleep(delay)
 
-    def _apply_goodbye(self, payload: dict):
-        """Wertet reconnect/retryAfterMs aus agent.goodbye aus (s. agent_protocol.md)."""
+    def _apply_goodbye(self, payload: dict): # Client wird beendet, wenn Server reconnect untersagt
         if payload.get("reconnect") is False:
             self._running = False
         retry_after_ms = payload.get("retryAfterMs")
