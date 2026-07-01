@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Python egg-info (Lokale Paket-Metadaten)
+*.egg-info/
+
 # IDEs & OS
 .idea/
 .vscode/
@@ -13,15 +16,12 @@ __pycache__/
 .venv/
 venv/
 *.pth
-.pt
+*.pt
+*.csv
+
+# Logs
 logs/*.txt
-training_system/checkpoints/*.pt
 
-# Python egg-info (Lokale Paket-Metadaten)
-*.egg-info/
-
-training_system/checkpoints/training_metrics.csv
-
-#Lokale Hilfsprogramme
+# Lokale Hilfsprogramme
 logs/visuals.py
 src/connect4/tools/wss_ping.py
