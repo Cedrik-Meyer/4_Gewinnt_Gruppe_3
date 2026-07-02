@@ -71,7 +71,7 @@ class Connect4Model(nn.Module):
         self.policy_head = nn.Sequential(
             # Berechnet aus dem abstrakten Feature-Vektor die unnormalisierten 
             # Wahrscheinlichkeiten (Logits) für den gesamten Aktionsraum (16 Spalten).
-            nn.Linear(self.flattened_size, 16)                                   # Layer 11: Fully-Connected (Aktions-Logits)
+            nn.Linear(self.flattened_size, 16)                                   # Layer 11: POLICY-Ausgabe (16 Zug-Logits)
         )
         
         # ---------------------------------------------------------
@@ -79,11 +79,11 @@ class Connect4Model(nn.Module):
         # ---------------------------------------------------------
         self.value_head = nn.Sequential(
             # Aggregiert denselben Feature-Vektor zu einer skalaren Stellungsbewertung.
-            nn.Linear(self.flattened_size, 1),                                   # Layer 12: Fully-Connected (Skalar)
+            nn.Linear(self.flattened_size, 1),                                   # Layer 12: VALUE-Aggregation (Skalar)
             
             # Normiert den berechneten Skalar strikt auf das Intervall 
             # zwischen -1.0 (deterministische Niederlage) und +1.0 (deterministischer Sieg).
-            nn.Tanh()                                                            # Layer 13: Wertebereichs-Normierung
+            nn.Tanh()                                                            # Layer 13: VALUE-Aktivierung (Normierung auf [-1.0, 1.0])
         )
 
     def forward(self, x: torch.Tensor):
