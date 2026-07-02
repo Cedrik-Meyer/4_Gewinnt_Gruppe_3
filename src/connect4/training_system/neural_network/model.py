@@ -18,61 +18,79 @@ class Connect4Model(nn.Module):
     """
     Neuronales Netzwerk zur Evaluierung von 3D-Connect4-Spielzuständen.
     
-    Die Architektur basiert auf einem gemeinsamen Feature-Extractor (3D-Faltungen),
-    der in zwei unabhängigen Köpfen (Policy und Value) mündet.
+    Die Architektur basiert auf insgesamt 13 sequentiellen Schichten (Layern),
+    die in einen gemeinsamen Feature-Extractor (3D-Faltungen) und zwei 
+    unabhängige Köpfe (Policy und Value) strukturiert sind.
     """
     
     def __init__(self):
+        """
+        PHASE 1: INSTANZIIERUNG DER NETZWERKSCHICHTEN (Speicher-Allokation)
+        
+        Der Konstruktor wird einmalig beim Start aufgerufen. Hier werden alle 13
+        mathematischen Schichten (Layer) des Modells im Speicher angelegt und die
+        trainierbaren Parameter (Weights und Biases) initialisiert.
+        """
         super().__init__()
         
         # ---------------------------------------------------------
-        # Gemeinsame Feature-Extraktion (Shared Body)
+        # Block A: Gemeinsame Feature-Extraktion (Layer 1 bis 10)
         # ---------------------------------------------------------
         # Verarbeitet den Input-Tensor der Form [Batch, Channels, Y, Z, X]
-        # Channels: 2 (Eigene Steine, Gegnerische Steine)
-        # Dimension: 4x4x4 Spielfeld
         self.conv_layers = nn.Sequential(
+            # Layer 1-3: Erste räumliche Merkmalsextraktion
             nn.Conv3d(in_channels=2, out_channels=32, kernel_size=3, padding=1),
             nn.BatchNorm3d(32),
             nn.ReLU(),
             
+            # Layer 4-6: Tiefere Merkmalsextraktion
             nn.Conv3d(in_channels=32, out_channels=64, kernel_size=3, padding=1),
             nn.BatchNorm3d(64),
             nn.ReLU(),
             
+            # Layer 7-9: Hochabstrakte Mustererkennung
             nn.Conv3d(in_channels=64, out_channels=64, kernel_size=3, padding=1),
             nn.BatchNorm3d(64),
             nn.ReLU(),
             
+            # Layer 10: Dimensionale Transformation
+            # Wandelt den 5D-Tensor zwingend in einen flachen 1D-Vektor um.
+            # Dies ist notwendig, da Fully-Connected-Layer (wie in den Köpfen)
+            # keine räumlichen Matrizen verarbeiten können.
             nn.Flatten()
         )
         
-        # Die Vektor-Dimension nach der Faltung: 64 Channels * 4(Y) * 4(Z) * 4(X)
+        # Die Vektor-Dimension nach dem Flatten-Layer: 64 Channels * 4(Y) * 4(Z) * 4(X)
         self.flattened_size = 64 * 4 * 4 * 4  # 4096
         
         # ---------------------------------------------------------
-        # Policy-Head (Handlungsstrategie)
+        # Block B: Policy-Head (Layer 11)
         # ---------------------------------------------------------
-        # Transformiert die 4096 extrahierten Merkmale in 16 unmaskierte Logits.
-        # Diese repräsentieren die Präferenz für jeden der 16 möglichen Züge (4x4 Raster).
         self.policy_head = nn.Sequential(
+            # Layer 11: Transformiert die 4096 extrahierten Merkmale in 16 Logits
             nn.Linear(self.flattened_size, 16)
         )
         
         # ---------------------------------------------------------
-        # Value-Head (Stellungsbewertung)
+        # Block C: Value-Head (Layer 12 bis 13)
         # ---------------------------------------------------------
-        # Komprimiert die 4096 Merkmale auf einen einzigen Skalarwert.
-        # Die Tanh-Aktivierungsfunktion normiert das Ergebnis zwingend auf den 
-        # Wertebereich zwischen -1.0 (Niederlage) und +1.0 (Sieg).
         self.value_head = nn.Sequential(
+            # Layer 12: Komprimiert die 4096 Merkmale auf einen Skalarwert
             nn.Linear(self.flattened_size, 1),
+            
+            # Layer 13: Wertebereichs-Normierung
+            # Die Tanh-Aktivierungsfunktion presst das Ergebnis zwingend in den 
+            # definierten Wertebereich zwischen -1.0 (Niederlage) und +1.0 (Sieg).
             nn.Tanh()
         )
 
     def forward(self, x: torch.Tensor):
         """
-        Führt den Vorwärtspass (Forward Pass) durch das Netzwerk aus.
+        PHASE 2: DATENFLUSS (Forward Pass)
+        
+        Diese Funktion wird bei jeder Vorhersage (Inferenz/Training) aufgerufen.
+        Sie definiert den Berechnungsgraphen, also in welcher Reihenfolge der 
+        Eingabe-Tensor 'x' durch die zuvor instanziierten 13 Schichten propagiert.
         
         Args:
             x (torch.Tensor): Der Input-Tensor der Dimension [Batch, 2, 4, 4, 4].
@@ -82,12 +100,15 @@ class Connect4Model(nn.Module):
                 - policy_logits: Rohwerte für die 16 möglichen Züge (Shape: [B, 16]).
                 - value: Evaluierung der Brettstellung von -1.0 bis 1.0 (Shape: [B, 1]).
         """
-        # 1. Extrahieren der räumlichen Muster aus dem Brettzustand
+        
+        # 1. Propagation durch Layer 1 bis 10:
+        # Das Spielfeld fließt durch die 3D-Faltungen und wird zu einem flachen 
+        # Vektor aus 4096 abstrakten Features komprimiert.
         features = self.conv_layers(x)
         
-        # 2. Parallele Berechnung der beiden Ausgabeköpfe
+        # 2. Parallele Propagation durch die Ausgabeköpfe:
+        # Die extrahierten Features werden simultan an Layer 11 sowie an Layer 12-13 übergeben.
         policy_logits = self.policy_head(features)
         value = self.value_head(features)
         
         return policy_logits, value
-    
