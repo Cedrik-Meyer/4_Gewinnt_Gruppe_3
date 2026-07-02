@@ -18,61 +18,81 @@ class Connect4Model(nn.Module):
     """
     Neuronales Netzwerk zur Evaluierung von 3D-Connect4-Spielzuständen.
     
-    Die Architektur basiert auf einem gemeinsamen Feature-Extractor (3D-Faltungen),
-    der in zwei unabhängigen Köpfen (Policy und Value) mündet.
+    Die Architektur basiert auf insgesamt 13 sequentiellen Schichten (Layern),
+    die in einen gemeinsamen Feature-Extractor (3D-Faltungen) und zwei 
+    unabhängige Köpfe (Policy und Value) strukturiert sind.
     """
     
     def __init__(self):
+        """
+        PHASE 1: INSTANZIIERUNG DER NETZWERKSCHICHTEN (Speicher-Allokation)
+        
+        Hier werden alle 13 mathematischen Schichten (Layer) des Modells im 
+        Speicher angelegt und die trainierbaren Parameter initialisiert.
+        """
         super().__init__()
         
         # ---------------------------------------------------------
-        # Gemeinsame Feature-Extraktion (Shared Body)
+        # Block A: Gemeinsame Feature-Extraktion (Layer 1 bis 10)
         # ---------------------------------------------------------
         # Verarbeitet den Input-Tensor der Form [Batch, Channels, Y, Z, X]
-        # Channels: 2 (Eigene Steine, Gegnerische Steine)
-        # Dimension: 4x4x4 Spielfeld
         self.conv_layers = nn.Sequential(
-            nn.Conv3d(in_channels=2, out_channels=32, kernel_size=3, padding=1),
-            nn.BatchNorm3d(32),
-            nn.ReLU(),
             
-            nn.Conv3d(in_channels=32, out_channels=64, kernel_size=3, padding=1),
-            nn.BatchNorm3d(64),
-            nn.ReLU(),
+            # --- Hierarchie-Stufe 1: Low-Level Features ---
+            # Extraktion lokaler, fundamentaler Merkmale (z. B. Kanten, isolierte Spielsteine).
+            nn.Conv3d(in_channels=2, out_channels=32, kernel_size=3, padding=1), # Layer 1: 3D-Faltungsoperation
+            nn.BatchNorm3d(32),                                                  # Layer 2: Batch-Normalisierung
+            nn.ReLU(),                                                           # Layer 3: Nichtlineare Aktivierung
             
-            nn.Conv3d(in_channels=64, out_channels=64, kernel_size=3, padding=1),
-            nn.BatchNorm3d(64),
-            nn.ReLU(),
+            # --- Hierarchie-Stufe 2: Mid-Level Features ---
+            # Kombination lokaler Features zu regionalen Strukturen (z. B. offene Zweierreihen).
+            nn.Conv3d(in_channels=32, out_channels=64, kernel_size=3, padding=1), # Layer 4: 3D-Faltungsoperation
+            nn.BatchNorm3d(64),                                                  # Layer 5: Batch-Normalisierung
+            nn.ReLU(),                                                           # Layer 6: Nichtlineare Aktivierung
             
-            nn.Flatten()
+            # --- Hierarchie-Stufe 3: High-Level Features ---
+            # Abstraktion regionaler Strukturen zu globalen, taktischen Mustern (z. B. Zwickmühlen).
+            nn.Conv3d(in_channels=64, out_channels=64, kernel_size=3, padding=1), # Layer 7: 3D-Faltungsoperation
+            nn.BatchNorm3d(64),                                                  # Layer 8: Batch-Normalisierung
+            nn.ReLU(),                                                           # Layer 9: Nichtlineare Aktivierung
+            
+            # --- Dimensionale Transformation ---
+            # Fully-Connected-Layer erfordern zwingend eindimensionale Vektoren als Eingabe.
+            # Transformiert den 5D-Tensor aus den Faltungsschichten in einen 1D-Vektor.
+            nn.Flatten()                                                         # Layer 10: Dimensionale Reduktion
         )
         
-        # Die Vektor-Dimension nach der Faltung: 64 Channels * 4(Y) * 4(Z) * 4(X)
-        self.flattened_size = 64 * 4 * 4 * 4  # 4096
+        # Die Vektor-Dimension nach dem Flatten-Layer: 64 Channels * 4(Y) * 4(Z) * 4(X)
+        self.flattened_size = 64 * 4 * 4 * 4  # 4096 abstrakte Merkmale
         
         # ---------------------------------------------------------
-        # Policy-Head (Handlungsstrategie)
+        # Block B: Policy-Head (Layer 11)
         # ---------------------------------------------------------
-        # Transformiert die 4096 extrahierten Merkmale in 16 unmaskierte Logits.
-        # Diese repräsentieren die Präferenz für jeden der 16 möglichen Züge (4x4 Raster).
         self.policy_head = nn.Sequential(
-            nn.Linear(self.flattened_size, 16)
+            # Berechnet aus dem abstrakten Feature-Vektor die unnormalisierten 
+            # Wahrscheinlichkeiten (Logits) für den gesamten Aktionsraum (16 Spalten).
+            nn.Linear(self.flattened_size, 16)                                   # Layer 11: Fully-Connected (Aktions-Logits)
         )
         
         # ---------------------------------------------------------
-        # Value-Head (Stellungsbewertung)
+        # Block C: Value-Head (Layer 12 bis 13)
         # ---------------------------------------------------------
-        # Komprimiert die 4096 Merkmale auf einen einzigen Skalarwert.
-        # Die Tanh-Aktivierungsfunktion normiert das Ergebnis zwingend auf den 
-        # Wertebereich zwischen -1.0 (Niederlage) und +1.0 (Sieg).
         self.value_head = nn.Sequential(
-            nn.Linear(self.flattened_size, 1),
-            nn.Tanh()
+            # Aggregiert denselben Feature-Vektor zu einer skalaren Stellungsbewertung.
+            nn.Linear(self.flattened_size, 1),                                   # Layer 12: Fully-Connected (Skalar)
+            
+            # Normiert den berechneten Skalar strikt auf das Intervall 
+            # zwischen -1.0 (deterministische Niederlage) und +1.0 (deterministischer Sieg).
+            nn.Tanh()                                                            # Layer 13: Wertebereichs-Normierung
         )
 
     def forward(self, x: torch.Tensor):
         """
-        Führt den Vorwärtspass (Forward Pass) durch das Netzwerk aus.
+        PHASE 2: DATENFLUSS (Forward Pass)
+        
+        Diese Funktion wird bei jeder Inferenz/Trainingsepoche aufgerufen.
+        Sie definiert den Berechnungsgraphen, also die Propagationsreihenfolge
+        des Eingabe-Tensors 'x' durch die instanziierten Schichten.
         
         Args:
             x (torch.Tensor): Der Input-Tensor der Dimension [Batch, 2, 4, 4, 4].
@@ -80,14 +100,17 @@ class Connect4Model(nn.Module):
         Returns:
             Tuple[torch.Tensor, torch.Tensor]: 
                 - policy_logits: Rohwerte für die 16 möglichen Züge (Shape: [B, 16]).
-                - value: Evaluierung der Brettstellung von -1.0 bis 1.0 (Shape: [B, 1]).
+                - value: Evaluierung der Brettstellung im Intervall [-1.0, 1.0] (Shape: [B, 1]).
         """
-        # 1. Extrahieren der räumlichen Muster aus dem Brettzustand
+        
+        # 1. Sequentielle Feature-Extraktion:
+        # Propagiert den Eingabe-Tensor durch die 3D-Faltungsblöcke zur 
+        # Generierung des hochdimensionalen Feature-Vektors (4096 Dimensionen).
         features = self.conv_layers(x)
         
-        # 2. Parallele Berechnung der beiden Ausgabeköpfe
+        # 2. Parallele Output-Generierung:
+        # Der Vektor wird simultan durch die linearen Ausgabeschichten propagiert.
         policy_logits = self.policy_head(features)
         value = self.value_head(features)
         
         return policy_logits, value
-    
