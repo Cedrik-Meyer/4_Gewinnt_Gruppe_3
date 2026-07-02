@@ -12,23 +12,23 @@ from training_system.neural_network.model import Connect4Model
 LIVE_NOISE_EPS = 0.10
 _CACHE_CAP = 2_000_000
 
-class TimeOutException(Exception):
-    pass
+# class TimeOutException(Exception):
+#    pass
 
 # 1. MCTS KNOTEN (Node)
 class MCTSNode:
+    # Attribute einer Stellung
     __slots__ = ['visit_count', 'value_sum', 'prior', 'children', 'is_expanded', 'terminal_value']
 
     def __init__(self, prior: float):
-        self.visit_count = 0
-        self.value_sum = 0.0
-        self.prior = prior
-        self.children = {}  # Dictionary: Action -> MCTSNode
-        self.is_expanded = False
-        # Caching für bewiesene Siege/Niederlagen, spart extrem viele check_winner() Aufrufe!
-        self.terminal_value = None
+        self.visit_count = 0 # Anzahl der Bewertungen des Zuges
+        self.value_sum = 0.0 # Summer aller Bewertungen des Zuges
+        self.prior = prior # Vorab Einschätzung für den Zug
+        self.children = {}  # Child Nodes
+        self.is_expanded = False # Existieren Child Nodes
+        self.terminal_value = None # Cache für bewiesene Endstellungen
 
-    def value(self):
+    def value(self): # Bewertung des Zuges
         if self.visit_count == 0:
             return 0.0
         return self.value_sum / self.visit_count
@@ -36,20 +36,21 @@ class MCTSNode:
 # 2. WORKER-STATE & HILFSFUNKTIONEN
 _WORKER = {}
 
-def _init_worker(state_dict, jit_path=None):
+def _init_worker(state_dict, jit_path=None): # Funktion um einen Worker anzulegen
     torch.set_grad_enabled(False)
-    torch.set_num_threads(1)
+    torch.set_num_threads(1) # Ein Thread pro Kern/Worker
 
-    if jit_path is not None:
-        model = torch.jit.load(jit_path, map_location='cpu')
-        model.eval()
-    else:
-        model = Connect4Model()
+    if jit_path is not None: # .jit Datei
+        model = torch.jit.load(jit_path, map_location='cpu') # Kann fertig geladen werden
+        model.eval() # Auswertungsmodus
+    else: # .pt Datei
+        model = Connect4Model() # Netz muss aufgebaut werden
         model.load_state_dict(state_dict)
         model.eval()
 
         try:
             example = torch.zeros(1, 2, 4, 4, 4)
+            # Kompilierung für .jit, sofern Test erfolgreich war
             model = torch.jit.optimize_for_inference(torch.jit.trace(model, example))
         except Exception:
             pass
@@ -57,23 +58,27 @@ def _init_worker(state_dict, jit_path=None):
     _WORKER["model"] = model
     _WORKER["nn_cache"] = {}
 
-
+# Wahrscheinlichkeiten für legale Züge werden berechnet
 def _masked_softmax(policy: np.ndarray, legal_mask: np.ndarray) -> np.ndarray:
+    # policy = Logits (Bewertungen einzelner Züge)
+    # legal_mask = Entscheidung ob Zug legal ist oder nicht
     policy = policy.copy()
-    policy[legal_mask == 0.0] = -1e9
-    policy = policy - np.max(policy)
+    policy[legal_mask == 0.0] = -1e9 # Illegale Züge bekommen extrem negative Bewertung
+    policy = policy - np.max(policy) # # Verhindert Überlauf in exp()
     exp = np.exp(policy)
-    return exp / np.sum(exp)
+    return exp / np.sum(exp) # Alle Werte sind summiert 1
 
-
+# Züge werden bewertet
 def _evaluate(board: np.ndarray, player: int, legal_mask: np.ndarray):
     cache = _WORKER["nn_cache"]
     key = board.tobytes()
     cached = cache.get(key)
-    if cached is not None:
+    if cached is not None: # Wurde Stellung bereits bewertet, wird sie aus Cache gezogen
         return cached
 
-    state = encode_state(board, player - 1).unsqueeze(0)
+    state = encode_state(board, player - 1).unsqueeze(0) # Board wird in Form umgewandelt, die das Netz erwartet: [1, 2, 4, 4, 4]
+    # logits = Bewertungen pro Zug
+    # val = Bewertung der Spielsituation
     logits, val = _WORKER["model"](state)
     probs = _masked_softmax(logits.squeeze(0).numpy(), legal_mask)
     value = val.squeeze(0).item()
@@ -83,7 +88,7 @@ def _evaluate(board: np.ndarray, player: int, legal_mask: np.ndarray):
     cache[key] = (probs, value)
     return probs, value
 
-
+# Child Nodes werden erstellt
 def _expand(node: MCTSNode, probs: np.ndarray, legal_mask: np.ndarray):
     for action in range(16):
         if legal_mask[action] == 1.0:
@@ -94,7 +99,7 @@ def _expand(node: MCTSNode, probs: np.ndarray, legal_mask: np.ndarray):
 def mcts_worker_task(args):
     board, player, time_limit_sec, c_puct, noise_eps, seed, root_mask = args
 
-    rng = np.random.default_rng(seed)
+    rng = np.random.default_rng(seed) # Zufalls Seed pro Worker, damit sie nicht gleich suchen
 
     end_time = time.monotonic() + (time_limit_sec * 0.95)
 
@@ -102,11 +107,12 @@ def mcts_worker_task(args):
     simulations = 0
 
     legal_mask = get_legal_mask(board)
-    probs, _ = _evaluate(board, player, legal_mask)
+    probs, _ = _evaluate(board, player, legal_mask) # Wurzel wird bewertet
 
     if root_mask is None:
         root_mask = legal_mask
 
+    # Noise sorgt dafür das nicht immer die selben Züge durchgegangen werden
     if noise_eps > 0.0:
         root_actions = np.flatnonzero(root_mask == 1.0)
         noise = rng.dirichlet([0.3] * len(root_actions))
@@ -115,12 +121,14 @@ def mcts_worker_task(args):
 
     _expand(root, probs, root_mask)
 
+    # Durchgänge starten an der Wurzel
     while time.monotonic() < end_time:
         node = root
         sim_board = np.copy(board)
         current_player = player
         search_path = [node]
 
+        # Child mit dem höchsten Score wird ausgewählt
         while node.is_expanded and len(node.children) > 0:
             best_score = -float('inf')
             best_action, best_child = None, None
@@ -171,6 +179,7 @@ class MCTSEngine:
         self.model_state_dict = None
         self.jit_path = None
 
+        # Modell wird für beide Varianten Probe geladen
         if model_path.endswith(".jit"):
             try:
                 torch.jit.load(model_path, map_location='cpu')
@@ -188,10 +197,12 @@ class MCTSEngine:
                 print(f"[!] FEHLER beim Laden des Modells: {e}")
                 raise e
 
+        # Anzahl der zu verfügbaren Kerne wird bestimmt
         if num_cores is None:
             num_cores = mp.cpu_count()
         self.num_cores = max(1, min(num_cores, mp.cpu_count()))
 
+        # Pro Kern wird ein Worker erstellt
         self.pool = mp.Pool(
             processes=self.num_cores,
             initializer=_init_worker,
@@ -199,6 +210,7 @@ class MCTSEngine:
         )
         self._warmup()
 
+    # Jeder Worker rechnet kurz auf einen leeren Board, um Kompilierungen und Speicherreservierungen im Vorfeld zu erledigen
     def _warmup(self):
         empty_board = create_empty_board()
         seeds = np.random.SeedSequence().spawn(self.num_cores)
@@ -214,6 +226,7 @@ class MCTSEngine:
             self.pool.join()
             self.pool = None
 
+    # Es wird geprüft, ob ein Zug dem Gegner einen Win Zug ermöglicht
     @staticmethod
     def _safe_indices(board: np.ndarray, player: int, legal_indices: list) -> list:
         opponent = 2 if player == 1 else 1
