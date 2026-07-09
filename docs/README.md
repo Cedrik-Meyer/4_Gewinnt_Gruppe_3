@@ -13,6 +13,7 @@ Dieser Bereich beschreibt den aktuellen technischen Zustand des Projekts, von de
 * **[Level 2: Modul- & Dateiebene](system/architecture_lvl2.md)**. Zuordnung der Architektur zur Ordnerstruktur und Beschreibung der Dateien im systemweiten Datenfluss.
 * **[Level 3: Tiefe Implementierungsdetails](system/architecture_lvl3.md)**. Detailanalyse der Tensor-Transformationen, Multiprocessing-Optimierungen und des Inferenz-Datenflusses.
 * **[Datenebenen & Formate](system/data_layers.md)**. Beschreibung der Repräsentationswechsel vom Server-JSON über den `float32`-Tensor bis zum Antwort-JSON.
+* **[Testdokumentation](system/test.md)**. Beschreibung der Teststrategie, Teststruktur und aktuell abgesicherten Qualitätsziele.
 * **[Training Timeline](system/training_timeline.md)**. Chronologische Dokumentation der Modell-Iterationen, Hardware-Konfigurationen und Trainingsstrategien.
 * **[Glossar, Maschinelles Lernen](system/glossar.md)**. Nachschlagewerk für fachspezifische Begriffe, z. B. *AlphaZero*, *Backpropagation* und *Dirichlet-Rauschen*.
 
