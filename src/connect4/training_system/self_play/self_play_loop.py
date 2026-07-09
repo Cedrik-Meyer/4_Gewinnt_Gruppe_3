@@ -96,9 +96,9 @@ def store_game_trajectory(trajectory: List[Dict[str, Any]], winner: int, replay_
     """
     for step in trajectory:
         state = step["state"]
-        action = step["action"]
-        original_probs = step["action_probs"]
-        legal_mask = step["legal_mask"]
+        action = step.get("action")
+        original_probs = np.array(step["action_probs"], dtype=np.float32)
+        legal_mask = np.array(step.get("legal_mask", np.ones(16, dtype=np.float32)), dtype=np.float32)
         player = step["player"]
         
         if winner == 0:
@@ -111,8 +111,11 @@ def store_game_trajectory(trajectory: List[Dict[str, Any]], winner: int, replay_
             # GEWINNER: Dieser spezifische Zug hat langfristig zum Sieg geführt.
             # Ein 1-Hot Vektor wird erzeugt, um das Netz auf exakt diesen Zug zu trainieren.
             value = 1.0
-            target_probs = np.zeros(16, dtype=np.float32)
-            target_probs[action] = 1.0
+            if action is None:
+                target_probs = original_probs
+            else:
+                target_probs = np.zeros(16, dtype=np.float32)
+                target_probs[action] = 1.0
             
         else:
             # VERLIERER: Dieser Zug war rückwirkend betrachtet ein Fehler.
@@ -120,7 +123,9 @@ def store_game_trajectory(trajectory: List[Dict[str, Any]], winner: int, replay_
             target_probs = np.zeros(16, dtype=np.float32)
             legal_count = np.sum(legal_mask)
             
-            if legal_count > 1:
+            if action is None:
+                target_probs = original_probs
+            elif legal_count > 1:
                 # Strafmaßnahme: Die Wahrscheinlichkeit für den getätigten Zug wird auf 0% gesetzt.
                 # Die freigewordene Wahrscheinlichkeitsmasse wird gleichmäßig auf alle ANDEREN 
                 # legalen Züge verteilt, um Alternativen zu fördern.

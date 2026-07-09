@@ -48,6 +48,7 @@ class Connect4Trainer:
             step_size=100000, 
             gamma=0.9
         )
+        self.last_losses = (0.0, 0.0, 0.0)
 
     def compute_loss(self, predicted_logits: torch.Tensor, predicted_value: torch.Tensor, 
                      target_probs: torch.Tensor, target_value: torch.Tensor) -> torch.Tensor:
@@ -60,7 +61,7 @@ class Connect4Trainer:
         
         return total_loss
 
-    def train_step(self, states: list, target_probs: list, target_values: list) -> tuple:
+    def train_step(self, states: list, target_probs: list, target_values: list) -> float:
         """
         B5_07: Führt einen kompletten Trainingsschritt (Backpropagation) auf einem Batch aus.
         Wurde für CUDA-Beschleunigung optimiert.
@@ -94,4 +95,5 @@ class Connect4Trainer:
         self.optimizer.step()
         self.scheduler.step()
         
-        return total_loss.item(), policy_loss.item(), value_loss.item()
+        self.last_losses = (total_loss.item(), policy_loss.item(), value_loss.item())
+        return total_loss.item()

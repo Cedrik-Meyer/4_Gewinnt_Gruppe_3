@@ -187,7 +187,8 @@ def main_training_loop():
         
         for _ in range(TRAINING_BATCHES):
             states, action_probs, values = replay_buffer.sample_batch(BATCH_SIZE)
-            t_loss, p_loss, v_loss = trainer.train_step(states, action_probs, values)
+            trainer.train_step(states, action_probs, values)
+            t_loss, p_loss, v_loss = trainer.last_losses
             
             total_loss_sum += t_loss
             pol_loss_sum += p_loss
