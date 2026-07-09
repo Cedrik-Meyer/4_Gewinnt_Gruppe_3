@@ -84,6 +84,24 @@ Die Ergebnisse automatisierter Benchmarks werden im Ordner `logs/` gespeichert.
 
 ---
 
+# Ausführen der Tests
+
+Für die Überprüfung der Funktionalität steht eine Testsuite auf Basis von **pytest** zur Verfügung. Sie umfasst Unit- und Integrationstests für die zentralen Komponenten des Projekts und dient dazu, Änderungen am Code auf Korrektheit zu überprüfen.
+
+## Tests ausführen
+
+Nach der Installation der Abhängigkeiten können alle Tests mit einem der folgenden Befehle gestartet werden:
+
+```bash
+pytest
+```
+
+oder
+
+```bash
+python -m pytest
+```
+
 # Training und Modell-Generierung
 
 Das Training des neuronalen Netzes kann über zwei verschiedene Ansätze erfolgen.
