@@ -1,1 +1,0 @@
-# Log-Dateien zur Auswertung, nur lokal
